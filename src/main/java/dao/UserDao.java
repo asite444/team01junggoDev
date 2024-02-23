@@ -21,7 +21,7 @@ public class UserDao {
 
 		return single;
 	}
-
+  
 	private UserDao() {
 		factory=MyBatisConnector.getInstance().getSqlSessionFactory();
 		System.out.println("변경!!!!");
