@@ -24,6 +24,7 @@ public class UserDao {
 
 	private UserDao() {
 		factory=MyBatisConnector.getInstance().getSqlSessionFactory();
+		System.out.println("변경");
 	}
 
 	public List<UserVo> selectList() {
