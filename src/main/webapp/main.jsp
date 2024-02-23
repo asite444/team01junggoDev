@@ -18,7 +18,7 @@
 <script type="text/javascript">
 	function login(){
 	    
-		   location.href="../user/login_form.do?url=" + encodeURIComponent(location.href) ;
+		   location.href="user/login.jsp";
 	}
 </script>
 
@@ -30,10 +30,10 @@
 		<nav class="left">
 			<a href="#menu"><span>Menu</span></a>
 		</nav>
-		<a href="main.jsp" class="logo">멀로할까요????</a>
+		<a href="main.jsp" class="logo">중고로Go</a>
 		<nav class="right">
 			<input class="button alt" value="Login"
-					onclick="">
+					onclick="login();">
 		</nav>
 	</header>
 	<!-- Menu -->
