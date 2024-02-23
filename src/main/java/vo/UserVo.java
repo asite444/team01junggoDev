@@ -19,6 +19,7 @@ public class UserVo {
 		// TODO Auto-generated constructor stub
 		System.out.println("이것입니다");
 		System.out.println("수정했습니다");
+		System.out.println("수정했습니다2");
 		
 	}
 	
