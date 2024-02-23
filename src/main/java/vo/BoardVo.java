@@ -1,6 +1,12 @@
 package vo;
 
 
+/**
+ * 
+ *
+ * @BoardVo : 게시판에 대한 VO 
+ *
+ */
 public class BoardVo {
 	
 	int 	b_idx;
