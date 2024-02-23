@@ -52,7 +52,7 @@
 				<h1>community</h1>
 				<p>
 					<b>
-						<a href="">커뮤니티</a>
+						<a href="">커뮤니티</a> | 
 					
 						<a href="">Q&A</a>
 					</b>
@@ -61,10 +61,7 @@
 			<div class="image fit">
 				
 			</div>
-			<p>1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰
-				 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 
-				 1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 
-				 1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 </p>
+			<p>게시판 </p>
 			<p>Aenean iaculis, neque sed pretium egestas, nunc lacus tempus
 				enim, nec tincidunt urna massa a libero. Aenean mattis bibendum est,
 				a pharetra elit. Morbi commodo lectus quis blandit mattis. Cras
