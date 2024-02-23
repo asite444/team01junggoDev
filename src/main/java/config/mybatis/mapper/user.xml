@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="user">
-      
+     <!-- 스정-정상균 --> 
   <!-- 전체조회 -->
   <select id="user_list"  resultType="vo.UserVo">
      select * from user order by user_idx
@@ -21,7 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                                  resultType="vo.UserVo">
     select * from user where user_id=#{ user_id }
              
-  </select>
+  </select>    
   
   <!-- user 추가 -->
   <insert id="user_insert" parameterType="vo.UserVo">

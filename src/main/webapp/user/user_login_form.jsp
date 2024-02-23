@@ -8,7 +8,7 @@
 -->
 <html>
 <head>
-<title>Join</title>
+<title>Generic - Intensify by TEMPLATED</title>
 <meta charset="UTF-8">
 <meta name="robots"
 	content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -26,61 +26,27 @@
 	<section id="main" class="wrapper">
 		<div class="inner">
 			<header class="align-center">
-				<h1>Join Us</h1>			
+				<h1>로그인</h1>			
 			</header>
 			
 
 			<hr class="major">
 			
-			<!-- Form -->
-			<h3>회원가입</h3>
+					<!-- Form -->
+					<h3>로그인을 해주세요</h3>
 
-			<form method="post" action="#">
-				<div class="row uniform">
-					<table>
-					<tr>
-						<th>이름</th>
-						<td>
-							<input type="text" name="name"  value="${ user_name }">
-						</td>
-					</tr>
-					<tr>
-						<th>아이디</th>
-						<td>
+					<form method="post" action="#">
+						<div class="row uniform">
 							<div class="6u 12u$(xsmall)">
-							<input type="text" name="id" id="id" value="${ user_id }"
-								placeholder="ID">
-							<div data-lastpass-icon-root="true"
-								style="position: relative !important; height: 0px !important; width: 0px !important; float: left !important;"></div>
+								<input type="text" name="id" id="id" value="${ user_id }"
+									placeholder="ID">
+								<div data-lastpass-icon-root="true"
+									style="position: relative !important; height: 0px !important; width: 0px !important; float: left !important;"></div>
 							</div>
-						</td>
-					</tr>
-					<tr>
-						<th>비밀번호</th>
-						<td>
 							<div class="6u$ 12u$(xsmall)">
-								<input type="password" name="password" id="password" value="${ user_pwd }"
-										placeholder="Password">
+								<input type="password" name="password" id="password" value="${ user_pwd }">
 							</div>
-						</td>
-					</tr>
-					<tr>
-						<th>이메일</th>
-						<td>
-							<input type="text" name="name"  value="${ user_email }">
-						</td>
-					</tr>
-					<tr>
-						<th>주소</th>
-						<td>
-							<input type="text" name="name"  value="${ user_addr }">
-						</td>
-					</tr>
-					
-
-					
-					<tr>
-						<th colspan="2">
+							
 							<!-- Break -->
 							<div class="12u$">
 								<ul class="actions">
@@ -93,16 +59,13 @@
 												onclick="list.do">
 									</li>
 									<li>
-										<input type="reset" value="Join In" class="button special"
-												onclick="/user/login_form.do">
+										<input type="reset" value="Join Us" class="button special"
+												onclick="location.href='/SecondhandMarket/user/loogin_form.jsp'">
 									</li>
 								</ul>
 							</div>
-						</th>
-					<tr>
-				</table>
-				</div>
-			</form>
+						</div>
+					</form>
 		</div>
 	</section>
 
