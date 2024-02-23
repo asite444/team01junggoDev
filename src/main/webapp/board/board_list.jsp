@@ -26,9 +26,9 @@
 	<!-- Header -->
 	<header id="header">
 		<nav class="left">
-			<a href="menu"><span>Menu</span></a>
+			<a href="#menu"><span>Menu</span></a>
 		</nav>
-		<a href="../main.jsp" class="logo">intensify</a>
+		<a href="../main.jsp" class="logo">중고로Go</a>
 		<nav class="right">
 			<a href="../user/login.jsp" class="button alt">Log in</a>
 		</nav>
@@ -37,8 +37,9 @@
 	<nav id="menu">
 		<ul class="links">
 			<li><a href="../main.jsp">Home</a></li>
-			<li><a href="../category.jsp">Category</a></li>
 			<li><a href="../all_items.jsp">전체매물</a></li>
+			<li><a href="../category.jsp">Category</a></li>
+			<li><a href="#">community</a></li>
 			<li><a href="../generic.jsp">Generic</a></li>
 			<li><a href="../elements.jsp">Elements</a></li>
 		</ul>
@@ -52,9 +53,7 @@
 				<h1>community</h1>
 				<p>
 					<b>
-						<a href="">커뮤니티</a> | 
-					
-						<a href="">Q&A</a>
+						<a href="">커뮤니티</a> | <a href="">Q&A</a>
 					</b>
 				</p>
 			</header>
