@@ -8,7 +8,7 @@
 -->
 <html>
 <head>
-<title>Generic - Intensify by TEMPLATED</title>
+<title>Join Us</title>
 <meta charset="UTF-8">
 <meta name="robots"
 	content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
