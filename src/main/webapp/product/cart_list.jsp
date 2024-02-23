@@ -1,19 +1,57 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE HTML>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!--
 	Intensify by TEMPLATED
 	templated.co @templatedco
 	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
 -->
 <html>
+
 <head>
-<title>Generic - Intensify by TEMPLATED</title>
+ <!--Bootstrap 3.x-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <!--외부 스타일 scc 참조-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<title>장바구니</title>
 <meta charset="UTF-8">
 <meta name="robots"
 	content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="../assets/css/main.css">
+<script type="text/javascript">
+
+$(document).ready(function(){
+	$("#check_all").click(function(){
+		const checked=$(this).is(':checked');
+		
+		//하위의 체크박스를 모두 체크/언체크(true<-->false)
+		$("input[name='cart_idx']").prop("checked",checked);
+		
+		//하위 각각의 체크박스가 클릭될시
+		$("input[name='cart_idx']").click(function(){
+			
+			//전체 개수
+			const total_count =$("input[name='cart_idx']").length;
+			
+			//체크된 개수
+			const check_count =$("input[name='cart_idx']:checked").length;
+			//console.log(total_count,check_count);
+			
+			// 전체 개수 ==체크된 개수가 같으면 전체 체크
+			$("#check_all").prop("checked",total_count==check_count);
+		});
+	});
+});
+</script>
+
+
 </head>
 <body>
 
@@ -34,7 +72,7 @@
 			<li><a href="../category.jsp">Category</a></li>
 			<li><a href="../generic.jsp">Generic</a></li>
 			<li><a href="../elements.jsp">Elements</a></li>
-			<li><a href="cart.jsp">(임시)카트</a></li>
+			<li><a href="cart_list.do">(임시)카트</a></li>
 		</ul>
 		<ul class="actions vertical">
 			<li><a href="#" class="button fit">Login</a></li>
@@ -44,37 +82,93 @@
 		<div class="inner">
 			<header class="align-center">
 				<h1>장바구니</h1>
-				<p>Lorem ipsum dolor sit amet nullam id egestas urna aliquam</p>
+				<form class="form-inline">
+				<div style="width:1000px; margin: auto;" class="table-wrapper"> 
+				<table >
+				<thead>
+				<tr>
+				<td colspan="5">
+				<input type="checkbox" id="check_all" class="form-control"><label for="check_all">
+				
+				 전체선택</label>
+				</td>
+			</tr>
+			
+			<tr bgcolor="#dedede" >
+			    <th style="text-align: center;">선택</th>
+				<th width="25%" style="text-align: center;">제품명</th>
+				<th style="text-align: center;">판매자</th>
+				<th style="text-align: center;">제품상태</th>
+				<th align="center" style="text-align: center;">금액</th>
+				<!-- <th>삭제</th> 
+				
+				cart_idx,
+				 user_idx,
+				  prod_idx, prod_count, p_subject, sell_user_idx, p_price, p_status
+				-->
+			</tr>
+			</thead>
+			<c:forEach var="cart"  items="${cart_list}">
+			<tbody>
+				<tr align="center">
+				<td><input type="checkbox" name="cart_idx"  value="${cart.cart_idx}" id="cart_idx_${cart.cart_idx}">
+				<label for="cart_idx_${cart.cart_idx}">
+				</label>
+				</td>
+				<td>${ cart.p_subject }</td>
+				<td>${ cart.sell_user_name }</td>
+				
+				<td>${ cart.p_status }</td>
+				<td>
+				<!-- 금액 조정 폼 -->
+						<input style="text-align: center; width: 150px;"  id="p_price_${cart.cart_idx}"  size="4"  value="${ cart.p_price }">
+						<input class="button small" type="button" value="수정" 
+						       onclick="modify_cart(${ cart.cart_idx });" width="10px">
+				
+				</td>
+				
+			</tr>
+			</tbody>
+			<tr>
+			
+			</tr>
+			</c:forEach>
+				 <!-- 장바구니목록이 없는경우 -->  
+	        <c:if test="${ empty cart_list }"> 
+				<tr>
+					<td colspan="6" align="center">
+						<b><font color=red>장바구니가 비었습니다.</font></b>
+					</td>
+				</tr>
+			</c:if>
+			
+			
+			
+	
+			<tr>
+				<td colspan="5" align="right">
+					총 결재액 :
+				</td>
+				<%-- <td><fmt:formatNumber value="${ total_amount }"/> (원)</td> --%>
+			</tr>
+			
+			<tr>
+			<td colspan="7" align="right">
+				<input type="button" value="선택삭제" class="button" onclick="delete_cart_select(this.form);">
+				<input type="button" value="결제" class="button special"
+				onclick="payment(this.form);" >
+			</td>
+			</tr>
+				
+				
+				</table>   
+				</div>
+				</form>
+				
+				
+				
 			</header>
-			<div class="image fit">
-				<img src="../images/pic04.jpg" alt="">
-			</div>
-			<p>1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰
-				 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 
-				 1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 
-				 1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 1번쨰 문단 </p>
-			<p>Aenean iaculis, neque sed pretium egestas, nunc lacus tempus
-				enim, nec tincidunt urna massa a libero. Aenean mattis bibendum est,
-				a pharetra elit. Morbi commodo lectus quis blandit mattis. Cras
-				pharetra quam quis tincidunt tempus. Donec a sem magna. Nullam purus
-				purus, fermentum id lorem sit amet, porta elementum neque. Proin
-				vulputate metus ac faucibus luctus.</p>
-			<p>Ut congue purus sed elit consectetur tempus. Duis convallis,
-				quam quis pellentesque vestibulum, tellus arcu hendrerit ante, sed
-				dictum felis nisl vitae magna. Integer et sapien a erat molestie
-				tempor. Cras est odio, suscipit id porttitor id, mollis et ligula.
-				Curabitur molestie mi molestie accumsan faucibus. Vestibulum ante
-				ipsum primis in faucibus orci luctus et ultrices posuere cubilia
-				Curae; Integer porta malesuada pellentesque. Morbi imperdiet dictum
-				velit, eu volutpat sem posuere non. Fusce ullamcorper gravida velit,
-				sed sollicitudin libero iaculis id. Ut eu neque non odio fringilla
-				faucibus nec quis neque. Quisque et nisi fermentum, tincidunt libero
-				a, condimentum ligula. Quisque ultrices blandit lacinia. Nulla velit
-				lorem, placerat nec eros ut, fermentum pharetra dolor. Maecenas arcu
-				ipsum, mattis et suscipit sed, convallis nec lectus. Nulla facilisi.
-				Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
-				posuere cubilia Curae;</p>
-		</div>
+		</div>	
 	</section>
 	<!-- Footer -->
 	<footer id="footer">

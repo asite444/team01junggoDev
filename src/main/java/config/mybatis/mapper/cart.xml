@@ -4,7 +4,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cart">
 
- 
+ <select id="cart_list" parameterType="int" resultType="vo.CartVo">
+select 
+c. cart_idx
+, c.user_idx
+, c.prod_idx
+, c.prod_count 
+, p.p_subject
+, p.user_idx as sell_user_idx
+, p.p_price
+, p.p_status
+, u.user_name as sell_user_name
+from cart c 
+join product p
+on  p.p_idx=c.prod_idx
+join user u
+on u.user_idx=p.user_idx
+where c.user_idx=#{user_idx}
+
+
+</select>
+
+<!-- 유저별 장바구니 총합계 -->
+<select id="cart_total_amount" parameterType="int" resultType="int">
+select  ifnull(sum(p.p_price),0) 
+from cart c join product p on  p.p_idx=c.prod_idx
+where c.user_idx=#{user_idx}
+</select>
   
 
 </mapper>
