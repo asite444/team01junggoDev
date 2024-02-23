@@ -26,14 +26,14 @@
 	<section id="main" class="wrapper">
 		<div class="inner">
 			<header class="align-center">
-				<h1>Join Us</h1>			
+				<h2>회원가입</h2>			
 			</header>
 			
 
 			<hr class="major">
 			
 			<!-- Form -->
-			<h3>회원가입</h3>
+			<h3>모두 입력해주세요</h3>
 
 			<form method="post" action="#">
 				<div class="row uniform">
