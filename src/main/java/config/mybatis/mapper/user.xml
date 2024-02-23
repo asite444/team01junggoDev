@@ -3,18 +3,56 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="user">
-
+      
   <!-- 전체조회 -->
   <select id="user_list"  resultType="vo.UserVo">
      select * from user order by user_idx
   </select>
   
-  <!-- user_idx로 조회 --> <!-- 
+  <!-- user_idx로 조회 -->
   <select id="user_one_user_idx" parameterType="int"
                                   resultType="vo.UserVo">
    select * from user where user_idx=#{ user_idx }                               
                                  
-  </select> -->
+  </select>
+     
+  <!-- user_id로 조회 -->
+  <select id="user_one_user_id" parameterType="String"
+                                 resultType="vo.UserVo">
+    select * from user where user_id=#{ user_id }
+             
+  </select>
+  
+  <!-- user 추가 -->
+  <insert id="user_insert" parameterType="vo.UserVo">
+  	 insert into user(user_name,user_id,user_pwd,user_email,user_zipcode,user_addr,user_ip)
+  	             values(#{ user_name },
+  	                    #{ user_id },
+  	                    #{ user_pwd },
+  	                    #{ user_email },
+  	                    #{ user_zipcode },
+  	                    #{ user_addr },
+  	                    #{ user_ip })
+  	               
+   </insert>
+   
+   <!-- 삭제 -->
+   <delete id="user_delete" parameterType="int">
+   	 delete from user where user_idx=#{ user_idx }
+   </delete>
+  
+  <!-- 수정 -->
+  <update id="user_update" parameterType="vo.UserVo">
+  	update user set user_pwd=#{ user_pwd },
+  	                user_email=#{ user_email },
+  	                user_zipcode=#{ user_zipcode },
+  	                user_addr=#{ user_addr },
+  	                user_ip=#{ user_ip },
+  	                user_grade=#{ user_grade },
+  	                user_modifydate=now()
+  	   where user_idx=#{ user_idx }
+  	                      
+  </update>
   
 </mapper>
 
