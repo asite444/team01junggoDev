@@ -17,6 +17,7 @@ public class UserVo {
 	
 	public UserVo() {
 		// TODO Auto-generated constructor stub
+		System.out.println("이것입니다");
 	}
 	
 	
@@ -48,7 +49,7 @@ public class UserVo {
 		this.user_ip = user_ip;
 		this.user_grade = user_grade;
 	}
-	
+	  
   
   
 	public int getUser_idx() {
