@@ -11,6 +11,7 @@
 <body>
 <c:forEach var="vo" items="${list}">
 ${vo.user_name}
+이것입니다!
 </c:forEach>
 </body>
 </html>
