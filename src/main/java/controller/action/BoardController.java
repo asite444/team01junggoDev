@@ -56,6 +56,8 @@ public class BoardController {
 		}
 		
 		//게시판 목록 가져오기
+		
+		//페이징 처리
 		List<BoardVo> list = BoardDao.getInstance().selectList(map);
 		
 		//page Menu생성							검색된 레코드수
