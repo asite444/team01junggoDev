@@ -49,7 +49,7 @@ public class UserVo {
 		this.user_grade = user_grade;
 	}
 	
-
+  
   
 	public int getUser_idx() {
 		return user_idx;
