@@ -135,16 +135,17 @@
 							<option value="subject_content">제목+내용</option>
 						</select>
 					</div>		
-						<div class="row uniform 9u$" style="float: right;">
-							<div class="6u 12u$(xsmall)">
-								<input type="text" id="search_text" value="${ param.search_text }" placeholder="search">
-							</div>
-							<div class="3u$ 12u$(small)">
-								<input type="button" value="Search" class="fit"
-										onclick="find();">
-							</div>
-						</div>
+					<div class="row uniform 9u$" style="float: right;">
+					<div class="6u 12u$(xsmall)">
+						<input type="text" id="search_text" value="${ param.search_text }" placeholder="search">
+					</div>
 				</form>
+				
+				<div class="3u$ 12u$(small)">
+					<input type="button" value="Search" class="fit"
+							onclick="find();">
+				</div>
+			</div>
 		           
 			</div>
 			
