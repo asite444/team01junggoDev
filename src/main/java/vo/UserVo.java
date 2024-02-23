@@ -14,8 +14,47 @@ public class UserVo {
 	String user_modifydate;
 	String user_grade;
 	
-	public UserVo() {}
+	
+	public UserVo() {
+		// TODO Auto-generated constructor stub
+		System.out.println("이것입니다");
+		System.out.println("수정했습니다");
+		System.out.println("수정했습니다2");
+		
+	}
+	
+	
+	//insert
+	public UserVo(String user_name, String user_id, String user_pwd, String user_email, String user_zipcode,
+			String user_addr, String user_ip) {
+		super();
+		this.user_name = user_name;
+		this.user_id = user_id;
+		this.user_pwd = user_pwd;
+		this.user_email = user_email;
+		this.user_zipcode = user_zipcode;
+		this.user_addr = user_addr;
+		this.user_ip = user_ip;
+	}
+	
 
+	//update
+	public UserVo(int user_idx, String user_name, String user_id, String user_pwd, String user_email,
+			String user_zipcode, String user_addr, String user_ip, String user_grade) {
+		super();
+		this.user_idx = user_idx;
+		this.user_name = user_name;
+		this.user_id = user_id;
+		this.user_pwd = user_pwd;
+		this.user_email = user_email;
+		this.user_zipcode = user_zipcode;
+		this.user_addr = user_addr;
+		this.user_ip = user_ip;
+		this.user_grade = user_grade;
+	}
+	  
+  
+  
 	public int getUser_idx() {
 		return user_idx;
 	}
@@ -27,7 +66,7 @@ public class UserVo {
 	public String getUser_name() {
 		return user_name;
 	}
-
+     
 	public void setUser_name(String user_name) {
 		this.user_name = user_name;
 	}
@@ -109,7 +148,23 @@ public class UserVo {
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
+
+
+
+
+
+	
+	
 	
 	
 	
