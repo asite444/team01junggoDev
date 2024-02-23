@@ -11,7 +11,9 @@
          <!--  action 패키지에 아래 명시한 action이 없으면 에러
          등록하지 않으면,해당 컨트롤러는 사용 불가-->
          <param-value>
-         controller.action.UserController
+         controller.action.UserController,
+         controller.action.CartController,
+         controller.action.BoardController
          </param-value> <!-- action 등록  -->
      </init-param>
   </servlet>
