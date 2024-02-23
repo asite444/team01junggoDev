@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name></display-name>
+  
+  
+  <servlet>
+     <servlet-name>FrontController</servlet-name>
+     <servlet-class>controller.FrontController</servlet-class>
+     <init-param>
+         <param-name>action</param-name>
+         <!--  action 패키지에 아래 명시한 action이 없으면 에러
+         등록하지 않으면,해당 컨트롤러는 사용 불가-->
+         <param-value>
+         controller.action.UserController
+         </param-value> <!-- action 등록  -->
+     </init-param>
+  </servlet>
+  
+  <servlet-mapping>
+  	 <servlet-name>FrontController</servlet-name>
+     <url-pattern>*.do</url-pattern> <!-- 모든 형태의 서블릿 요청처리 -->
+  </servlet-mapping>
+  
+  <!--위 코드는 @WebServlet("*.do")  울 명시한 것,즉 frontcontroller 에서 @WebServlet("*.do") 을 명시할 필요 없게 됨 -->  
+  
+  
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+</web-app>
