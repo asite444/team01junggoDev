@@ -14,7 +14,7 @@ import dao.BoardDao;
 import myconstant.MyConstant;
 import util.Paging;
 import vo.BoardVo;
-import vo.MemberVo;
+import vo.UserVo;
 
 public class BoardController {
 	
@@ -120,7 +120,7 @@ public class BoardController {
 		
 		// /board/insert.do?b_subject=제목&b_content=내용
 		
-		MemberVo user = (MemberVo) request.getSession().getAttribute("user");
+		UserVo user = (UserVo) request.getSession().getAttribute("user");
 		
 		if (user == null) {
 			//세션이 만료시(logout)
@@ -137,8 +137,8 @@ public class BoardController {
 		int b_idx = BoardDao.getInstance().selectOneB_idx();
 		int b_ref = b_idx;
 		//4.등록회원정보
-		int 	mem_idx = user.getMem_idx();
-		String mem_name = user.getMem_name();
+		int 	user_idx = user.getUser_idx();
+		String user_name = user.getUser_name();
 		
 		//5.VoardVo포장
 		BoardVo vo = new BoardVo(b_idx, b_subject, b_content, b_ip, user_idx, user_name, b_ref);
@@ -161,7 +161,7 @@ public class BoardController {
 	@RequestMapping("/board/reply.do")
 	public String reply(HttpServletRequest request, HttpServletResponse response) {
 		// /board/reply.do?b_idx=13&b_subject=제목&b_content=내용&page=3
-		MemberVo user = (MemberVo) request.getSession().getAttribute("user");
+		UserVo user = (UserVo) request.getSession().getAttribute("user");
 		
 		if (user == null) {
 			//세션이 만료시(logout)
@@ -182,8 +182,8 @@ public class BoardController {
 		int b_idx = BoardDao.getInstance().selectOneB_idx();
 //		int b_ref = b_idx;
 		//4.등록회원정보
-		int 	mem_idx = user.getMem_idx();
-		String mem_name = user.getMem_name();
+		int 	user_idx = user.getUser_idx();
+		String user_name = user.getUser_name();
 		
 		//5.기준글 정보 얻어오기
 		BoardVo baseVo	= BoardDao.getInstance().selectOne(base_b_idx);
@@ -197,7 +197,7 @@ public class BoardController {
 		int b_depth	= baseVo.getB_depth() + 1;
 		
 		//8.BoardVo포장
-		BoardVo vo = new BoardVo(b_idx, b_subject, b_content, b_ip, mem_idx, mem_name, b_ref, b_step, b_depth);
+		BoardVo vo = new BoardVo(b_idx, b_subject, b_content, b_ip, user_idx, user_name, b_ref, b_step, b_depth);
 		
 		//9.DB reply
 		res = BoardDao.getInstance().reply(vo);
@@ -254,7 +254,7 @@ public class BoardController {
 	@RequestMapping("/board/modify.do")
 	public String modify(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
 		
-		MemberVo user = (MemberVo) request.getSession().getAttribute("user");
+		UserVo user = (UserVo) request.getSession().getAttribute("user");
 		if (user == null) {
 			//세션이 만료시(logout)
 			return "rediect:../member/login_form.do?reason=session_timeout";
