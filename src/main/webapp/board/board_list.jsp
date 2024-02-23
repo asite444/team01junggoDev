@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
+  
 <!DOCTYPE HTML>
 <!--
 	Intensify by TEMPLATED
@@ -20,6 +23,65 @@
 	<script src="../assets/js/skel.min.js"></script>
 	<script src="../assets/js/util.js"></script>
 	<script src="../assets/js/main.js"></script>
+<script type="text/javascript">
+	
+	
+	function home() {
+		lacation.herf="list.do";
+		return ;
+	}//end: home();
+	
+	function insert_form() {
+		
+		//로그인이 안된경우
+		if("${ empty user }" == "true"){
+			
+			if (confirm("글쓰기는 로그인 후에 가능합니다\n로그인 하시겠습니까?")==false) return; {
+				location.href="../member/login_form.do";
+			}
+			return;
+		}
+		//글쓰기 폼으로 이동
+		location.href="insert_form.do"; // /board/insert_form.do
+	}//end:insert_form()
+	
+	function find() {
+		
+		let search		= $("#search").val();
+		let search_text	= $("#search_text").val().trim();
+		
+		//전체검색이 아닌데 검색어가 비어있으면
+		if(search!='all' && search_text==''){
+			
+			alert("검색어를 입력하세요!");
+			$("search_text").val("");
+			$("search_text").val().focus();
+			return ;
+		}
+		
+		location.href="list.do?search=" + search + 
+						"&search_text=" + encodeURIComponent(search_text,"utf-8"); //한글을 javascript에서 넘길떄 인코딩필수 
+						
+	}
+		/* 초기화 */
+		$(document).ready(function(){
+	   if("${ not empty param.search }" =="true"){ 
+		   $("#search").val("${ param.search }");
+	   }
+	   
+	   //전체보기면 검색어 지워라
+	   if("${ param.search eq 'all' }" == "true"){  
+		   $("#search_text").val("");
+	   }
+   });
+		
+   function login(){
+	      
+	   location.href="../member/login_form.do?url=" + encodeURIComponent(location.href) ;
+   }
+		
+		
+</script>
 </head>
 <body>
 
@@ -53,53 +115,141 @@
 				<h1>community</h1>
 				<p>
 					<b>
-						<a href="">커뮤니티</a> | <a href="">Q&A</a>
+						<a href="">커뮤니티</a> | <a href="">Notice</a> | <a href="">Q&A</a>
 					</b>
 				</p>
 			</header>
-			<div class="image fit">
+				<div class="image fit">
+
+				</div>
+			<p>자유로운 커뮤니티</p>
+			
+			<div>
+				<form method="post" action="#">
+					<div class="select-wrapper 3u$" style="float: left;">
+						<select name="category" id="category">
+							<option value="all">전체보기</option>
+							<option value="id">아이디</option>
+							<option value="subject">제목</option>
+							<option value="conetent">내용</option>
+							<option value="subject_content">제목+내용</option>
+						</select>
+					</div>		
+					<div class="row uniform 9u$" style="float: right;">
+					<div class="6u 12u$(xsmall)">
+						<input type="text" id="search_text" value="${ param.search_text }" placeholder="search">
+					</div>
+				</form>
 				
+				<div class="3u$ 12u$(small)">
+					<input type="button" value="Search" class="fit"
+							onclick="find();">
+				</div>
 			</div>
-			<p>게시판 </p>
-			<p>Aenean iaculis, neque sed pretium egestas, nunc lacus tempus
-				enim, nec tincidunt urna massa a libero. Aenean mattis bibendum est,
-				a pharetra elit. Morbi commodo lectus quis blandit mattis. Cras
-				pharetra quam quis tincidunt tempus. Donec a sem magna. Nullam purus
-				purus, fermentum id lorem sit amet, porta elementum neque. Proin
-				vulputate metus ac faucibus luctus.</p>
-			<p>Ut congue purus sed elit consectetur tempus. Duis convallis,
-				quam quis pellentesque vestibulum, tellus arcu hendrerit ante, sed
-				dictum felis nisl vitae magna. Integer et sapien a erat molestie
-				tempor. Cras est odio, suscipit id porttitor id, mollis et ligula.
-				Curabitur molestie mi molestie accumsan faucibus. Vestibulum ante
-				ipsum primis in faucibus orci luctus et ultrices posuere cubilia
-				Curae; Integer porta malesuada pellentesque. Morbi imperdiet dictum
-				velit, eu volutpat sem posuere non. Fusce ullamcorper gravida velit,
-				sed sollicitudin libero iaculis id. Ut eu neque non odio fringilla
-				faucibus nec quis neque. Quisque et nisi fermentum, tincidunt libero
-				a, condimentum ligula. Quisque ultrices blandit lacinia. Nulla velit
-				lorem, placerat nec eros ut, fermentum pharetra dolor. Maecenas arcu
-				ipsum, mattis et suscipit sed, convallis nec lectus. Nulla facilisi.
-				Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
-				posuere cubilia Curae;</p>
+		           
+			</div>
+			
+			
+			<br>
+			<br>
+			<br>
+			
+			<hr>
+			<input class="btn btn-link" type="button"  value="글쓰기"
+	            	onclick="insert_form();">
+			<div>
+			
+			
+			<table>
+			<tr>
+				<th>번호</th>
+				<th>제목</th>
+				<th>작성자</th>
+				<th>아이피</th>
+				<th>작성일</th>
+				<th>조회수</th>
+			</tr>
+				<!-- for(BoardVo vo : list) -->
+			<c:forEach var="vo" items="${ list }">
+				<tr>
+					<td >${ vo.no }</td>
+					
+					<!-- 제목 -->
+					<td class="b_subject" >
+						<!-- 답글이면 들여쓰기 -->
+						<c:forEach begin="1" end="${ vo.b_depth }">&nbsp;&nbsp;&nbsp;</c:forEach>
+						<!-- 메인글이 아니면'ㄴ'붙여라 -->
+						<c:if test="${ vo.b_step ne 0 }">ㄴ</c:if>
+						
+						<!-- 사용중인 게시물 -->
+						<c:if test="${ vo.b_use eq 'y' }">
+							 <a href="view.do?b_idx=${ vo.b_idx }&page=${ empty param.page ? 1 : param.page }&search=${ param.search }&search_text=${ param.search_text }">${ vo.b_subject }</a>
+						
+						<!-- badge: 댓글갯수 -->
+							<c:if test="${ vo.cmt_count gt 0 }">
+		              	    	<span class="badge" style="background: #FFB6C1;">${ vo.cmt_count }</span>
+		              	 	</c:if>
+						
+						</c:if>
+						
+						<!-- 삭제 게시물에 대한 정보 -->
+						<c:if test="${ vo.b_use eq 'n' }">
+							<font color="red">삭제된 게시물(${ vo.b_subject })</font>
+						</c:if>
+					</td>
+					
+					<td >${ vo.mem_name }</td>
+					<!-- <td >ip:{ vo.b_ip }</td> -->
+					<td >${ fn:substring(vo.b_regdate,0,16) }</td>
+					<td >${ vo.b_readhit }</td>
+				</tr>	
+			</c:forEach>
+			<!-- 게시물이 없는경우 -->
+			<c:if test="${ empty list }"> <!-- request Binding에서 줌 -->
+				<tr>
+					<td colspan="6" align="center">
+						<font color="red">등록된 게시글이 없습니다.</font>
+					</td>
+				</tr>	
+			</c:if>
+			
+	
+			<tr >
+				<td colspan="6" align="center">
+				<br>
+	
+					<br>
+					<br>
+					<!-- Page Menu -->
+					<ul class="page">${ pageMenu }</ul>
+				</td>
+			</tr>
+			</table>
+			
+			</div>
+			<p></p>
 		</div>
+		
+		
 	</section>
-	<!-- Footer -->
-	<footer id="footer">
-		<div class="inner">
-			<h2>Get In Touch</h2>
-			<ul class="actions">
-				<li><span class="icon fa-phone"></span> <a href="#">(000)
-						000-0000</a></li>
-				<li><span class="icon fa-envelope"></span> <a href="#">information@untitled.tld</a></li>
-				<li><span class="icon fa-map-marker"></span> 123 Somewhere
-					Road, Nashville, TN 00000</li>
-			</ul>
-		</div>
-	</footer>
-	<div class="copyright">
-		Powered by: <a href="https://templated.co/">TEMPLATED</a>.
+	
+	
+<!-- Footer -->
+<footer id="footer">
+	<div class="inner">
+		<h2>Get In Touch</h2>
+		<ul class="actions">
+			<li><span class="icon fa-phone"></span> <a href="#">(000)
+					000-0000</a></li>
+			<li><span class="icon fa-envelope"></span> <a href="#">information@untitled.tld</a></li>
+			<li><span class="icon fa-map-marker"></span> 123 Somewhere
+				Road, Nashville, TN 00000</li>
+		</ul>
 	</div>
+</footer>
+<div class="copyright">
+	Powered by: <a href="https://templated.co/">TEMPLATED</a>.
+</div>
 
 	
 </body>
