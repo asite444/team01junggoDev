@@ -126,8 +126,8 @@
 			
 			<div>
 				<form method="post" action="#">
-					<div class="select-wrapper 3u$" style="float: left;">
-						<select name="category" id="category">
+					<div class="select-wrapper" style="float: left; width: 150px;">
+						<select class="select-wrapper" name="category" id="category">
 							<option value="all">전체보기</option>
 							<option value="id">아이디</option>
 							<option value="subject">제목</option>
@@ -136,13 +136,15 @@
 						</select>
 					</div>		
 					<div class="row uniform 9u$" style="float: right;">
-					<div class="6u 12u$(xsmall)">
-						<input type="text" id="search_text" value="${ param.search_text }" placeholder="search">
+						<div class="6u 12u$(xsmall)">
+							<input class="6u" type="text" id="search_text" value="${ param.search_text }" placeholder="search">
+						</div>
 					</div>
 				</form>
 				
+				
 				<div class="3u$ 12u$(small)">
-					<input type="button" value="Search" class="fit"
+					<input  type="button" value="Search" class="fit"
 							onclick="find();">
 				</div>
 			</div>
@@ -227,6 +229,9 @@
 			</table>
 			
 			</div>
+			
+			
+			
 			<p></p>
 		</div>
 		
