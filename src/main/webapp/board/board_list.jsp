@@ -42,7 +42,7 @@
 			return;
 		}
 		//글쓰기 폼으로 이동
-		location.href="insert_form.do"; // /board/insert_form.do
+		location.href="board_insert_form.do"; // /board/insert_form.do
 	}//end:insert_form()
 	
 	function find() {
@@ -91,8 +91,19 @@
 			<a href="#menu"><span>Menu</span></a>
 		</nav>
 		<a href="../main.jsp" class="logo">중고로Go</a>
+		
 		<nav class="right">
-			<a href="../user/login.jsp" class="button alt">Log in</a>
+			<c:if test="${ empty sessionScope.user }">
+			<input class="button alt" value="Login"
+					onclick="login();">
+		  </c:if>
+			<!-- 로그인이 됐을경우 : 세션영역에 user가 있는가?  -->
+			<c:if test="${ not empty sessionScope.user }">
+				<b>${ sessionScope.user.user_name }</b>님 환영합니다!!
+				<input class="button alt" type="button" value="Logout"
+				       onclick="location.href='logout.do'">
+			</c:if>	
+			
 		</nav>
 	</header>
 	<!-- Menu -->
@@ -101,7 +112,7 @@
 			<li><a href="../main.jsp">Home</a></li>
 			<li><a href="../all_items.jsp">전체매물</a></li>
 			<li><a href="../category.jsp">Category</a></li>
-			<li><a href="#">community</a></li>
+			<li><a href="../board/list.do">community</a></li>
 			<li><a href="../generic.jsp">Generic</a></li>
 			<li><a href="../elements.jsp">Elements</a></li>
 		</ul>
@@ -122,10 +133,10 @@
 				<div class="image fit">
 
 				</div>
-			<p>자유로운 커뮤니티</p>
+			<p>자유로운 커뮤니티 모아보기</p>
 			
 			<div>
-				<form method="post" action="#">
+				<form>
 					<div class="select-wrapper" style="float: left; width: 150px;">
 						<select class="select-wrapper" name="category" id="category">
 							<option value="all">전체보기</option>
@@ -162,13 +173,13 @@
 			<div>
 			
 			
-			<table>
+			<table class="table-wrapper">
 			<tr>
 				<th>번호</th>
 				<th>제목</th>
 				<th>작성자</th>
-				<th>아이피</th>
 				<th>작성일</th>
+				<th>아이피</th>
 				<th>조회수</th>
 			</tr>
 				<!-- for(BoardVo vo : list) -->
@@ -200,9 +211,10 @@
 						</c:if>
 					</td>
 					
-					<td >${ vo.mem_name }</td>
+					<td >${ vo.user_name }</td>
 					<!-- <td >ip:{ vo.b_ip }</td> -->
 					<td >${ fn:substring(vo.b_regdate,0,16) }</td>
+					<td >${ vo.b_ip }</td>
 					<td >${ vo.b_readhit }</td>
 				</tr>	
 			</c:forEach>

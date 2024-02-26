@@ -13,7 +13,8 @@
          <param-value>
          controller.action.UserController,
          controller.action.CartController,
-         controller.action.BoardController
+         controller.action.BoardController,
+         controller.action.PaymentController
          </param-value> <!-- action 등록  -->
      </init-param>
   </servlet>

@@ -92,7 +92,16 @@
 		</nav>
 		<a href="../main.jsp" class="logo">중고로Go</a>
 		<nav class="right">
-			<a href="../user/login.jsp" class="button alt">Log in</a>
+			<c:if test="${ empty sessionScope.user }">
+			<input class="button alt" value="Login"
+					onclick="login();">
+			</c:if>
+			<!-- 로그인이 됐을경우 : 세션영역에 user가 있는가?  -->
+			<c:if test="${ not empty sessionScope.user }">
+				<b>${ sessionScope.user.user_name }</b>님 환영합니다!!
+				<input class="button alt" type="button" value="Logout"
+			       onclick="location.href='logout.do'">
+			</c:if>	
 		</nav>
 	</header>
 	<!-- Menu -->
@@ -101,7 +110,7 @@
 			<li><a href="../main.jsp">Home</a></li>
 			<li><a href="../all_items.jsp">전체매물</a></li>
 			<li><a href="../category.jsp">Category</a></li>
-			<li><a href="#">community</a></li>
+			<li><a href="../board/board_list.jsp">community</a></li>
 			<li><a href="../generic.jsp">Generic</a></li>
 			<li><a href="../elements.jsp">Elements</a></li>
 		</ul>
@@ -112,7 +121,7 @@
 	<section id="main" class="wrapper">
 		<div class="inner">
 			<header class="align-center">
-				<h1>커뮤니티</h1>
+				<h1>Notice</h1>
 				<p>
 					<b>
 						<a href="#" style="font: bold;">커뮤니티</a> | <a href="board_notice.jsp">Notice</a> | <a href="board_qna.jsp">Q&A</a>
@@ -122,7 +131,7 @@
 				<div class="image fit">
 
 				</div>
-			<p>커뮤니티</p>
+			<p>공지사항</p>
 			
 			<div>
 				<form method="post" action="#">

@@ -37,6 +37,7 @@ public class BoardController {
 		int start	= (nowPage-1) * MyConstant.Board.BLOCK_LIST + 1;
 		int end		= start + MyConstant.Board.BLOCK_LIST - 1;
 		
+		//검색조건 정보를 맵으로 포장
 		Map<String, Object> map = new HashMap<String,Object>();
 		map.put("start", start);
 		map.put("end", end);
@@ -56,15 +57,14 @@ public class BoardController {
 			map.put("content", search_text);
 		}
 		
-		//게시판 목록 가져오기
-		
-		//페이징 처리
+		//게시판 전체조회
 		List<BoardVo> list = BoardDao.getInstance().selectList(map);
-		
+		//System.out.println(list.get(0).getNo());
+	
 		//page Menu생성							검색된 레코드수
 		int rowTotal = BoardDao.getInstance().selectRowTotal(map);
 				
-		request.getSession().setAttribute("list", list);
+		
 		
 		String search_filter = String.format("&search=%s&search_text=%s", search,search_text);
 		
@@ -88,7 +88,7 @@ public class BoardController {
 	//상세보기: 게시물 한건보기
 	@RequestMapping("/board/view.do")
 	public String view(HttpServletRequest request, HttpServletResponse response) {
-		
+		//System.out.println("view실행");
 		// /board/view.do?b_idx=1
 		int b_idx = Integer.parseInt(request.getParameter("b_idx"));
 		
@@ -107,9 +107,9 @@ public class BoardController {
 		return "board_view.jsp";
 	}
 	
-	//글쓰기 폼
-	@RequestMapping("/board/insert_form.do")
-	public String insert_form(HttpServletRequest request, HttpServletResponse response) {
+	//글쓰기 폼으로 넘어가기
+	@RequestMapping("/board/board_insert_form.do")
+	public String board_insert_form(HttpServletRequest request, HttpServletResponse response) {
 
 		return "board_insert_form.jsp";
 	}
@@ -117,7 +117,7 @@ public class BoardController {
 	//글쓰기
 	@RequestMapping("/board/insert.do")
 	public String insert(HttpServletRequest request, HttpServletResponse response) {
-		
+		// System.out.println("insert실행");
 		// /board/insert.do?b_subject=제목&b_content=내용
 		
 		UserVo user = (UserVo) request.getSession().getAttribute("user");
@@ -134,11 +134,11 @@ public class BoardController {
 		String b_ip = request.getRemoteAddr();
 		
 		//3.b_idx구하기
-		int b_idx = BoardDao.getInstance().selectOneB_idx();
+	    int b_idx = BoardDao.getInstance().selectOneB_idx();
 		int b_ref = b_idx;
 		//4.등록회원정보
-		int 	user_idx = user.getUser_idx();
-		String user_name = user.getUser_name();
+		int 	user_idx = 1;		//user.getUser_idx();
+		String user_name = "홍길동";	//user.getUser_name();
 		
 		//5.VoardVo포장
 		BoardVo vo = new BoardVo(b_idx, b_subject, b_content, b_ip, user_idx, user_name, b_ref);
@@ -165,7 +165,7 @@ public class BoardController {
 		
 		if (user == null) {
 			//세션이 만료시(logout)
-			return "rediect:../member/login_form.do?reason=session_timeout";
+			return "rediect:../user/login_form.do?reason=session_timeout";
 		}	
 		
 		//1.파라메터 받기
@@ -257,7 +257,7 @@ public class BoardController {
 		UserVo user = (UserVo) request.getSession().getAttribute("user");
 		if (user == null) {
 			//세션이 만료시(logout)
-			return "rediect:../member/login_form.do?reason=session_timeout";
+			return "rediect:../user/login_form.do?reason=session_timeout";
 		}
 		//1.parameter받기 :내용 가져오기
 		int    b_idx     = Integer.parseInt(request.getParameter("b_idx"));

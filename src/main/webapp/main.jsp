@@ -1,5 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+    
 <!DOCTYPE HTML>
 <!--
 	Intensify by TEMPLATED
@@ -18,7 +22,7 @@
 <script type="text/javascript">
 	function login(){
 	    
-		   location.href="user/login.jsp";
+		   location.href="user/user_login_form.jsp";
 	}
 </script>
 
@@ -32,9 +36,23 @@
 		</nav>
 		<a href="main.jsp" class="logo">중고로Go</a>
 		<nav class="right">
+		  <c:if test="${ empty sessionScope.user }">
 			<input class="button alt" value="Login"
 					onclick="login();">
+		  </c:if>
+			
+			<!-- 로그인이 됐을경우 : 세션영역에 user가 있는가?  -->
+		<c:if test="${ not empty sessionScope.user }">
+			<b>${ sessionScope.user.user_name }</b>님 환영합니다!!
+			<input class="button alt" type="button" value="Logout"
+			       onclick="location.href='logout.do'">
+		</c:if>		
+					
 		</nav>
+		
+		
+		
+		
 	</header>
 	<!-- Menu -->
 	<nav id="menu">
@@ -42,7 +60,7 @@
 			<li><a href="main.jsp">Home</a></li>
 			<li><a href="all_items.jsp">전체매물</a></li>
 			<li><a href="category.jsp">Category</a></li>
-			<li><a href="board/board_list.jsp">community</a></li>
+			<li><a href="board/list.do">community</a></li>
 			<li><a href="generic.jsp">Generic</a></li>
 			<li><a href="elements.jsp">Elements</a></li>
 		</ul>
@@ -52,6 +70,8 @@
 						onclick="login();" >			
 			</li>
 		</ul>
+		
+		
 	</nav>
 	<!-- Banner -->
 	<section id="banner">
