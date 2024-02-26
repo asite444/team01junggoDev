@@ -88,7 +88,7 @@ public class BoardController {
 	//상세보기: 게시물 한건보기
 	@RequestMapping("/board/view.do")
 	public String view(HttpServletRequest request, HttpServletResponse response) {
-		
+		//System.out.println("view실행");
 		// /board/view.do?b_idx=1
 		int b_idx = Integer.parseInt(request.getParameter("b_idx"));
 		
@@ -117,15 +117,15 @@ public class BoardController {
 	//글쓰기
 	@RequestMapping("/board/insert.do")
 	public String insert(HttpServletRequest request, HttpServletResponse response) {
-		
+		// System.out.println("insert실행");
 		// /board/insert.do?b_subject=제목&b_content=내용
 		
-		UserVo user = (UserVo) request.getSession().getAttribute("user");
-		
-		if (user == null) {
-			//세션이 만료시(logout)
-			return "rediect:../member/login_form.do?reason=session_timeout";
-		}
+//		UserVo user = (UserVo) request.getSession().getAttribute("user");
+//		
+//		if (user == null) {
+//			//세션이 만료시(logout)
+//			return "rediect:../member/login_form.do?reason=session_timeout";
+//		}
 		
 		String b_subject = request.getParameter("b_subject");
 		String b_content = request.getParameter("b_content").replaceAll("\n", "<br>");
@@ -134,11 +134,11 @@ public class BoardController {
 		String b_ip = request.getRemoteAddr();
 		
 		//3.b_idx구하기
-		int b_idx = BoardDao.getInstance().selectOneB_idx();
+	    int b_idx = BoardDao.getInstance().selectOneB_idx();
 		int b_ref = b_idx;
 		//4.등록회원정보
-		int 	user_idx = user.getUser_idx();
-		String user_name = user.getUser_name();
+		int 	user_idx = 1;		//user.getUser_idx();
+		String user_name = "홍길동";	//user.getUser_name();
 		
 		//5.VoardVo포장
 		BoardVo vo = new BoardVo(b_idx, b_subject, b_content, b_ip, user_idx, user_name, b_ref);

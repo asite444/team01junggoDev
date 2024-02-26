@@ -68,25 +68,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 where b_idx=#{ b_idx }
 	</select>
 	
-	<!-- b_idx얻어오기 : 다음게시물(insert) -->
- 	<select id="board_b_idx" resultType="int">
+ 	<!-- b_idx얻어오기 : 다음게시물(insert) -->
+ 	 <select id="board_b_idx" resultType="int">
  		select ifnull(max(b_idx),0) + 1 from board
- 	</select>
+ 	</select>  
  	
  	<!-- 새글쓰기 -->
  	<select id="board_insert" parameterType="vo.BoardVo">
- 		insert into board values(#{ b_idx },
-								 #{ b_subject },
-								 #{ b_content },
-								 #{ b_ip },
-								 now(),
-								 0,
-								 #{ user_idx },
-								 #{ user_name },
-								 #{ b_ref },
-								 0,
-								 0,
-								 'y')
+ 		insert into board(
+ 		  b_idx
+ 		, b_subject
+ 		, b_content
+ 		, b_ip
+ 		, b_regdate
+ 		, b_ref
+ 		, b_step
+ 		, b_depth
+ 		, b_use
+ 		, user_idx
+ 		, user_name
+ 		) 
+ 		values(#{ b_idx },	 
+			  #{ b_subject },
+				#{ b_content },
+				#{ b_ip },
+				now(),
+				#{ b_ref },
+				0,
+				0,
+				'y',
+			     #{user_idx},
+			     #{user_name}
+			     )
  	</select>
 	
 	<!-- 조회수 증가 -->

@@ -27,7 +27,16 @@ public class BoardVo {
 		
 	}
 
-	//새글쓰기에 대한 포장
+	/**
+	 * 새글쓰기에 대한 포장
+	 * @param b_idx
+	 * @param b_subject
+	 * @param b_content
+	 * @param b_ip
+	 * @param user_idx
+	 * @param user_name
+	 * @param b_ref
+	 */
 	public BoardVo(int b_idx, String b_subject, String b_content, String b_ip, int user_idx, String user_name,
 			int b_ref) {
 		super();
@@ -40,10 +49,21 @@ public class BoardVo {
 		this.b_ref = b_ref;
 	}
 
-	//답글쓰기
+	/**
+	 * 답글쓰기
+	 * @param b_idx
+	 * @param b_subject
+	 * @param b_content
+	 * @param b_ip
+	 * @param user_idx
+	 * @param user_name
+	 * @param b_ref
+	 * @param b_step
+	 * @param b_depth
+	 */
 	public BoardVo(int b_idx, String b_subject, String b_content, String b_ip, int user_idx, String user_name, int b_ref,
 			int b_step, int b_depth) {
-		super();
+		
 		this.b_idx = b_idx;
 		this.b_subject = b_subject;
 		this.b_content = b_content;

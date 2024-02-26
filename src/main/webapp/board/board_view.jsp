@@ -49,7 +49,7 @@ th{
 			<li><a href="../main.jsp">Home</a></li>
 			<li><a href="../all_items.jsp">전체매물</a></li>
 			<li><a href="../category.jsp">Category</a></li>
-			<li><a href="../board/board_list.do">community</a></li>
+			<li><a href="../board/list.do">community</a></li>
 			<li><a href="../generic.jsp">Generic</a></li>
 			<li><a href="../elements.jsp">Elements</a></li>
 		</ul>
@@ -98,7 +98,7 @@ th{
 	   	<%-- <c:if test="${ (vo.user_idx eq user.user_idx) or (user.user_grade eq '관리자') }"> --%><!-- request:vo | session:user -->
 		   	      <input type="button" class="button special"  value="새글쓰기" 
 	              			onclick="send(this.form)">
-		   	      <input class="btn btn-link" type="reset" value="삭제하기" 
+		   	      <input class="button alt" type="button" value="삭제하기" 
 		   			onclick="delete_board('${ vo.b_idx }');">
 	  <%--   </c:if> --%>
 	              <input type="button" class="button"  value="목록보기" 

@@ -97,6 +97,11 @@ public class BoardDao {
 			return b_idx;
 		}
 
+		/**
+		 * 게시글 등록 dao메서드
+		 * @param vo
+		 * @return
+		 */
 		public int insert(BoardVo vo) { // vo :7가지 항목이 포장이 되어있다.
 			// TODO Auto-generated method stub
 			int res = 0;
