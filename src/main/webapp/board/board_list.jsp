@@ -42,7 +42,7 @@
 			return;
 		}
 		//글쓰기 폼으로 이동
-		location.href="insert_form.do"; // /board/insert_form.do
+		location.href="board_insert_form.do"; // /board/insert_form.do
 	}//end:insert_form()
 	
 	function find() {
@@ -158,7 +158,7 @@
 			
 			<hr>
 			<input class="btn btn-link" type="button"  value="글쓰기"
-	            	onclick="board_insert_form();">
+	            	onclick="insert_form();">
 			<div>
 			
 			

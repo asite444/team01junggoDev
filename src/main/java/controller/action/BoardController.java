@@ -165,7 +165,7 @@ public class BoardController {
 		
 		if (user == null) {
 			//세션이 만료시(logout)
-			return "rediect:../member/login_form.do?reason=session_timeout";
+			return "rediect:../user/login_form.do?reason=session_timeout";
 		}	
 		
 		//1.파라메터 받기
@@ -257,7 +257,7 @@ public class BoardController {
 		UserVo user = (UserVo) request.getSession().getAttribute("user");
 		if (user == null) {
 			//세션이 만료시(logout)
-			return "rediect:../member/login_form.do?reason=session_timeout";
+			return "rediect:../user/login_form.do?reason=session_timeout";
 		}
 		//1.parameter받기 :내용 가져오기
 		int    b_idx     = Integer.parseInt(request.getParameter("b_idx"));

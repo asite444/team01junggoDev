@@ -101,6 +101,9 @@ th{
 			<br>
 		<form action="form-inline">
 		<table class="table-wrapper">
+			<tr>
+				<th colspan="2"> <b>${ vo.user_name }</b>님의 글 작성</th>
+			</tr>
 	       <tr>
 	          <th>제목</th>
 	          <td><input class="query" type="text" name="b_subject"></td>
