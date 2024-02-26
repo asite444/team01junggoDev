@@ -50,7 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	                user_ip=#{ user_ip },
   	                user_grade=#{ user_grade },
   	                user_modifydate=now()
-  	   where user_idx=#{ user_idx }
+  	   where user_idx=#{ user_idx  }
   	                      
   </update>
   
