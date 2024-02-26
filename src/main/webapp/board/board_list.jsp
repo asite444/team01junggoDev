@@ -158,7 +158,7 @@
 			
 			<hr>
 			<input class="btn btn-link" type="button"  value="글쓰기"
-	            	onclick="insert_form();">
+	            	onclick="board_insert_form();">
 			<div>
 			
 			
@@ -167,8 +167,8 @@
 				<th>번호</th>
 				<th>제목</th>
 				<th>작성자</th>
-				<th>아이피</th>
 				<th>작성일</th>
+				<th>아이피</th>
 				<th>조회수</th>
 			</tr>
 				<!-- for(BoardVo vo : list) -->
@@ -200,9 +200,10 @@
 						</c:if>
 					</td>
 					
-					<td >${ vo.mem_name }</td>
+					<td >${ vo.user_name }</td>
 					<!-- <td >ip:{ vo.b_ip }</td> -->
 					<td >${ fn:substring(vo.b_regdate,0,16) }</td>
+					<td >${ vo.b_ip }</td>
 					<td >${ vo.b_readhit }</td>
 				</tr>	
 			</c:forEach>

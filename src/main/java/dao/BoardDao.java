@@ -36,6 +36,7 @@ public class BoardDao {
 		
 		//2.수행
 		list = sqlSession.selectList("board.board_list");
+		//System.out.println(list.size());
 		
 		//3.닫기
 		sqlSession.close();
@@ -44,7 +45,7 @@ public class BoardDao {
 		return list;
 	}
 	
-	//페이징 처리
+	//전체 목록보기
 	public List<BoardVo> selectList(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		List<BoardVo> list = null;

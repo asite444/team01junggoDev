@@ -116,18 +116,7 @@ public class BoardVo {
 	public void setB_readhit(int b_readhit) {
 		this.b_readhit = b_readhit;
 	}
-	public int getMem_idx() {
-		return user_idx;
-	}
-	public void setMem_idx(int user_idx) {
-		this.user_idx = user_idx;
-	}
-	public String getMem_name() {
-		return user_name;
-	}
-	public void setMem_name(String user_name) {
-		this.user_name = user_name;
-	}
+
 	public int getB_ref() {
 		return b_ref;
 	}
@@ -152,6 +141,23 @@ public class BoardVo {
 	public void setB_use(String b_use) {
 		this.b_use = b_use;
 	}
+
+	public int getUser_idx() {
+		return user_idx;
+	}
+
+	public void setUser_idx(int user_idx) {
+		this.user_idx = user_idx;
+	}
+
+	public String getUser_name() {
+		return user_name;
+	}
+
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+	
 	
 	
 	

@@ -37,6 +37,7 @@ public class BoardController {
 		int start	= (nowPage-1) * MyConstant.Board.BLOCK_LIST + 1;
 		int end		= start + MyConstant.Board.BLOCK_LIST - 1;
 		
+		//검색조건 정보를 맵으로 포장
 		Map<String, Object> map = new HashMap<String,Object>();
 		map.put("start", start);
 		map.put("end", end);
@@ -56,15 +57,14 @@ public class BoardController {
 			map.put("content", search_text);
 		}
 		
-		//게시판 목록 가져오기
+		//게시판 전체조회
+		List<BoardVo> list = BoardDao.getInstance().selectList();
 		
-		//페이징 처리
-		List<BoardVo> list = BoardDao.getInstance().selectList(map);
-		
+	
 		//page Menu생성							검색된 레코드수
 		int rowTotal = BoardDao.getInstance().selectRowTotal(map);
 				
-		request.getSession().setAttribute("list", list);
+		
 		
 		String search_filter = String.format("&search=%s&search_text=%s", search,search_text);
 		
@@ -104,12 +104,12 @@ public class BoardController {
 		//request binding
 		request.setAttribute("vo", vo);
 		
-		return "board_view.jsp";
+		return "board_list.jsp";
 	}
 	
-	//글쓰기 폼
-	@RequestMapping("/board/insert_form.do")
-	public String insert_form(HttpServletRequest request, HttpServletResponse response) {
+	//글쓰기 폼으로 넘어가기
+	@RequestMapping("/board/board_insert_form.do")
+	public String board_insert_form(HttpServletRequest request, HttpServletResponse response) {
 
 		return "board_insert_form.jsp";
 	}
