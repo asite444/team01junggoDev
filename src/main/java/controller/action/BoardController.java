@@ -58,7 +58,7 @@ public class BoardController {
 		}
 		
 		//게시판 전체조회
-		List<BoardVo> list = BoardDao.getInstance().selectList();
+		List<BoardVo> list = BoardDao.getInstance().selectList(map);
 		//System.out.println(list.get(0).getNo());
 	
 		//page Menu생성							검색된 레코드수
@@ -120,12 +120,12 @@ public class BoardController {
 		// System.out.println("insert실행");
 		// /board/insert.do?b_subject=제목&b_content=내용
 		
-//		UserVo user = (UserVo) request.getSession().getAttribute("user");
-//		
-//		if (user == null) {
-//			//세션이 만료시(logout)
-//			return "rediect:../member/login_form.do?reason=session_timeout";
-//		}
+		UserVo user = (UserVo) request.getSession().getAttribute("user");
+		
+		if (user == null) {
+			//세션이 만료시(logout)
+			return "rediect:../member/login_form.do?reason=session_timeout";
+		}
 		
 		String b_subject = request.getParameter("b_subject");
 		String b_content = request.getParameter("b_content").replaceAll("\n", "<br>");

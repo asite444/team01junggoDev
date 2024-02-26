@@ -98,8 +98,7 @@ public class UserController {
 		request.getSession().removeAttribute("s_user");
 
 		// 메인페이지
-		// response.sendRedirect("../product/list.do");
-		return "redirect:../user/main.jsp";
+		return "redirect:../main.jsp";
 	
 	  }//end: logout
 	
