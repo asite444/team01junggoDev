@@ -112,17 +112,17 @@
 	<section id="main" class="wrapper">
 		<div class="inner">
 			<header class="align-center">
-				<h1>community</h1>
+				<h1>커뮤니티</h1>
 				<p>
 					<b>
-						<a href="board_community.jsp">커뮤니티</a> | <a href="board_notice.jsp">Notice</a> | <a href="board_qna.jsp">Q&A</a>
+						<a href="#" style="font: bold;">커뮤니티</a> | <a href="board_notice.jsp">Notice</a> | <a href="board_qna.jsp">Q&A</a>
 					</b>
 				</p>
 			</header>
 				<div class="image fit">
 
 				</div>
-			<p>자유로운 커뮤니티</p>
+			<p>커뮤니티</p>
 			
 			<div>
 				<form method="post" action="#">

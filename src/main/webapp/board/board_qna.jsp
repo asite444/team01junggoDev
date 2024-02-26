@@ -115,7 +115,7 @@
 				<h1>community</h1>
 				<p>
 					<b>
-						<a href="board_community.jsp">커뮤니티</a> | <a href="board_notice.jsp">Notice</a> | <a href="board_qna.jsp">Q&A</a>
+						<a href="">커뮤니티</a> | <a href="">Notice</a> | <a href="">Q&A</a>
 					</b>
 				</p>
 			</header>
