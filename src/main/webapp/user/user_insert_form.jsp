@@ -90,7 +90,7 @@
 									</li>
 									<li>
 										<input type="reset" value="Home" class="alt"
-												onclick="list.do">
+												onclick="location.href='/SecondhandMarket/main.jsp'">
 									</li>
 									<li>
 										<input type="reset" value="Join In" class="button special"
