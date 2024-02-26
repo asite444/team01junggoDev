@@ -111,7 +111,7 @@ public class BoardController {
 	//글쓰기 폼으로 넘어가기
 	@RequestMapping("/board/board_insert_form.do")
 	public String board_insert_form(HttpServletRequest request, HttpServletResponse response) {
-
+		
 		return "board_insert_form.jsp";
 	}
 	
@@ -125,7 +125,7 @@ public class BoardController {
 		
 		if (user == null) {
 			//세션이 만료시(logout)
-			return "rediect:../member/login_form.do?reason=session_timeout";
+			return "rediect:../user/login_form.do?reason=session_timeout";
 		}
 		
 		String b_subject = request.getParameter("b_subject");

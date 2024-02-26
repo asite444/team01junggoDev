@@ -115,7 +115,7 @@ th{
 		<form action="form-inline">
 		<table class="table-wrapper">
 			<tr>
-				<th colspan="2"><b>${ vo.user_name }</b>님의 글 작성</th>
+				<th colspan="2"><b>${ user.user_name }</b>님의 글 작성</th>
 			</tr>
 	       <tr>
 	          <th>제목</th>

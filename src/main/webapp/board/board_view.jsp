@@ -125,7 +125,7 @@ th{
 b{font-weight: bold;}
 .row{ margin: auto; }
 textarea{ 
-	width: 500px; 
+	width: 700px; 
     display: inline-block;
     margin-right: 20px; /* 요소 사이의 간격 조정 */
     vertical-align: middle; /* 요소의 수직 정렬 설정 */
