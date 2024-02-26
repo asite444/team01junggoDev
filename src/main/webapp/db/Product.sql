@@ -33,6 +33,15 @@ ALTER TABLE `Product` ADD CONSTRAINT `FK_user_TO_Product_1` FOREIGN KEY (
 REFERENCES `user` (
 	`user_idx`
 );
+
+
+
+
+
+
+
+
+
 commit;
 select * from user;
 select * from product;
