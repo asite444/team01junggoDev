@@ -161,14 +161,14 @@
 			<!-- Form -->
 			<h2>모두 입력해주세요</h2>
 
-			<form method="post" action="#">
+			<form>
 				<div class="row uniform">
 					<table>
 					<tr>
 						<th>이름</th>
 						<td>
 							<div class="6u 12u$(xsmall)">
-							<input type="text" name="name"  value="${ user_name }">
+							<input type="text" name="user_name"  value="${ user_name }">
 							</div>
 						</td>
 					</tr>
@@ -176,7 +176,7 @@
 						<th>아이디</th>
 						<td>
 							<div class="6u 12u$(xsmall)">
-							<input type="text" name="id" id="id" value="${ user_id }"
+							<input type="text" name="user_id" id="user_id" value="${ user_id }"
 								placeholder="ID">
 							<div data-lastpass-icon-root="true"
 								style="position: relative !important; height: 0px !important; width: 0px !important; float: left !important;"></div>
@@ -187,7 +187,7 @@
 						<th>비밀번호</th>
 						<td>
 							<div class="6u$ 12u$(xsmall)">
-								<input type="password" name="password" id="password" value="${ user_pwd }"
+								<input type="password" name="user_pwd" id="user_pwd" value="${ user_pwd }"
 										placeholder="Password">
 							</div>
 						</td>
@@ -196,7 +196,7 @@
 						<th>이메일</th>
 						<td>
 							<div class="6u 12u$(xsmall)">
-							<input type="text" name="name"  value="${ user_email }">
+							<input type="text" name="user_email"  value="${ user_email }">
 							</div>
 						</td>
 					</tr>
@@ -212,7 +212,7 @@
 					<tr>
 						<th>주소</th>
 						<td>
-							<input type="text" name="name"  value="${ user_addr }">
+							<input type="text" name="user_addr"  value="${ user_addr }">
 						</td>
 					</tr>
 					
