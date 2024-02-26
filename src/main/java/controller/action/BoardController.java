@@ -91,6 +91,7 @@ public class BoardController {
 		//System.out.println("view실행");
 		// /board/view.do?b_idx=1
 		int b_idx = Integer.parseInt(request.getParameter("b_idx"));
+		//int user_name = Integer.parseInt(request.getParameter("_name"));
 		
 		BoardVo vo = BoardDao.getInstance().selectOne(b_idx);
 		
@@ -137,8 +138,8 @@ public class BoardController {
 	    int b_idx = BoardDao.getInstance().selectOneB_idx();
 		int b_ref = b_idx;
 		//4.등록회원정보
-		int 	user_idx = 1;		//user.getUser_idx();
-		String user_name = "홍길동";	//user.getUser_name();
+		int 	user_idx = user.getUser_idx();
+		String user_name = user.getUser_name();
 		
 		//5.VoardVo포장
 		BoardVo vo = new BoardVo(b_idx, b_subject, b_content, b_ip, user_idx, user_name, b_ref);
