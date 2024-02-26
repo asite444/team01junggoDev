@@ -24,6 +24,10 @@
 	<script src="../assets/js/util.js"></script>
 	<script src="../assets/js/main.js"></script>
 <script type="text/javascript">
+	function login(){
+	    
+		   location.href="../user/login_form.do?url=" + encodeURIComponent(location.href) ;
+	}
 	function send(f) {
 		let b_subject = f.b_subject.value.trim();
 		let b_content = f.b_content.value.trim();
