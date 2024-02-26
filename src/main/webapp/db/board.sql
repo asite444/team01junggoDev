@@ -2,7 +2,7 @@ use secondhanddb;
 CREATE TABLE `board` (
 	`b_idx`	int  primary key auto_increment 	NOT NULL,
 	`b_subject`	varchar(200)	NOT NULL,
-	`b_contect`	text	NOT NULL,
+	`b_content`	text	NOT NULL,
 	`b_ip`	varchar(200)	NOT NULL,
 	`b_regdate`	datetime	NULL,
 	`b_readhit`	int NULL	DEFAULT 0,

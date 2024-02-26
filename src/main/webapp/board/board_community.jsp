@@ -42,7 +42,7 @@
 			return;
 		}
 		//글쓰기 폼으로 이동
-		location.href="board_insert_form.do"; // /board/insert_form.do
+		location.href="insert_form.do"; // /board/insert_form.do
 	}//end:insert_form()
 	
 	function find() {
@@ -101,7 +101,7 @@
 			<li><a href="../main.jsp">Home</a></li>
 			<li><a href="../all_items.jsp">전체매물</a></li>
 			<li><a href="../category.jsp">Category</a></li>
-			<li><a href="../board/list.do">community</a></li>
+			<li><a href="../board/board_list.jsp">community</a></li>
 			<li><a href="../generic.jsp">Generic</a></li>
 			<li><a href="../elements.jsp">Elements</a></li>
 		</ul>
@@ -115,17 +115,17 @@
 				<h1>community</h1>
 				<p>
 					<b>
-						<a href="board_community.jsp">커뮤니티</a> | <a href="board_notice.jsp">Notice</a> | <a href="board_qna.jsp">Q&A</a>
+						<a href="#" class="logo">커뮤니티</a> | <a href="board_notice.jsp">Notice</a> | <a href="board_qna.jsp">Q&A</a>
 					</b>
 				</p>
 			</header>
 				<div class="image fit">
 
 				</div>
-			<p>자유로운 커뮤니티 모아보기</p>
+			<p>자유로운 커뮤니티</p>
 			
 			<div>
-				<form>
+				<form method="post" action="#">
 					<div class="select-wrapper" style="float: left; width: 150px;">
 						<select class="select-wrapper" name="category" id="category">
 							<option value="all">전체보기</option>
@@ -162,13 +162,13 @@
 			<div>
 			
 			
-			<table class="table-wrapper">
+			<table>
 			<tr>
 				<th>번호</th>
 				<th>제목</th>
 				<th>작성자</th>
-				<th>작성일</th>
 				<th>아이피</th>
+				<th>작성일</th>
 				<th>조회수</th>
 			</tr>
 				<!-- for(BoardVo vo : list) -->
@@ -200,10 +200,9 @@
 						</c:if>
 					</td>
 					
-					<td >${ vo.user_name }</td>
+					<td >${ vo.mem_name }</td>
 					<!-- <td >ip:{ vo.b_ip }</td> -->
 					<td >${ fn:substring(vo.b_regdate,0,16) }</td>
-					<td >${ vo.b_ip }</td>
 					<td >${ vo.b_readhit }</td>
 				</tr>	
 			</c:forEach>

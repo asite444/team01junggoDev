@@ -36,6 +36,7 @@ public class BoardDao {
 		
 		//2.수행
 		list = sqlSession.selectList("board.board_list");
+		//System.out.println(list.size());
 		
 		//3.닫기
 		sqlSession.close();
@@ -44,7 +45,7 @@ public class BoardDao {
 		return list;
 	}
 	
-	//페이징 처리
+	//전체 목록보기
 	public List<BoardVo> selectList(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		List<BoardVo> list = null;
@@ -63,39 +64,44 @@ public class BoardDao {
 	}
 	
 	//게시글 1건 조회
-		public BoardVo selectOne(int b_idx) {
-			// TODO Auto-generated method stub
-			BoardVo vo = null;
-			
-			//1.SqlSession 얻어오기
-			SqlSession sqlSession = factory.openSession(); // true : DML명령(insert,update,delete)
-			
-			//2.작업수행
-			vo = sqlSession.selectOne("board.board_one",b_idx);
-			
-			//3.닫기
-			sqlSession.close();
-
-			return vo;
-		}
+	public BoardVo selectOne(int b_idx) {
+		// TODO Auto-generated method stub
+		BoardVo vo = null;
 		
-		//등록시킬 게시물의 번호 얻어오기
-		public int selectOneB_idx() {
-			// TODO Auto-generated method stub
-			int b_idx = 0;
-			
-			//1.SqlSession 얻어오기
-			SqlSession sqlSession = factory.openSession();
-			
-			//2.작업수행
-			b_idx = sqlSession.selectOne("board.board_b_idx");
-			
-			//3.닫기
-			sqlSession.close();
-			
-			return b_idx;
-		}
+		//1.SqlSession 얻어오기
+		SqlSession sqlSession = factory.openSession(); // true : DML명령(insert,update,delete)
+		
+		//2.작업수행
+		vo = sqlSession.selectOne("board.board_one",b_idx);
+		
+		//3.닫기
+		sqlSession.close();
 
+		return vo;
+	}
+		
+	//등록시킬 게시물의 번호 얻어오기
+	public int selectOneB_idx() {
+		// TODO Auto-generated method stub
+		int b_idx = 0;
+		
+		//1.SqlSession 얻어오기
+		SqlSession sqlSession = factory.openSession();
+		
+		//2.작업수행
+		b_idx = sqlSession.selectOne("board.board_b_idx");
+		
+		//3.닫기
+		sqlSession.close();
+		
+		return b_idx;
+	}
+
+		/**
+		 * 게시글 등록 dao메서드
+		 * @param vo
+		 * @return
+		 */
 		public int insert(BoardVo vo) { // vo :7가지 항목이 포장이 되어있다.
 			// TODO Auto-generated method stub
 			int res = 0;

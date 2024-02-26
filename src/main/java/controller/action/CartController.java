@@ -1,6 +1,8 @@
 package controller.action;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
@@ -43,11 +45,31 @@ public class CartController {
 		List<CartVo> cart_list = CartDao.getInstance().selectList(user_idx);
 
 		// 결제 정보 총
-		//int total_amount = CartDao.getInstance().selectTotalAmount(user_idx);
+		int total_amount = CartDao.getInstance().selectTotalAmount(user_idx);
 
 		request.setAttribute("cart_list", cart_list);
-		//request.setAttribute("total_amount", total_amount);
+		request.setAttribute("total_amount", total_amount);
 
 		return "cart_list.jsp";
+	}
+	
+	/**
+	 * 선택 상품 삭제 메서드
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping("/product/cart_delete_select.do")
+	public String delete(HttpServletRequest request, HttpServletResponse response) {
+
+		
+				String[] str_idx_array=request.getParameterValues("cart_idx"); // 배열처리,기본적으로 문자열로 옴
+
+				Map<String, Object> map=new HashMap<String, Object>();
+				map.put("idx_array", str_idx_array);
+				
+				 int res=CartDao.getInstance().delete_select(map);
+		
+		return "redirect:cart_list.do";
 	}
 }

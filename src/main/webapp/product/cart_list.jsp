@@ -12,6 +12,7 @@
 <html>
 
 <head>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
  <!--Bootstrap 3.x-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <!--외부 스타일 scc 참조-->
@@ -49,12 +50,59 @@ $(document).ready(function(){
 		});
 	});
 });
+
+/**
+ * 선택된 상품 삭제처리
+ */
+function delete_cart_select(f){
+	const check_count =$("input[name='cart_idx']:checked").length;
+	
+	// alert(check_count);
+	if(check_count==0){
+	alert('삭제할 상품을 선택하세요');
+	
+		return;
+	}
+
+		  if (window.confirm("해당 상품을 삭제하시겠습니까?")) {
+				f.action="cart_delete_select.do"; // CartSelectDeleteAction.java
+				f.submit();
+		  }
+	
+	
+
+}
+
+/**
+ * 결제하기
+ */
+function payment(f){
+
+const check_count =$("input[name='cart_idx']:checked").length;
+	
+	// alert(check_count);
+	if(check_count==0){
+	alert('결제할 상품을 선택하세요');
+	
+		return;
+	}
+	//결제 폼으로 이동
+	if (window.confirm("해당 상품을 결제하시겠습니까?")) {
+			f.action="payment_form.do";
+			f.submit();
+	}
+	
+	
+	
+
+}
+
 </script>
 
 
 </head>
 <body>
-
+<form class="form-inline">
 	<!-- Header -->
 	<header id="header">
 		<nav class="left">
@@ -82,12 +130,12 @@ $(document).ready(function(){
 		<div class="inner">
 			<header class="align-center">
 				<h1>장바구니</h1>
-				<form class="form-inline">
-				<div style="width:1000px; margin: auto;" class="table-wrapper"> 
+				
+				<div style="width:1300px; margin: auto;" class="table-wrapper"> 
 				<table >
 				<thead>
 				<tr>
-				<td colspan="5">
+				<td colspan="6" align="left">
 				<input type="checkbox" id="check_all" class="form-control"><label for="check_all">
 				
 				 전체선택</label>
@@ -100,6 +148,7 @@ $(document).ready(function(){
 				<th style="text-align: center;">판매자</th>
 				<th style="text-align: center;">제품상태</th>
 				<th align="center" style="text-align: center;">금액</th>
+				<th style="text-align: center;" width="10%">금액수정</th>
 				<!-- <th>삭제</th> 
 				
 				cart_idx,
@@ -121,12 +170,19 @@ $(document).ready(function(){
 				<td>${ cart.p_status }</td>
 				<td>
 				<!-- 금액 조정 폼 -->
-						<input style="text-align: center; width: 150px;"  id="p_price_${cart.cart_idx}"  size="4"  value="${ cart.p_price }">
-						<input class="button small" type="button" value="수정" 
-						       onclick="modify_cart(${ cart.cart_idx });" width="10px">
+				<fmt:formatNumber value="${cart.p_price}"/> (원)
+				
+				
 				
 				</td>
+				<td>
+				<c:if test="${cart.p_nego eq '가능'}">
+		<%-- 				<input style="text-align: center; width: 150px;"  id="p_price_${cart.cart_idx}"  size="4"  value="${ cart.p_price }"> --%>
+						<input class="button small" type="button" value="수정"  
+						       onclick="modify_cart(${ cart.cart_idx });" style="text-align: center;">
+				</c:if>
 				
+				</td>
 			</tr>
 			</tbody>
 			<tr>
@@ -146,10 +202,10 @@ $(document).ready(function(){
 			
 	
 			<tr>
-				<td colspan="5" align="right">
+				<td colspan="4" align="right">
 					총 결재액 :
 				</td>
-				<%-- <td><fmt:formatNumber value="${ total_amount }"/> (원)</td> --%>
+				<td><fmt:formatNumber value="${ total_amount }"/> (원)</td> 
 			</tr>
 			
 			<tr>
@@ -163,7 +219,7 @@ $(document).ready(function(){
 				
 				</table>   
 				</div>
-				</form>
+				
 				
 				
 				
@@ -193,5 +249,6 @@ $(document).ready(function(){
 	<script src="../assets/js/skel.min.js"></script>
 	<script src="../assets/js/util.js"></script>
 	<script src="../assets/js/main.js"></script>
+</form>
 </body>
 </html>
