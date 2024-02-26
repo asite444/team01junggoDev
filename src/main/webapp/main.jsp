@@ -44,7 +44,7 @@
 			<!-- 로그인이 됐을경우 : 세션영역에 user가 있는가?  -->
 		<c:if test="${ not empty sessionScope.user }">
 			<b>${ sessionScope.user.user_name }</b>님 환영합니다!!
-			<input class="button alt" type="button" value="로그아웃"
+			<input class="button alt" type="button" value="Logout"
 			       onclick="location.href='logout.do'">
 		</c:if>		
 					
