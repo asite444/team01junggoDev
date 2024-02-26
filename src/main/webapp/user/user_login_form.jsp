@@ -56,11 +56,11 @@
 									</li>
 									<li>
 										<input type="reset" value="Home" class="alt"
-												onclick="list.do">
+												onclick="location.href='/SecondhandMarket/main.jsp'">
 									</li>
 									<li>
 										<input type="reset" value="Join Us" class="button special"
-												onclick="location.href='/SecondhandMarket/user/loogin_form.jsp'">
+												onclick="location.href='/SecondhandMarket/user/user_insert_form.jsp'">
 									</li>
 								</ul>
 							</div>
