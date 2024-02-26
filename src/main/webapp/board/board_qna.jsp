@@ -77,7 +77,7 @@
 		
    function login(){
 	      
-	   location.href="../member/login_form.do?url=" + encodeURIComponent(location.href) ;
+	   location.href="../user/login_form.do?url=" + encodeURIComponent(location.href) ;
    }
 		
 		

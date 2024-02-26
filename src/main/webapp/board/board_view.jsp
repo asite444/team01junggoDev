@@ -23,6 +23,12 @@
 	<script src="../assets/js/skel.min.js"></script>
 	<script src="../assets/js/util.js"></script>
 	<script src="../assets/js/main.js"></script>
+<script type="text/javascript">
+	function login(){
+	    
+		   location.href="../user/login_form.do?url=" + encodeURIComponent(location.href) ;
+	}
+</script>
 
 <style type="text/css">
 th{
