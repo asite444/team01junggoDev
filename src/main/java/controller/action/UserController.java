@@ -68,8 +68,8 @@ public class UserController {
 		
 		//메인페이지 이동: 현재경로 /user/login.do
 		if(url.isEmpty()) {
-		   //response.sendRedirect("../product/list.do");
-			return "redirect:../user/list.do";
+		   //response.sendRedirect("../user/list.do");
+			return "redirect:../board/list.do";
 		}else {
 			return "redirect:" + url;
 		   //response.sendRedirect(url);	
@@ -87,7 +87,7 @@ public class UserController {
 
 		// 메인페이지
 		// response.sendRedirect("../product/list.do");
-		return "redirect:../user/list.do";
+		return "redirect:../user/main.jsp";
 	
 	  }//end: logout
 	
