@@ -101,7 +101,7 @@
 			<li><a href="../main.jsp">Home</a></li>
 			<li><a href="../all_items.jsp">전체매물</a></li>
 			<li><a href="../category.jsp">Category</a></li>
-			<li><a href="#">community</a></li>
+			<li><a href="../board/board_list.jsp">community</a></li>
 			<li><a href="../generic.jsp">Generic</a></li>
 			<li><a href="../elements.jsp">Elements</a></li>
 		</ul>
@@ -112,7 +112,7 @@
 	<section id="main" class="wrapper">
 		<div class="inner">
 			<header class="align-center">
-				<h1>커뮤니티</h1>
+				<h1>Notice</h1>
 				<p>
 					<b>
 						<a href="#" style="font: bold;">커뮤니티</a> | <a href="board_notice.jsp">Notice</a> | <a href="board_qna.jsp">Q&A</a>
@@ -122,7 +122,7 @@
 				<div class="image fit">
 
 				</div>
-			<p>커뮤니티</p>
+			<p>공지사항</p>
 			
 			<div>
 				<form method="post" action="#">

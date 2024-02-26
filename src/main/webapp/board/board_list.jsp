@@ -101,7 +101,7 @@
 			<li><a href="../main.jsp">Home</a></li>
 			<li><a href="../all_items.jsp">전체매물</a></li>
 			<li><a href="../category.jsp">Category</a></li>
-			<li><a href="#">community</a></li>
+			<li><a href="../board/board_list.jsp">community</a></li>
 			<li><a href="../generic.jsp">Generic</a></li>
 			<li><a href="../elements.jsp">Elements</a></li>
 		</ul>
@@ -122,7 +122,7 @@
 				<div class="image fit">
 
 				</div>
-			<p>자유로운 커뮤니티</p>
+			<p>자유로운 커뮤니티 모아보기</p>
 			
 			<div>
 				<form method="post" action="#">
@@ -162,7 +162,7 @@
 			<div>
 			
 			
-			<table>
+			<table class="table-wrapper">
 			<tr>
 				<th>번호</th>
 				<th>제목</th>
