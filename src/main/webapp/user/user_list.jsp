@@ -77,7 +77,7 @@
 		<!-- 로그인이 안될경우 : 세션영역에 user가 없는가? -->
 		<c:if test="${ empty sessionScope.user }">
 			<input class="btn btn-success" type="button" value="로그인"
-			        onclick="location.href=login_form.do'">
+			        onclick="location.href='/SecondhandMarket/user/user_login_form.do'">
 		</c:if>
 		
 		<!-- 로그인이 됐을경우 : 세션영역에 user가 있는가?  -->
