@@ -28,7 +28,7 @@ public class UserController {
 	//로그인 폼
 	@RequestMapping("/user/login_form.do")
 	public String login_form(HttpServletRequest request, HttpServletResponse response) {
-
+		UserVo user=null;
 		return "user_login_form.jsp";
 	
 	}//end: login_form
@@ -38,42 +38,54 @@ public class UserController {
 	public String login(HttpServletRequest request, HttpServletResponse response) {
 		
 		// /user/login.do?user_id=one&user_pwd=1234&url=http://localhost.....
-		
+		// System.out.println("로그인 실행");
 		//1.parameter받기
 		String user_id   =  request.getParameter("user_id");
+		// System.out.println("user_id:"+user_id);
 		String user_pwd  =  request.getParameter("user_pwd");
-		String url       =  request.getParameter("url");
+		// String url       =  request.getParameter("url");
 		
 		// select * from user where user_id=one1234
 		
 		//2.user_id에 해당되는 유저정보 읽어오기
-		UserVo s_user = UserDao.getInstance().selectOne(user_id);
+		UserVo user = UserDao.getInstance().selectOne(user_id);
 		
 		//아이디가 틀린경우
-		if(s_user==null) {
+		if(user==null) {
 			//reponse.sendRedirect("login_form.do?reason=fail_id&url=" + url);
-			return "redirect: login_form.do?reason=fail_id&url=" + url;
+			
+			// url 기능 임시 주석처리
+			// return "redirect: login_form.do?reason=fail_id&url=" + url;
+			
+			return "redirect: login_form.do?reason=fail_id";
 		}
 		
 		//비밀번호가 틀린경우
-		if(s_user.getUser_pwd().equals(user_pwd)==false) {
+		if(user.getUser_pwd().equals(user_pwd)==false) {
 		   //response.sendRedirect(String.format("login_form.do?reason=fail_pwd&user_id=%s&url=%s", user_id,url));
-			return String.format("login_form.do?reason=fail_pwd&user_id=%s&url=%s", user_id,url);
+			
+			//url기능 임시 주석처리
+		// return String.format("login_form.do?reason=fail_pwd&user_id=%s&url=%s", user_id,url);
+			
+			return String.format("login_form.do?reason=fail_pwd&user_id=%s", user_id);
 		}
 		
 		//세션정보 얻어오기->로그인 유저정보 저장
 		HttpSession session = request.getSession();
 		
-		session.setAttribute("s_user", s_user);
+		session.setAttribute("user", user);
+		
+		// return "redirect:../user/list.do";
+	    return "redirect:../main.jsp";
 		
 		//메인페이지 이동: 현재경로 /user/login.do
-		if(url.isEmpty()) {
-		   //response.sendRedirect("../product/list.do");
-			return "redirect:../user/list.do";
-		}else {
-			return "redirect:" + url;
-		   //response.sendRedirect(url);	
-		}
+//		if(url.isEmpty()) {
+//		   //response.sendRedirect("../user/list.do");
+//			return "redirect:../board/list.do";
+//		}else {
+//			return "redirect:" + url;
+//		   //response.sendRedirect(url);	
+//		}
 		
 
 	  }// end: login
@@ -87,7 +99,7 @@ public class UserController {
 
 		// 메인페이지
 		// response.sendRedirect("../product/list.do");
-		return "redirect:../user/list.do";
+		return "redirect:../user/main.jsp";
 	
 	  }//end: logout
 	

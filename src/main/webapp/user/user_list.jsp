@@ -77,7 +77,7 @@
 		<!-- 로그인이 안될경우 : 세션영역에 user가 없는가? -->
 		<c:if test="${ empty sessionScope.user }">
 			<input class="btn btn-success" type="button" value="로그인"
-			        onclick="location.href=login_form.do'">
+			        onclick="location.href='/SecondhandMarket/user/user_login_form.jsp'">
 		</c:if>
 		
 		<!-- 로그인이 됐을경우 : 세션영역에 user가 있는가?  -->
@@ -91,7 +91,7 @@
 	
 	<!-- 회원가입 -->
 	<div style="margin: -bottom: 5px;">
-		<button class="btn btn-danger" onclick="location.href='insert_form.do'">회원가입</button>
+		<button class="btn btn-danger" onclick="location.href='/SecondhandMarket/user/user_insert_form.jsp'">회원가입</button>
 	</div>
 	
 	
