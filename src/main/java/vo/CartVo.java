@@ -10,6 +10,7 @@ private int user_idx;
 private int prod_idx;
 private int prod_count;
 private String p_subject;
+private String p_name;
 private int sell_user_idx;
 private int p_price;
 private String p_filename;
@@ -46,6 +47,12 @@ public String getP_subject() {
 }
 public void setP_subject(String p_subject) {
 	this.p_subject = p_subject;
+}
+public String getP_name() {
+	return p_name;
+}
+public void setP_name(String p_name) {
+	this.p_name = p_name;
 }
 public int getSell_user_idx() {
 	return sell_user_idx;

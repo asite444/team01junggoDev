@@ -14,13 +14,16 @@ import vo.CardVo;
 import vo.CartVo;
 
 import vo.UserVo;
-
+/**
+ * 결제정보 컨트롤러
+ */
 public class PaymentController {
 
 	@RequestMapping("/product/payment_form.do")
 	public String list(HttpServletRequest request, HttpServletResponse response) {
 
 		String[] str_idx_array = request.getParameterValues("cart_idx");
+		// System.out.println(str_idx_array[0]);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("idx_array", str_idx_array);
 		UserVo user = (UserVo) request.getSession().getAttribute("user");
