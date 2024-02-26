@@ -12,6 +12,7 @@ private int prod_count;
 private String p_subject;
 private int sell_user_idx;
 private int p_price;
+private String p_filename;
 private String  p_status;
 private String sell_user_name;
 private String p_nego;
@@ -57,6 +58,12 @@ public int getP_price() {
 }
 public void setP_price(int p_price) {
 	this.p_price = p_price;
+}
+public String getP_filename() {
+	return p_filename;
+}
+public void setP_filename(String p_filename) {
+	this.p_filename = p_filename;
 }
 public String getP_status() {
 	return p_status;
