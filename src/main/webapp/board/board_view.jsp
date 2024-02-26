@@ -94,9 +94,11 @@ th{
 	       
 	       <tr>
 	          <td colspan="2" align="center">
-	          
-	              <input type="button" class="button special"  value="새글쓰기" 
+	          <!-- 글주인 or 관리자만 활성화 -->
+	   	<c:if test="${ (vo.user_idx eq user.user_idx) or (user.user_grade eq '관리자') }"><!-- request:vo | session:user -->
+		   	      <input type="button" class="button special"  value="새글쓰기" 
 	              			onclick="send(this.form)">
+	    </c:if>
 	              <input type="button" class="button"  value="목록보기" 
 	              			onclick="location.href='list.do'">
 	          </td>
