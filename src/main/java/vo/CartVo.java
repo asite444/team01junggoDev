@@ -14,6 +14,7 @@ private int sell_user_idx;
 private int p_price;
 private String  p_status;
 private String sell_user_name;
+private String p_nego;
 
 public int getCart_idx() {
 	return cart_idx;
@@ -68,6 +69,12 @@ public String getSell_user_name() {
 }
 public void setSell_user_name(String sell_user_name) {
 	this.sell_user_name = sell_user_name;
+}
+public String getP_nego() {
+	return p_nego;
+}
+public void setP_nego(String p_nego) {
+	this.p_nego = p_nego;
 }
 
 
