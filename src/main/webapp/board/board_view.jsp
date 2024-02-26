@@ -27,13 +27,114 @@
 	function login(){
 	    
 		   location.href="../user/login_form.do?url=" + encodeURIComponent(location.href) ;
-	}
+	}//end : login
+	
+	function delete_board(b_idx) { //delete는 javascript예약어이야.
+		
+		if (confirm("정말 삭제하시겠습니다?")==false)return;
+			
+		location.href='delete.do?b_idx=' + b_idx + "&page=${ param.page }&search=${param.search}&search_text=${param.search_text}" ;
+		//자리는 유지하되 내용만 감춘다.
+	}//end : delete_board
+	
+	//뎃글
+	$(document).ready(function (){
+		comment_list(1); //page1
+	});
+		
+	//Ajax 통해서 삭제 => boaed_comment_list.jsp	
+	var g_cmt_page=1;
+	
+	function comment_list(p) { //답글의 댓글
+		//ajax  댓글목록 요청
+		$.ajax({
+			url		:	"comment_list.do",
+			data	:	{ "b_idx" : "${ vo.b_idx }", "page" : p },
+			success	:	function (res_data){
+				$("#disp").html(res_data);
+			},
+			error	:	function (err){
+				alert(err.responseText); //서버 점검중
+			}
+			
+		});
+	}//end : comment_list
+	
+	function comment_insert() {
+		
+		//로그인여부 체트
+		if ("${ empty user}" == "true") {
+			if(confirm("댓글쓰기는 로그인후에 가능합니다\n로그인하시겠습니까?")==false) return;
+			
+			location.href="../user/login_form.do?url=" + encodeURIComponent(location.href);			
+			return;
+		
+		}//end: comment_insert();
+
+		   //내용입력 여부체크
+		   let cmt_content = $("#cmt_content").val().trim();
+		   if(cmt_content==''){
+			   alert('댓글 내용을 입력하세요!');
+			   $("#cmt_content").val('');
+			   $("#cmt_content").focus();
+			   return;
+		   }
+		   
+		   // Ajax로 전송
+		   $.ajax({
+			   url		:	"comment_insert.do",
+			   data		:	{ 
+				               "b_idx" : "${ vo.b_idx }",
+				               "cmt_content" : cmt_content, 
+				               "mem_idx" : "${ user.user_idx }",
+				               "mem_id"  : "${ user.user_id }",
+				               "mem_name": "${ user.user_name }"
+			                },
+			   dataType	:	"json",
+			   success	:	function(res_data){
+				   // res_data = {"result" : true } or {"result" : false}
+				   if(res_data.result){
+					   //성공시 : 댓글목록 가져오기
+					   comment_list(1);
+					   
+				   }else{
+					   //실패시
+					   alert("댓글쓰기 실패!!");
+				   }
+				   
+				   //이전댓글내용 지우기
+				   $("#cmt_content").val('');
+				   
+			   },
+			   error	:	function(err){
+				   
+				   alert(err.responseText);
+				   
+			   }
+		   });
+		   
+		
+	}//end : comment_insert
 </script>
 
 <style type="text/css">
 th{
 	font-size: 50px;
+	width: 300px;
 }
+b{font-weight: bold;}
+.row{ margin: auto; }
+textarea{ 
+	width: 700px; 
+    display: inline-block;
+    margin-right: 20px; /* 요소 사이의 간격 조정 */
+    vertical-align: middle; /* 요소의 수직 정렬 설정 */
+}
+.comment{
+	 vertical-align: middle;
+	
+}
+
 </style>
 
 </head>
@@ -109,24 +210,52 @@ th{
 	       
 	       <tr>
 	          <td colspan="2" align="center">
+	          
+	          <c:if test="${ user.user_grade eq '관리자' }">
+			   	<input class="btn btn-link" type="button" value="답글달기" 
+			   				onclick="location.href='reply_form.do?b_idx=${ vo.b_idx }&page=${ param.page }&'">
+			  </c:if>
 	          <!-- 글주인 or 관리자만 활성화 -->
-	   	<c:if test="${ (vo.user_idx eq user.user_idx) or (user.user_grade eq '관리자') }"><!-- request:vo | session:user -->
-		   	      <input type="button" class="button special"  value="새글쓰기" 
+	   			<c:if test="${ (vo.user_idx eq user.user_idx) or (user.user_grade eq '관리자') }"><!-- request:vo | session:user -->
+		   	      <input type="button" class="button special"  value="수정하기" 
 	              			onclick="send(this.form)">
 		   	      <input class="button alt" type="button" value="삭제하기" 
 		   			onclick="delete_board('${ vo.b_idx }');">
-	    </c:if>
+	    		</c:if>
 	              <input type="button" class="button"  value="목록보기" 
 	              			onclick="location.href='list.do'">
 	          </td>
 	       </tr>
 		</table>
 		</form>
+		
+		<br>
+		<br>
+		<br>
 			
-				
+		<!-- 댓글등록폼 -->
+		<div class="row">
+			<form action="">
+				<div class="row uniform">
+					<div class="12u$">
+						<textarea name="message" id="message"
+										placeholder="Enter your message" rows="6" data-gramm="false"
+										wt-ignore-input="true"></textarea>
+						<input class="button comment" id="cmt_btn_register" type="button" value="댓글쓰기"
+							onclick="comment_insert();">
+					</div>
+				</div>
+			</form>
+		</div>
+		
+		</div>
+		
+		<hr>
+			<!-- 댓글목록 출력 -->
+		<div id="disp"></div>	
 				
 		
-	</div>	
+	
 	</section>
 	
 	

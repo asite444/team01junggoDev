@@ -25,6 +25,11 @@
 		   location.href="user/user_login_form.jsp";
 	}
 </script>
+<style type="text/css">
+	#query{ 
+	margin: auto;
+	width: 800px; }
+</style>
 
 </head>
 <body>

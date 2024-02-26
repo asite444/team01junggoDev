@@ -164,7 +164,7 @@ const check_count =$("input[name='cart_idx']:checked").length;
 				<label for="cart_idx_${cart.cart_idx}">
 				</label>
 				</td>
-				<td>${ cart.p_subject }</td>
+				<td>${ cart.p_name }</td>
 				<td>${ cart.sell_user_name }</td>
 				
 				<td>${ cart.p_status }</td>
