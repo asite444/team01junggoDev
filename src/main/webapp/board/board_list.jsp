@@ -125,7 +125,7 @@
 			<p>자유로운 커뮤니티 모아보기</p>
 			
 			<div>
-				<form method="post" action="#">
+				<form>
 					<div class="select-wrapper" style="float: left; width: 150px;">
 						<select class="select-wrapper" name="category" id="category">
 							<option value="all">전체보기</option>

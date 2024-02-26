@@ -59,7 +59,7 @@ public class BoardController {
 		
 		//게시판 전체조회
 		List<BoardVo> list = BoardDao.getInstance().selectList();
-		
+		//System.out.println(list.get(0).getNo());
 	
 		//page Menu생성							검색된 레코드수
 		int rowTotal = BoardDao.getInstance().selectRowTotal(map);

@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="board">
 
-		<!-- 전체조회 -->
+	<!-- 전체조회 -->
 	<select id="board_list" resultType="vo.BoardVo">
 		select * from board order by b_ref desc, b_step asc
 	</select>
