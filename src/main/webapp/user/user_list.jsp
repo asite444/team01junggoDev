@@ -91,7 +91,7 @@
 	
 	<!-- 회원가입 -->
 	<div style="margin: -bottom: 5px;">
-		<button class="btn btn-danger" onclick="location.href='insert_form.do'">회원가입</button>
+		<button class="btn btn-danger" onclick="location.href='/SecondhandMarket/user/user_insert_form.jsp'">회원가입</button>
 	</div>
 	
 	
