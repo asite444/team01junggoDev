@@ -1,6 +1,7 @@
 package dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -59,6 +60,20 @@ public class CartDao {
 		return total_amount;
 	}
 	
+	/**
+	 * 위시리스트 삭제 메서드
+	 * @param map
+	 * @return
+	 */
+	public int delete_select(Map<String, Object> map) {
+		
+		int res=0;
+		SqlSession sqlSession=factory.openSession(true);
+		res=sqlSession.delete("cart.cart_delete_select",map);
+		
+		sqlSession.close();
+		return res;
+	}
 	
 	
 }

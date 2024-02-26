@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cart">
-
+<!-- 카트 리스트 출력 -->
  <select id="cart_list" parameterType="int" resultType="vo.CartVo">
 select 
 c. cart_idx
@@ -14,6 +14,7 @@ c. cart_idx
 , p.user_idx as sell_user_idx
 , p.p_price
 , p.p_status
+, p.p_nego
 , u.user_name as sell_user_name
 from cart c 
 join product p
@@ -31,7 +32,30 @@ select  ifnull(sum(p.p_price),0)
 from cart c join product p on  p.p_idx=c.prod_idx
 where c.user_idx=#{user_idx}
 </select>
-  
+
+<!-- 장바구니 삭제(사용안함) -->
+<delete id="cart_delete" parameterType="int">
+delete from cart where c_idx=#{c_idx}
+</delete>
+
+<!-- 장바구니 등록여부 -->
+<select id="cart_one_exist" parameterType="cart" resultType="cart">
+select * from cart where p_idx=#{p_idx} and mem_idx=#{mem_idx}
+</select>
+
+<!--장바구니 등록 -->
+<insert id="cart_insert" parameterType="cart">
+insert into cart (c_cnt, p_idx, mem_idx) values(1,#{p_idx},#{mem_idx})
+</insert>  
+
+<!-- 선택된 상품만만 삭제 -->
+<delete id="cart_delete_select" parameterType="Map">
+delete from cart where cart_idx in
+<foreach collection="idx_array" item="cart_idx" separator="," open="(" close=")"> <!-- 시작은 ( 다음 값은 ,으로 구분짓고 )으로 닫음 -->
+#{cart_idx}
+</foreach>
+</delete>
+
 
 </mapper>
 
