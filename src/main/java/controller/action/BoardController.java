@@ -104,7 +104,7 @@ public class BoardController {
 		//request binding
 		request.setAttribute("vo", vo);
 		
-		return "board_list.jsp";
+		return "board_view.jsp";
 	}
 	
 	//글쓰기 폼으로 넘어가기

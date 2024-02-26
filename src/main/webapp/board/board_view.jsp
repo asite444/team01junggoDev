@@ -49,7 +49,7 @@ th{
 			<li><a href="../main.jsp">Home</a></li>
 			<li><a href="../all_items.jsp">전체매물</a></li>
 			<li><a href="../category.jsp">Category</a></li>
-			<li><a href="../board/board_list.jsp">community</a></li>
+			<li><a href="../board/board_list.do">community</a></li>
 			<li><a href="../generic.jsp">Generic</a></li>
 			<li><a href="../elements.jsp">Elements</a></li>
 		</ul>
@@ -81,7 +81,7 @@ th{
 		<form action="form-inline">
 		<table class="table-wrapper">
 			<tr>
-				<th colspan="2"> <b>${ vo.mem_name }</b>님의 글 </th>
+				<th colspan="2"> <b>${ vo.user_name }</b>님의 글 </th>
 			</tr>
 	       <tr>
 	          <th>제목</th>
@@ -94,6 +94,7 @@ th{
 	       
 	       <tr>
 	          <td colspan="2" align="center">
+	          
 	              <input type="button" class="button special"  value="새글쓰기" 
 	              			onclick="send(this.form)">
 	              <input type="button" class="button"  value="목록보기" 
