@@ -47,7 +47,7 @@
 	   }
 	  
 	   
-	   f.action="/user/login.do"; // UserLoginAction
+	   f.action="login.do"; // UserLoginAction
 	   f.submit();
    }
 
@@ -106,7 +106,7 @@
 					<!-- Form -->
 					<h3>로그인을 해주세요</h3>
 
-					<form method="post" action="/user/login.do">
+					<form >
 						<div class="row uniform">
 							<div class="6u 12u$(xsmall)">
 								<input type="text" name="user_id" id="user_id" value="${ user_id }"
