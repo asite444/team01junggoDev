@@ -95,9 +95,9 @@
   function send(f){
 	  
 	  //폼에서 입력된값 체크...
-	  let user_name 		= f.user_name.value.trim();
-	  let user_pwd  		= f.user_pwd.value.trim();
-	  let user_email		= f.user_email.value;
+	  let user_name 	= f.user_name.value.trim();
+	  let user_pwd  	= f.user_pwd.value.trim();
+	  let user_email    = f.user_email.value;
 	  let user_zipcode 	= f.user_zipcode.value;
 	  let user_addr		= f.user_addr.value;
 	  
@@ -138,7 +138,7 @@
 	  }
 	  
 	  
-	  f.action = "insert.do";//MemberInsertAction
+	  f.action = "insert.do";//UserInsertAction
 	  f.submit();//전송
 	  
   }
@@ -159,7 +159,7 @@
 			<hr class="major">
 			
 			<!-- Form -->
-			<h3>모두 입력해주세요</h3>
+			<h2>모두 입력해주세요</h2>
 
 			<form method="post" action="#">
 				<div class="row uniform">
@@ -167,7 +167,9 @@
 					<tr>
 						<th>이름</th>
 						<td>
+							<div class="6u 12u$(xsmall)">
 							<input type="text" name="name"  value="${ user_name }">
+							</div>
 						</td>
 					</tr>
 					<tr>
@@ -193,14 +195,18 @@
 					<tr>
 						<th>이메일</th>
 						<td>
+							<div class="6u 12u$(xsmall)">
 							<input type="text" name="name"  value="${ user_email }">
+							</div>
 						</td>
 					</tr>
 					<tr>
 		                 <th><label>우편번호</label></th>
 		                 <td>
-		                     <input class="form-control"  name="mem_zipcode"  id="mem_zipcode">
+		                 	<div class="6u 12u$(xsmall)">
+		                     <input type="text"  name="user_zipcode"  id="user_zipcode">
 		                     <input type="button"  value="주소검색"  onclick="find_addr();">
+		                     </div>
 		                 </td>
 		              </tr>	
 					<tr>
@@ -213,13 +219,13 @@
 
 					
 					<tr>
-						<th colspan="2">
+						<td colspan="2" align="center">
 							<!-- Break -->
 							<div class="12u$">
 								<ul class="actions">
 									<li>
 										<input type="reset" value="Join In" class="button special"
-												onclick="/user/login_form.do">
+												onclick="send(this.form);">
 									</li>
 									<li>
 										<input type="reset" value="Home" class="alt"
@@ -228,7 +234,7 @@
 									
 								</ul>
 							</div>
-						</th>
+						</td>
 					<tr>
 				</table>
 				</div>
