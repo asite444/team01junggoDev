@@ -92,7 +92,16 @@
 		</nav>
 		<a href="../main.jsp" class="logo">중고로Go</a>
 		<nav class="right">
-			<a href="../user/login.jsp" class="button alt">Log in</a>
+			<c:if test="${ empty sessionScope.user }">
+			<input class="button alt" value="Login"
+					onclick="login();">
+			</c:if>
+			<!-- 로그인이 됐을경우 : 세션영역에 user가 있는가?  -->
+			<c:if test="${ not empty sessionScope.user }">
+				<b>${ sessionScope.user.user_name }</b>님 환영합니다!!
+				<input class="button alt" type="button" value="Logout"
+			       onclick="location.href='logout.do'">
+			</c:if>	
 		</nav>
 	</header>
 	<!-- Menu -->
