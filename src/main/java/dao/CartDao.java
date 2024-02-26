@@ -74,6 +74,42 @@ public class CartDao {
 		sqlSession.close();
 		return res;
 	}
+
+	/**
+	 * 결제화면의 실제 결제할 상품정보 list
+	 * @param map
+	 * @return
+	 */
+	public List<CartVo> payment_select(Map<String, Object> map) {
+		 
+		SqlSession sqlSession=factory.openSession();
+		
+		List<CartVo> list=sqlSession.selectList("cart.cart_select", map);
+		sqlSession.close();
+	
+		return list;
+	}
+
+	/**
+	 * 결제화면의 실제 결제할 결제 상품정보 총합금액
+	 * @param map
+	 * @return
+	 */
+	public int selectPaymentTotalAmount(Map<String, Object> map) {
+		
+		int payment_total_amount=0;
+		SqlSession sqlSession=factory.openSession();
+	
+		String [] payment_total=(String[])map.get("idx_array");
+		
+		for(int i=0;i<payment_total.length;i++) {
+		payment_total_amount+=(int)sqlSession.selectOne("cart.payment_total_amount", payment_total[i]);
+		}
+		sqlSession.close();
+		
+		
+		return payment_total_amount;	
+	}
 	
 	
 }

@@ -15,6 +15,7 @@ c. cart_idx
 , p.p_price
 , p.p_status
 , p.p_nego
+, p.p_filename
 , u.user_name as sell_user_name
 from cart c 
 join product p
@@ -55,6 +56,21 @@ delete from cart where cart_idx in
 #{cart_idx}
 </foreach>
 </delete>
+
+
+<select id="cart_select" parameterType="Map" resultType="cart">
+select * 
+from cart 
+where c_idx in
+<foreach collection="idx_array" item="c_idx" separator="," open="(" close=")"> <!-- 시작은 ( 다음 값은 ,으로 구분짓고 )으로 닫음 -->
+#{c_idx}
+</foreach>
+
+</select>
+
+<select id="payment_total_amount" parameterType="int" resultType="int">
+select  ifnull(sum(amount),0) from cart where c_idx =#{c_idx}
+</select>
 
 
 </mapper>
