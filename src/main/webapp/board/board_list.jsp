@@ -37,7 +37,7 @@
 		if("${ empty user }" == "true"){
 			
 			if (confirm("글쓰기는 로그인 후에 가능합니다\n로그인 하시겠습니까?")==false) return; {
-				location.href="../member/login_form.do";
+				location.href="../user/login_form.do";
 			}
 			return;
 		}
@@ -77,7 +77,7 @@
 		
    function login(){
 	      
-	   location.href="../member/login_form.do?url=" + encodeURIComponent(location.href) ;
+	   location.href="../user/login_form.do?url=" + encodeURIComponent(location.href) ;
    }
 		
 		

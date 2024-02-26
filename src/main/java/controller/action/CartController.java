@@ -31,16 +31,16 @@ public class CartController {
 	public String list(HttpServletRequest request, HttpServletResponse response) {
 
 		// 로그인 유저정보 Object->MemberVo 다운케스팅
-		// UserVo user=(UserVo)request.getSession().getAttribute("user");
+		 UserVo user=(UserVo)request.getSession().getAttribute("user");
 
 		// 로그아웃 상태
-		// if(user==null) {
-		// response.sendRedirect("../user/login_form.do?reason=session_timeout");
-		// //session_timeout: 세션만료(로그아웃상태)
+		 if(user==null) {
+			 return "redirect:../user/login_form.do?reason=session_timeout";
+		 //session_timeout: 세션만료(로그아웃상태)
 
-		// }
+		 }
 
-		int user_idx = 1; // 임시
+		int user_idx = user.getUser_idx(); // 임시
 		// 장바구니 목록
 		List<CartVo> cart_list = CartDao.getInstance().selectList(user_idx);
 

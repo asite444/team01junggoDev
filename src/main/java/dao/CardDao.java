@@ -23,12 +23,12 @@ public class CardDao {
 		factory = MyBatisConnector.getInstance().getSqlSessionFactory();
 	}
 
-	public List<CardVo> selectList() {
+	public List<CardVo> selectList(int user_idx) {
 		List<CardVo> list = null;
 
 		SqlSession sqlSession = factory.openSession();
 
-		list = sqlSession.selectList("payment.card_list");
+		list = sqlSession.selectList("payment.card_list",user_idx);
 
 		sqlSession.close();
 		return list;

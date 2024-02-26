@@ -95,7 +95,7 @@ public class UserController {
 	public String logout(HttpServletRequest request, HttpServletResponse response) {
 		  
 		// 로그아웃: session에 저장된 user삭제
-		request.getSession().removeAttribute("s_user");
+		request.getSession().removeAttribute("user");
 
 		// 메인페이지
 		return "redirect:../main.jsp";
