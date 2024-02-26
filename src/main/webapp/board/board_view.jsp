@@ -64,9 +64,9 @@
 		
 		//로그인여부 체트
 		if ("${ empty user}" == "true") {
-			if(confirm("댓글쓰기은 로그인후에 가능합니다\n로그인하시겠습니까?")==false) return;
+			if(confirm("댓글쓰기는 로그인후에 가능합니다\n로그인하시겠습니까?")==false) return;
 			
-			location.href="../member/login_form.do?url=" + encodeURIComponent(location.href);			
+			location.href="../user/login_form.do?url=" + encodeURIComponent(location.href);			
 			return;
 		
 		}//end: comment_insert();
@@ -123,7 +123,17 @@ th{
 	width: 300px;
 }
 b{font-weight: bold;}
-textarea{ width: 500px; }
+.row{ margin: auto; }
+textarea{ 
+	width: 500px; 
+    display: inline-block;
+    margin-right: 20px; /* 요소 사이의 간격 조정 */
+    vertical-align: middle; /* 요소의 수직 정렬 설정 */
+}
+.comment{
+	 vertical-align: middle;
+	
+}
 
 </style>
 
@@ -231,7 +241,7 @@ textarea{ width: 500px; }
 						<textarea name="message" id="message"
 										placeholder="Enter your message" rows="6" data-gramm="false"
 										wt-ignore-input="true"></textarea>
-						<input class="button" id="cmt_btn_register" type="button" value="댓글쓰기"
+						<input class="button comment" id="cmt_btn_register" type="button" value="댓글쓰기"
 							onclick="comment_insert();">
 					</div>
 				</div>
