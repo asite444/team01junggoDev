@@ -18,7 +18,7 @@
 <script type="text/javascript">
 	function login(){
 	    
-		   location.href="user/login.jsp";
+		   location.href="user/user_login_form.jsp";
 	}
 </script>
 
