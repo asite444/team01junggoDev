@@ -1,6 +1,6 @@
 use secondhanddb;
 -- drop table product;
-drop table product
+drop table product;
 -- 상품 테이블
 CREATE TABLE `Product` (
 	`p_idx`	int PRIMARY KEY  auto_increment	NOT NULL,
