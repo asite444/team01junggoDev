@@ -19,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				<trim prefix="where"  prefixOverrides="or">
 			
 				<if test="name!=null">
-					mem_name like concat('%', #{name}, '%')
+					user_name like concat('%', #{name}, '%')
 				</if>
 				<if test="subject!=null">
 					p_subject like concat('%', #{subject}, '%')
@@ -52,7 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<update id="product_update_filename" parameterType="vo.ProductVo">
-	update product set p_filename= #{ p_filename },p_modifydate=now() where p_idx=#{ p_idx }
+	update product set p_filename= #{ p_filename },p_filename1= #{ p_filename1 },p_filename2= #{ p_filename2 },p_filename3= #{ p_filename3 }p_modifydate=now() where p_idx=#{ p_idx }
 	</update>
 	
 		<select id="product_condition_row_total" parameterType="Map" resultType="int">
