@@ -92,7 +92,7 @@ public class ProductController {
 			request.setAttribute("pageMenu", pageMenu);
 			request.setAttribute("weatherlist", weatherlist);
 			
-			return "category.jsp";
+			return "../category.jsp";
 			
 		}//end:product_list.do
 		
@@ -175,17 +175,20 @@ public class ProductController {
 			String p_filename2="no_file";
 			String p_filename3="no_file";
 			//업로드된 화일정보 얻어온다
-			File f = mr.getFile("product");
+			File f = mr.getFile("photo");
+			File f1 = mr.getFile("photo");
+			File f2 = mr.getFile("photo");
+			File f3 = mr.getFile("photo");
 			if(f != null) {
 				p_filename = f.getName();
 			}
-			if(f != null) {
+			if(f1 != null) {
 				p_filename1 = f.getName();
 			}
-			if(f != null) {
+			if(f2 != null) {
 				p_filename2 = f.getName();
 			}
-			if(f != null) {
+			if(f3 != null) {
 				p_filename3= f.getName();
 			}
 			

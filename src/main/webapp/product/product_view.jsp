@@ -343,11 +343,7 @@ font-size: 30px;
 
 <script type="text/javascript">
 
-	function download(p_filename){
-		
-		 location.href="../FileDownload.do?dir=/upload/&filename=" + encodeURIComponent(p_filename, "utf-8");
-		 
-	}
+
 	
 	function del(p_idx){
 		
@@ -448,9 +444,9 @@ font-size: 30px;
 			<div id="cat">
 			 <div id="list">
 				<img src="${ pageContext.request.contextPath }/upload/${ vo.p_filename }" style="width: 120px; height: 100px; margin-top:50px;border: 1px solid black;" onclick="photo();" />
-				<img src="${ pageContext.request.contextPath }/upload/02d.png" style="width: 120px; height: 100px; margin-top: 3px; border: 1px solid black;" onclick="photo();" />
-				<img src="${ pageContext.request.contextPath }/upload/03d.png" style="width: 120px; height: 100px; margin-top: 3px; border: 1px solid black;" onclick="photo();" />
-				<img src="${ pageContext.request.contextPath }/upload/04d.png" style="width: 120px; height: 100px; margin-top: 3px; border: 1px solid black;" onclick="photo();" />
+				<img src="${ pageContext.request.contextPath }/upload/${ vo.p_filename1 }" style="width: 120px; height: 100px; margin-top: 3px; border: 1px solid black;" onclick="photo();" />
+				<img src="${ pageContext.request.contextPath }/upload/${ vo.p_filename2 }" style="width: 120px; height: 100px; margin-top: 3px; border: 1px solid black;" onclick="photo();" />
+				<img src="${ pageContext.request.contextPath }/upload/${ vo.p_filename3 }" style="width: 120px; height: 100px; margin-top: 3px; border: 1px solid black;" onclick="photo();" />
 			</div>
 			</div>
 	

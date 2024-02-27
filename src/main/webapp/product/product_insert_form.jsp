@@ -14,13 +14,14 @@
 
 <style type="text/css">
   #box{
-     width: 500px;
+     width: 800px;
      margin: auto;
      margin-top: 50px;
   }
   
   textarea {
-	 resize: none; 
+
+	resize: none; 
   }
 
 </style>
@@ -81,7 +82,7 @@
 
 <form method="POST"  enctype="multipart/form-data">
     <input type="hidden"  name="user_idx"   value="${ user.user_idx }">
-    <input type="hidden"  name="user_name"  value="${ user.user_name }">
+    
 
 	<div id="box">
 		<div class="panel panel-primary">
@@ -96,13 +97,14 @@
 			       <tr>
 			          <th>내용</th>
 			          <td>
-			             <textarea  class="form-control" rows="5" cols="" name="p_content"></textarea>
+			             <textarea  class="form-control" rows="10" cols="" name="p_content"></textarea>
 			          </td>
 			       </tr>
 			       
 			       <tr>
 			          <th>사진</th>
-			          <td><input type="file" class="form-control" name="photo"></td>
+			          <td><input type="file" class="form-control" name="photo"><br><input type="file" class="form-control" name="photo1"><br><input type="file" class="form-control" name="photo2"><br><input type="file" class="form-control" name="photo3"></td>
+			          
 			       </tr>
 			       
 			       <tr>
