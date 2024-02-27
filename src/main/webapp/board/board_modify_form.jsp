@@ -48,7 +48,7 @@
 			f.b_content.focus();
 			return;
 		}
-
+		if (confirm("정말 수정하시겠습니까?")==false)return;
 
 		f.action = "modify.do";// PhotoModifyAction
 		f.submit();
@@ -103,7 +103,7 @@ th{
 				<h1>community</h1>
 				<p>
 					<b>
-						<a href="board_community.jsp">커뮤니티</a> | <a href="board_notice.jsp">Notice</a> | <a href="board_qna.jsp">Q&A</a>
+						<a href="../board/list.do">커뮤니티</a> | <a href="board_notice.jsp">Notice</a> | <a href="board_qna.jsp">Q&A</a>
 					</b>
 				</p>
 			</header>

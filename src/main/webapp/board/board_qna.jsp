@@ -124,7 +124,7 @@
 				<h1>Q&A</h1>
 				<p>
 					<b>
-						<a href="board_community.jsp">커뮤니티</a> | <a href="board_notice.jsp">Notice</a> | <a href="#" class="logo">Q&A</a>
+						<a href="../board/list.do">커뮤니티</a> | <a href="board_notice.jsp">Notice</a> | <a href="#" class="logo">Q&A</a>
 					</b>
 				</p>
 			</header>

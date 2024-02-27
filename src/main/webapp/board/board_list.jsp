@@ -82,6 +82,21 @@
 		
 		
 </script>
+<style type="text/css">
+
+	 .search-container {
+        overflow: hidden; /* float 된 요소를 감싸기 위해 overflow 속성을 추가합니다. */
+        float: left;
+    }
+
+    #search_text {
+        float: left; /* 왼쪽으로 플로팅 */
+    }
+
+    #search_button {
+        float: left; /* 왼쪽으로 플로팅 */
+    }
+</style>
 </head>
 <body>
 
@@ -126,7 +141,7 @@
 				<h1>community</h1>
 				<p>
 					<b>
-						<a href="board_community.jsp">커뮤니티</a> | <a href="board_notice.jsp">Notice</a> | <a href="board_qna.jsp">Q&A</a>
+						<a href="../board/list.do">커뮤니티</a> | <a href="board_notice.jsp">Notice</a> | <a href="board_qna.jsp">Q&A</a>
 					</b>
 				</p>
 			</header>
@@ -166,6 +181,17 @@
 			<br>
 			<br>
 			<br>
+
+			<hr>
+			<div class="3u$">
+				<select class="select-wrapper" name="category" id="category">
+							<option value="all">전체보기</option>
+							<option value="id">아이디</option>
+							<option value="subject">제목</option>
+							<option value="conetent">내용</option>
+							<option value="subject_content">제목+내용</option>
+				</select>
+			</div>
 			
 			<hr>
 			<input class="btn btn-link" type="button"  value="글쓰기"

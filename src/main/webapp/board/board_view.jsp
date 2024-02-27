@@ -37,7 +37,7 @@
 		//자리는 유지하되 내용만 감춘다.
 	}//end : delete_board
 	
-	//댓글
+	//개시물의 댓글
 	$(document).ready(function (){
 		//comment_list(1); //page1
 	});
@@ -185,7 +185,7 @@ textarea{
 				<h1>community</h1>
 				<p>
 					<b>
-						<a href="board_community.jsp">커뮤니티</a> | <a href="board_notice.jsp">Notice</a> | <a href="board_qna.jsp">Q&A</a>
+						<a href="../board/list.do">커뮤니티</a> | <a href="board_notice.jsp">Notice</a> | <a href="board_qna.jsp">Q&A</a>
 					</b>
 				</p>
 			</header>
@@ -221,14 +221,14 @@ textarea{
 		          
 		          <c:if test="${ user.user_grade eq '관리자' }">
 				   	<input class="btn btn-link" type="button" value="답글달기" 
-				   				onclick="location.href='reply_form.do?b_idx=${ vo.b_idx }&page=${ param.page }&'">
+				   				onclick="location.href='reply_form.do?b_idx=${ vo.b_idx }&page=${ param.page }&'">&nbsp;
 				  </c:if>
 		          <!-- 글주인 or 관리자만 활성화 -->
 		   			<c:if test="${ (vo.user_idx eq user.user_idx) or (user.user_grade eq '관리자') }"><!-- request:vo | session:user -->
 			   	      <input type="button" class="button special"  value="수정하기" 
-		              			onclick="modify_form('${ vo.b_idx }');">
+		              			onclick="modify_form('${ vo.b_idx }');">&nbsp;
 			   	      <input class="button alt" type="button" value="삭제하기" 
-			   			onclick="delete_board('${ vo.b_idx }');">
+			   			onclick="delete_board('${ vo.b_idx }');">&nbsp;
 		    		</c:if>
 		              <input type="button" class="button"  value="목록보기" 
 		              			onclick="location.href='list.do'">
