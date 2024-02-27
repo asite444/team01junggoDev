@@ -12,11 +12,6 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<meta charset="UTF-8">
-<meta name="robots"
-	content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="${ pageContext.request.contextPath }/assets/css/main.css">
 <title>Insert title here</title>
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -307,7 +302,7 @@ font-size: 30px;
 	       $.ajax({
 	    	   
 	    	   url			:	"api.do",  // CartInsertAction  : cart_insert.do?p_idx=5&mem_idx=1 
-	    	   data		:	{"p_idx":"${ vo.p_idx }" ,"user_idx": "${ user.user_idx }"   },
+	    	   data		:	{"p_idx":"${ vo.p_idx }" ,"mem_idx": "${ user.mem_idx }"   },
 	    	   dataType	:	"json",
 	    	   success	:	function(res_data){
 	    		  
@@ -329,7 +324,7 @@ font-size: 30px;
 	       $.ajax({
 	    	   
 	    	   url			:	"view.do",  // CartInsertAction  : cart_insert.do?p_idx=5&mem_idx=1 
-	    	   data		:	{"p_idx":"${ vo.p_idx }" ,"user_idx": "${ user.user_idx }"   },
+	    	   data		:	{"p_idx":"${ vo.p_idx }" ,"mem_idx": "${ user.mem_idx }"   },
 	    	   dataType	:	"json",
 	    	   success	:	function(res_data){
 	    		  
@@ -448,17 +443,17 @@ font-size: 30px;
 
 			<div id="cat">
 			 <div id="list">
-				<img src="${ pageContext.request.contextPath }/images/${ vo.p_filename }" style="width: 120px; height: 100px; margin-top:50px;border: 1px solid black;" onclick="photo();" />
-				<img src="${ pageContext.request.contextPath }/images/${ vo.p_filename1 }" style="width: 120px; height: 100px; margin-top: 3px; border: 1px solid black;" onclick="photo();" />
-				<img src="${ pageContext.request.contextPath }/images/${ vo.p_filename2 }" style="width: 120px; height: 100px; margin-top: 3px; border: 1px solid black;" onclick="photo();" />
-				<img src="${ pageContext.request.contextPath }/images/${ vo.p_filename3 }" style="width: 120px; height: 100px; margin-top: 3px; border: 1px solid black;" onclick="photo();" />
+				<img src="${ pageContext.request.contextPath }/upload/${ vo.p_filename }" style="width: 120px; height: 100px; margin-top:50px;border: 1px solid black;" onclick="photo();" />
+				<img src="${ pageContext.request.contextPath }/upload/${ vo.p_filename1 }" style="width: 120px; height: 100px; margin-top: 3px; border: 1px solid black;" onclick="photo();" />
+				<img src="${ pageContext.request.contextPath }/upload/${ vo.p_filename2 }" style="width: 120px; height: 100px; margin-top: 3px; border: 1px solid black;" onclick="photo();" />
+				<img src="${ pageContext.request.contextPath }/upload/${ vo.p_filename3 }" style="width: 120px; height: 100px; margin-top: 3px; border: 1px solid black;" onclick="photo();" />
 			</div>
 			</div>
 	
 		
 			<div class="movieinfo">
 			<div id="product" align="center" >
-				<img src="${ pageContext.request.contextPath }/images/${ vo.p_filename }" id="img1" style="width: 500px; height: 450px; margin-top: 50px;"/>
+				<img src="${ pageContext.request.contextPath }/upload/${ vo.p_filename }" id="img1" style="width: 500px; height: 450px; margin-top: 50px;"/>
 				<%-- <input type="button" class="btn btn-success" value="다운로드" onclick="download('${vo.p_filename}');"> --%>
        			<input type="button" class="btn btn-info"  value="수정"onclick="modify_form(${vo.p_idx});"> 
        			<input type="button" class="btn btn-warning"  value="삭제" onclick="del(${vo.p_idx});">      
@@ -481,7 +476,7 @@ font-size: 30px;
 			
 			<div id="local">경기</div>
 			<div id="bo"></div>
-			<div id="name">${ vo.user_name }</div>
+			<div id="name">${ vo.mem_name }</div>
 			<div id="bo"></div>
 			<div id="state">제품상태</div>
 			

@@ -115,18 +115,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
  	<!-- 답글쓰기 -->
  	<select id="board_reply" parameterType="vo.BoardVo">
- 		insert into board values(#{ b_idx },
-								 #{ b_subject },
-								 #{ b_content },
-								 #{ b_ip },
-								 now(),
-								 0,
-								 #{ user_idx },
-								 #{ user_name },
-								 #{ b_ref },
-								 #{ b_step },
-								 #{ b_depth },
-								 'y')
+	 	insert into board(
+	 		  b_idx
+	 		, b_subject
+	 		, b_content
+	 		, b_ip
+	 		, b_regdate
+	 		, b_ref
+	 		, b_step
+	 		, b_depth
+	 		, b_use
+	 		, user_idx
+	 		, user_name
+	 		) values(#{ b_idx },	 
+				  #{ b_subject },
+					#{ b_content },
+					#{ b_ip },
+					now(),
+					#{ b_ref },
+					#{ b_step },
+					#{ b_depth },
+					'y',
+				     #{user_idx},
+				     #{user_name}
+				     )
+
  	</select>	
 	
 	<!-- 삭제: 사용유무에 대한 정보 변경 -->

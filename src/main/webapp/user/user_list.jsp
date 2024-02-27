@@ -22,7 +22,7 @@
 <script type="text/javascript">
 	function login(){
 	    
-		   location.href="user_login_form.jsp";
+		   location.href="user/user_login_form.jsp";
 	}
 </script>
 <style type="text/css">

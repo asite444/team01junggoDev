@@ -80,7 +80,7 @@ public class BoardDao {
 		return vo;
 	}
 		
-	//등록시킬 게시물의 번호 얻어오기
+	//등록시킬 답글의 메인 게시물의 번호 얻어오기
 	public int selectOneB_idx() {
 		// TODO Auto-generated method stub
 		int b_idx = 0;
@@ -135,7 +135,12 @@ public class BoardDao {
 			
 			return res;
 		}
-
+		
+		/**
+		 * 댓글달기
+		 * @param baseVo
+		 * @return
+		 */
 		public int update_step(BoardVo baseVo) {
 			// TODO Auto-generated method stub
 			int res = 0;

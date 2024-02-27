@@ -27,15 +27,8 @@ CREATE TABLE `Product` (
 	`p_num`	varchar(100)	NULL
 );
 
+insert into board values(2,'웃기지마','똥멍충이','192.168.0.25',now(),0,2,'김관리',1,1,1,'y'); 
 
-
-
-
-
-
-
-insert into Product values(1,'가전','1','야옹','고양이','옷15.jpg','15-1.jpg','15-2.jpg','15-3.jpg','192.168.0.25',now(),now(),0,'좋음',2000,'가능','가능','옷','경기','고양','삼성','034567') 
-insert into Product values(2,'가전','2','야옹','고양이','옷4.jpg','4-1.jpg','4-2.jpg','4-3.jpg','192.168.0.25',now(),now(),0,'좋음',2000,'가능','가능','옷','경기','고양','삼성','034567') 
 
 -- FK 설정(카테고리 테이블)
 ALTER TABLE `Product` ADD CONSTRAINT `FK_categories_TO_Product_1` FOREIGN KEY (
@@ -45,9 +38,6 @@ REFERENCES `categories` (
 	`c_idx`
 );
 
-desc product
-desc categories
-
 -- FK설정 (회원 테이블)
 ALTER TABLE `Product` ADD CONSTRAINT `FK_user_TO_Product_1` FOREIGN KEY (
 	`user_idx`
@@ -56,10 +46,7 @@ REFERENCES `user` (
 	`user_idx`
 );
 
-insert into user(user_name, user_id, user_pwd, user_email, user_zipcode, user_addr, user_ip)
-				values('꼬부기','dfwt','5678','dfwt@ict.com','56932','경기도 평택시','168.192.0.38');	
-		insert into user(user_name, user_id, user_pwd, user_email, user_zipcode, user_addr, user_ip, user_grade)
-				values('관리소','admin','8899','admin@ict.com','34982','경기도 안산시','168.192.0.42','관리자');	
+
 select * from product
 
 
