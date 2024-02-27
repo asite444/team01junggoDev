@@ -7,33 +7,33 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
 import service.MyBatisConnector;
-import vo.PhotoVo;
+import vo.ProductVo;
 
-public class PhotoDao {
+public class ProductDao {
 	
 	SqlSessionFactory factory;
 	
-	static PhotoDao single = null;
+	static ProductDao single = null;
 
-	public static PhotoDao getInstance() {
+	public static ProductDao getInstance() {
 
 		if (single == null)
-			single = new PhotoDao();
+			single = new ProductDao();
 		return single;
 	}
 
-	private PhotoDao() {
+	private ProductDao() {
 		// TODO Auto-generated constructor stub
 		factory = MyBatisConnector.getInstance().getSqlSessionFactory();
 	}
 	
-	public List<PhotoVo> selectList() {
+	public List<ProductVo> selectList() {
 
-		List<PhotoVo> list = null;
+		List<ProductVo> list = null;
 
 		SqlSession sqlSession = factory.openSession();
 		
-		list = sqlSession.selectList("photo.photo_list");
+		list = sqlSession.selectList("product.product_list");
 		
 		sqlSession.close();
 		
@@ -42,15 +42,15 @@ public class PhotoDao {
 	}//end: selectList()
 	
 	
-	public PhotoVo selectOne(int p_idx) {
+	public ProductVo selectOne(int p_idx) {
 		// TODO Auto-generated method stub
 
-		PhotoVo vOb = null;
+		ProductVo vOb = null;
 
 		SqlSession sqlSession =factory.openSession(true);
 		
 		//2. 작업수행 
-		vOb = sqlSession.selectOne("photo.photo_one", p_idx);
+		vOb = sqlSession.selectOne("product.product_one", p_idx);
 		
 		//3. 닫기
 		sqlSession.close();
@@ -58,13 +58,13 @@ public class PhotoDao {
 		return vOb;
 	}
 
-	public int insert(PhotoVo vo) {
+	public int insert(ProductVo vo) {
 		// TODO Auto-generated method stub
 		int res = 0;
 		
 		SqlSession sqlSession = factory.openSession(true);
 		
-		res = sqlSession.insert("photo.photo_insert", vo);
+		res = sqlSession.insert("product.product_insert", vo);
 		
 		//3. 닫기
 		sqlSession.close();
@@ -78,7 +78,7 @@ public int delete(int p_idx) {
 	
 	SqlSession sqlSession = factory.openSession(true);
 	
-	res = sqlSession.delete("photo.photo_delete", p_idx);
+	res = sqlSession.delete("product.product_delete", p_idx);
 	
 	//3. 닫기
 	sqlSession.close();
@@ -86,13 +86,13 @@ public int delete(int p_idx) {
 	return res;
 }
 
-public int update(PhotoVo vo) {
+public int update(ProductVo vo) {
 	// TODO Auto-generated method stub
 	int res = 0;
 	
 	SqlSession sqlSession = factory.openSession(true);
 	
-	res = sqlSession.update("photo.photo_update",  vo);
+	res = sqlSession.update("product.product_update",  vo);
 	
 	//3. 닫기
 	sqlSession.close();
@@ -100,13 +100,13 @@ public int update(PhotoVo vo) {
 	return res;
 }
 
-public int update_filename(PhotoVo vo) {
+public int update_filename(ProductVo vo) {
 	// TODO Auto-generated method stub
 	int res = 0;
 	
 	SqlSession sqlSession = factory.openSession(true);
 	
-	res = sqlSession.update("photo.photo_update_filename",  vo);
+	res = sqlSession.update("product.product_update_filename",  vo);
 	
 	//3. 닫기
 	sqlSession.close();
@@ -121,20 +121,20 @@ public int selectRowTotal(Map<String, Object> map) {
 	
 	SqlSession sqlSesstion = factory.openSession();
 	
-	rowTotal = sqlSesstion.selectOne("photo.photo_condition_row_total",map);
+	rowTotal = sqlSesstion.selectOne("product.product_condition_row_total",map);
 	
 	sqlSesstion.close();
 	
 	return rowTotal;
 }
 
-public List<PhotoVo> selectList(Map<String, Object> map) {
+public List<ProductVo> selectList(Map<String, Object> map) {
 	// TODO Auto-generated method stub
-	List<PhotoVo> list = null;
+	List<ProductVo> list = null;
 	
 	SqlSession sqlSesstion = factory.openSession();
 	
-	list = sqlSesstion.selectList("photo.photo_condition_list", map);
+	list = sqlSesstion.selectList("product.product_condition_list", map);
 	
 	sqlSesstion.close();
 	

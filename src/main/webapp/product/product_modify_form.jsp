@@ -74,7 +74,9 @@
 	    var formData = new FormData(form);
 	    formData.append("p_idx", '${ vo.p_idx }');
 	    formData.append("photo", $("#ajaxFile")[0].files[0]);
-	    
+	    formData.append("photo1", $("#ajaxFile")[0].files[0]);
+	    formData.append("photo2", $("#ajaxFile")[0].files[0]);
+	    formData.append("photo3", $("#ajaxFile")[0].files[0]);
 	    /*
 	    <form method="POST" encType="mutipart/form-data">
 	       <input name="p_idx" value="${ vo.p_idx}">
@@ -92,6 +94,9 @@
 	            	 //result_data = {"p_filename":"aaa.jpb"}
 	            	 
 	            	 $("#my_img").attr("src","../upload/" + result_data.p_filename);
+	            	 $("#my_img1").attr("src","../upload/" + result_data.p_filename1);
+	            	 $("#my_img2").attr("src","../upload/" + result_data.p_filename2);
+	            	 $("#my_img3").attr("src","../upload/" + result_data.p_filename3);
 	             },
 	             error : function(err){
 	            	 alert(err.responseText);
@@ -115,8 +120,7 @@
 
 <!-- 내용수정용 폼 -->
 <form>
-    <input type="hidden"  name="mem_idx"   value="${ user.mem_idx }">
-    <input type="hidden"  name="mem_name"  value="${ user.mem_name }">
+    <input type="hidden"  name="user_idx"   value="${ user.user_idx }">
   	<input type="hidden"  name="p_idx"  value="${ vo.p_idx }">
   	<input type="hidden"  name="page"  value="${ param.page }">
 
@@ -129,6 +133,10 @@
 			          <td colspan="2" align="center">
 			             
 			             <img id="my_img" src="../upload/${ vo.p_filename }">
+			             <img id="my_img1" src="../upload/${ vo.p_filename1 }">
+			             <img id="my_img2" src="../upload/${ vo.p_filename2 }">
+			             <img id="my_img3" src="../upload/${ vo.p_filename3 }">
+			       
 			             <br>
 			             <br>
 			             <input class="btn btn-info" type="button" value="이미지수정" onclick="ajaxFileUpload();">			          

@@ -15,7 +15,7 @@ public class MyConstant {
 		
 	}
 	
-	public static class Photo{
+	public static class Product{
 		
 		public static final int BLOCK_LIST = 10;    //1화면당 게시물 수
 		public static final int BLOCK_PAGE = 3;   // 1화면당 페이지 수

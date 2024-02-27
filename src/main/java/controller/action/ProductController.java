@@ -17,20 +17,21 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import annotation.RequestMapping;
 import annotation.ResponseBody;
-import dao.PhotoDao;
+import dao.ProductDao;
 import myconstant.MyConstant;
 import util.Paging;
 import util.WeatherUtil;
-import vo.PhotoVo;
+import vo.ProductVo;
 import vo.WeatherVo;
 
-public class PhotoController {
+public class ProductController {
 
-		@RequestMapping("/photo/list.do")
+	
+	
+		@RequestMapping("/product/list.do")
 		public String list(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 			int nowPage = 1;
-			
 			
 			String page = request.getParameter("page");
 			String search = request.getParameter("search");
@@ -44,9 +45,8 @@ public class PhotoController {
 				nowPage = Integer.parseInt(page);
 			}
 			
-	
-			int start = (nowPage-1) * MyConstant.Photo.BLOCK_LIST+1;
-			int end  = start + MyConstant.Photo.BLOCK_LIST-1;
+			int start = (nowPage-1) * MyConstant.Product.BLOCK_LIST+1;
+			int end  = start + MyConstant.Product.BLOCK_LIST-1;
 			
 			Map<String, Object> map = new HashMap<String,Object>();
 			
@@ -79,24 +79,22 @@ public class PhotoController {
 				e.printStackTrace();
 			}
 			
-		
-			
-			List<PhotoVo> list = PhotoDao.getInstance().selectList(map);
-			int rowTotal = PhotoDao.getInstance().selectRowTotal(map);
+			List<ProductVo> list = ProductDao.getInstance().selectList(map);
+			int rowTotal = ProductDao.getInstance().selectRowTotal(map);
 			
 			String pageMenu = Paging.getproductPaging("list.do", 
 					nowPage,  //현재페이지
 					rowTotal,  // 전체게시물수
-					MyConstant.Photo.BLOCK_LIST,		 //1화면에 보여질 게시물수	 
-					MyConstant.Photo.BLOCK_PAGE);   // 1화면에 보여질 메뉴수
+					MyConstant.Product.BLOCK_LIST,		 //1화면에 보여질 게시물수	 
+					MyConstant.Product.BLOCK_PAGE);   // 1화면에 보여질 메뉴수
 			
 			request.setAttribute("list",list);
 			request.setAttribute("pageMenu", pageMenu);
 			request.setAttribute("weatherlist", weatherlist);
 			
-			return "photo_list.jsp";
+			return "../category.jsp";
 			
-		}//end:photo_list.do
+		}//end:product_list.do
 		
 		/**
 		 * 포토정보 데이터 하나 가져오는 메서드 서블릿
@@ -104,14 +102,14 @@ public class PhotoController {
 		 * @param response
 		 * @return
 		 */
-		@RequestMapping(value="/photo/photo_one.do",produces="application/json;charset=utf-8;")
+		@RequestMapping(value="/product/product_one.do",produces="application/json;charset=utf-8;")
 		@ResponseBody
-		public String photo_one(HttpServletRequest request, HttpServletResponse response) {
+		public String product_one(HttpServletRequest request, HttpServletResponse response) {
 
 			int p_idx = Integer.parseInt(request.getParameter("p_idx"));
 			
 			//2.p_idx에 해당되는 vo얻어오기
-			PhotoVo vo = PhotoDao.getInstance().selectOne(p_idx);
+			ProductVo vo = ProductDao.getInstance().selectOne(p_idx);
 			
 			//3. JSON 데이터 생성
 			JSONObject json = new JSONObject();
@@ -122,21 +120,21 @@ public class PhotoController {
 			json.put("p_filename", vo.getP_filename());
 			json.put("p_regdate", vo.getP_regdate());
 			json.put("p_modifydate", vo.getP_modifydate());
-			json.put("mem_idx", vo.getMem_idx());
-			json.put("mem_name", vo.getMem_name());
+			json.put("user_idx", vo.getUser_idx());
+			
 			
 			return json.toString();
 			
-		}//end:photo_one.do
+		}//end:product_one.do
 		
-		@RequestMapping("/photo/delete.do")
+		@RequestMapping("/product/delete.do")
 		public String delete(HttpServletRequest request, HttpServletResponse response) {
 
 			ServletContext application = request.getServletContext();
 			
 			int p_idx = Integer.parseInt(request.getParameter("p_idx")); 
 			
-			PhotoVo vo = PhotoDao.getInstance().selectOne(p_idx);
+			ProductVo vo = ProductDao.getInstance().selectOne(p_idx);
 			
 			String webPath = "/upload/"; 
 			
@@ -147,18 +145,18 @@ public class PhotoController {
 			f.delete();
 				 
 			//3.DB delete
-			int res = PhotoDao.getInstance().delete(p_idx);
+			int res = ProductDao.getInstance().delete(p_idx);
 			
-			return "redirect:../photo/list.do";
+			return "redirect:../product/list.do";
 		}
 		
-		@RequestMapping("/photo/insert_form.do")
+		@RequestMapping("/product/insert_form.do")
 		public String insert_form(HttpServletRequest request, HttpServletResponse response) {
 
-			return "photo_insert_form.jsp";
+			return "product_insert_form.jsp";
 		}
 		
-		@RequestMapping("/photo/insert.do")
+		@RequestMapping("/product/insert.do")
 		public String insert(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 			int res1 =0;
@@ -173,32 +171,47 @@ public class PhotoController {
 			MultipartRequest mr = new MultipartRequest(request, saveDir, maxSize, "utf-8", new DefaultFileRenamePolicy()); 
 			
 			String p_filename="no_file";
+			String p_filename1="no_file";
+			String p_filename2="no_file";
+			String p_filename3="no_file";
 			//업로드된 화일정보 얻어온다
 			File f = mr.getFile("photo");
+			File f1 = mr.getFile("photo1");
+			File f2 = mr.getFile("photo2");
+			File f3 = mr.getFile("photo3");
 			if(f != null) {
 				p_filename = f.getName();
+			}
+			if(f1 != null) {
+				p_filename1 = f.getName();
+			}
+			if(f2 != null) {
+				p_filename2 = f.getName();
+			}
+			if(f3 != null) {
+				p_filename3= f.getName();
 			}
 			
 			String p_subject	= mr.getParameter("p_subject");  
 			String p_content	= mr.getParameter("p_content");
 			String p_ip		= request.getRemoteAddr();  
-			int mem_idx	= Integer.parseInt(mr.getParameter("mem_idx"));  
-			String mem_name	= mr.getParameter("mem_name");  
+			int user_idx	= Integer.parseInt(mr.getParameter("user_idx"));  
+			String user_name	= mr.getParameter("mem_name");  
 			
-			PhotoVo vo = new PhotoVo(p_subject, p_content, p_filename, p_ip,mem_idx,mem_name );
+			ProductVo vo = new ProductVo(p_subject, p_content, p_filename,p_filename1,p_filename2,p_filename3, p_ip,user_idx,user_name );
 			
-			res1 = PhotoDao.getInstance().insert(vo);
+			res1 = ProductDao.getInstance().insert(vo);
 			
-			return "redirect:../photo/list.do";
+			return "redirect:../product/list.do";
 		}
 		
-		@RequestMapping("/photo/modify_form.do")
+		@RequestMapping("/product/modify_form.do")
 		public String modify_form(HttpServletRequest request, HttpServletResponse response) {
 			String page = request.getParameter("page");
 			int p_idx = Integer.parseInt(request.getParameter("p_idx"));
 			
-			//2. p_idx - > PhotoVo
-			PhotoVo vo = PhotoDao.getInstance().selectOne(p_idx);
+			//2. p_idx - > ProductVo
+			ProductVo vo = ProductDao.getInstance().selectOne(p_idx);
 			
 			//<br> -> \n
 			String p_content = vo.getP_content().replace("<br>", "\n");
@@ -207,10 +220,10 @@ public class PhotoController {
 			request.setAttribute("vo", vo);
 			request.setAttribute("page", page);
 			
-			return "photo_modify_form.jsp";
+			return "product_modify_form.jsp";
 		}
 		
-		@RequestMapping("/photo/modify.do")
+		@RequestMapping("/product/modify.do")
 		public String modify(HttpServletRequest request, HttpServletResponse response) {
 
 			int     p_idx			= Integer.parseInt(request.getParameter("p_idx"));
@@ -219,21 +232,21 @@ public class PhotoController {
 			String page = request.getParameter("page");
 			//String p_ip			= request.getRemoteAddr();  
 		
-		   PhotoVo  vo = new PhotoVo();
+		   ProductVo  vo = new ProductVo();
 		   vo.setP_idx(p_idx);
 		   vo.setP_subject(p_subject);
 		   vo.setP_content(p_content);
 		   
-		   int res = PhotoDao.getInstance().update(vo);
+		   int res = ProductDao.getInstance().update(vo);
 		   
 		 
-		  return  String.format("redirect:../photo/view.do?p_idx=%d&page=%s",p_idx,page);
-		   //return "redirect:../photo/view.do?p_idx=" + p_idx + "&page=" + page;
+		  return  String.format("redirect:../product/view.do?p_idx=%d&page=%s",p_idx,page);
+		   //return "redirect:../product/view.do?p_idx=" + p_idx + "&page=" + page;
 		}
 		
-		@RequestMapping(value="/photo/photo_upload.do",produces="application/json;charset=utf-8;")
+		@RequestMapping(value="/product/product_upload.do",produces="application/json;charset=utf-8;")
 		@ResponseBody
-		public String photo_upload(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		public String product_upload(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 			ServletContext application = request.getServletContext();
 			
@@ -252,49 +265,71 @@ public class PhotoController {
 					                                    );
 			//업로드된 화일명 얻어온다
 			String p_filename="no_file";
+			String p_filename1="no_file";
+			String p_filename2="no_file";
+			String p_filename3="no_file";
 			//업로드된 화일정보 얻어온다
 			File f = mr.getFile("photo");
+			File f1 = mr.getFile("photo1");
+			File f2 = mr.getFile("photo2");
+			File f3 = mr.getFile("photo3");
+			
 			if(f != null) {
 				p_filename = f.getName();
+			}
+			if(f1 != null) {
+				p_filename1 = f1.getName();
+			}
+			if(f2 != null) {
+				p_filename2 = f2.getName();
+			}
+			if(f3 != null) {
+				p_filename3 = f3.getName();
 			}
 			
 			//p_idx
 			int p_idx = Integer.parseInt(mr.getParameter("p_idx"));
 			
-			PhotoVo vo = PhotoDao.getInstance().selectOne(p_idx);
+			ProductVo vo = ProductDao.getInstance().selectOne(p_idx);
 			
 			//기존화일을 삭제
 			File oldFile = new File(saveDir,vo.getP_filename());
 			oldFile.delete();
 			
 			//DB p_filename update
-			// update photo set p_filename=? where p_idx=?
+			// update product set p_filename=? where p_idx=?
 			vo.setP_filename(p_filename); //old -> new filename
+			vo.setP_filename(p_filename1);
+			vo.setP_filename(p_filename2);
+			vo.setP_filename(p_filename3);
 			
-			int res = PhotoDao.getInstance().update_filename(vo);
+			int res = ProductDao.getInstance().update_filename(vo);
 			
 			//결과전송
 			JSONObject json = new JSONObject();
 			json.put("p_filename", p_filename);
+			json.put("p_filename", p_filename1);
+			json.put("p_filename", p_filename2);
+			json.put("p_filename", p_filename3);
 			
 			return json.toString();
 		}
 		
 		
-		@RequestMapping("/photo/view.do")
+		@RequestMapping("/product/view.do")
 		public String view(HttpServletRequest request, HttpServletResponse response) {
 			
 			int p_idx = Integer.parseInt(request.getParameter("p_idx"));
 			
 			String page = request.getParameter("page");
 			
-			PhotoVo vo = PhotoDao.getInstance().selectOne(p_idx);
+			ProductVo vo = ProductDao.getInstance().selectOne(p_idx);
 			 
 			
 			request.setAttribute("vo", vo);
 			request.setAttribute("page", page);
 
-			return "photo_view.jsp";
+			return "product_view.jsp";
 		}
 		
 		
