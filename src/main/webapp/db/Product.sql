@@ -27,6 +27,9 @@ CREATE TABLE `Product` (
 	`p_num`	varchar(100)	NULL
 );
 
+insert into board values(2,'웃기지마','똥멍충이','192.168.0.25',now(),0,2,'김관리',1,1,1,'y'); 
+
+
 -- FK 설정(카테고리 테이블)
 ALTER TABLE `Product` ADD CONSTRAINT `FK_categories_TO_Product_1` FOREIGN KEY (
 	`c_idx`

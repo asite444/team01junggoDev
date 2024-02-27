@@ -176,9 +176,9 @@ public class ProductController {
 			String p_filename3="no_file";
 			//업로드된 화일정보 얻어온다
 			File f = mr.getFile("photo");
-			File f1 = mr.getFile("photo");
-			File f2 = mr.getFile("photo");
-			File f3 = mr.getFile("photo");
+			File f1 = mr.getFile("photo1");
+			File f2 = mr.getFile("photo2");
+			File f3 = mr.getFile("photo3");
 			if(f != null) {
 				p_filename = f.getName();
 			}
