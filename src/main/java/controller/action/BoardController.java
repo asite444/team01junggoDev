@@ -232,6 +232,12 @@ public class BoardController {
 	}
 	
 	//수정하기 폼띄우기
+	/***
+	 * 수정하기 폼띄우기
+	 * @param request
+	 * @param response
+	 * @return board_modify_form.jsp
+	 */
 	@RequestMapping("/board/modify_form.do")
 	public String modify_form(HttpServletRequest request, HttpServletResponse response) {
 		
@@ -254,7 +260,7 @@ public class BoardController {
 	
 	@RequestMapping("/board/modify.do")
 	public String modify(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
-		
+		//System.out.println("수정");
 		UserVo user = (UserVo) request.getSession().getAttribute("user");
 		if (user == null) {
 			//세션이 만료시(logout)
@@ -276,10 +282,11 @@ public class BoardController {
 		
 		//6.DB insert
 		int res = BoardDao.getInstance().update(vo);
-		System.out.println(res);
+//		System.out.println(res);
 		
 		//return "redirect:view.do?b_idx=" + b_idx + "&page=" + page ;
-		return String.format("redirect:view.do?b_idx=%d&page=%s&search=%s&search_text=%s", b_idx, page,search,URLEncoder.encode(search_text, "utf-8")) ;
+		//return String.format("redirect:view.do?b_idx=%d&page=%s&search=%s&search_text=%s", b_idx, page,search,URLEncoder.encode(search_text, "utf-8")) ;
+		return String.format("redirect:view.do?b_idx=%d", b_idx) ;
 		
 	}
 

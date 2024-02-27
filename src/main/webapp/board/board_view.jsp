@@ -37,9 +37,9 @@
 		//자리는 유지하되 내용만 감춘다.
 	}//end : delete_board
 	
-	//뎃글
+	//댓글
 	$(document).ready(function (){
-		comment_list(1); //page1
+		//comment_list(1); //page1
 	});
 		
 	//Ajax 통해서 삭제 => boaed_comment_list.jsp	
@@ -86,9 +86,9 @@
 			   data		:	{ 
 				               "b_idx" : "${ vo.b_idx }",
 				               "cmt_content" : cmt_content, 
-				               "mem_idx" : "${ user.user_idx }",
-				               "mem_id"  : "${ user.user_id }",
-				               "mem_name": "${ user.user_name }"
+				               "user_idx" : "${ user.user_idx }",
+				               "user_id"  : "${ user.user_id }",
+				               "user_name": "${ user.user_name }"
 			                },
 			   dataType	:	"json",
 			   success	:	function(res_data){
@@ -115,11 +115,17 @@
 		   
 		
 	}//end : comment_insert
+	function modify_form(b_idx) {
+		
+		console.log(b_idx);
+		location.href="modify_form.do?b_idx=" + b_idx; //PhotoModifyFormAction=BoardController
+
+	}//end : modify_form
 </script>
 
 <style type="text/css">
 th{
-	font-size: 50px;
+	font-size: 20px;
 	width: 300px;
 }
 b{font-weight: bold;}
@@ -195,38 +201,40 @@ textarea{
 			
 			<br>
 		<form action="form-inline">
-		<table class="table-wrapper">
-			<tr>
-				<th colspan="2"><b>${ vo.user_name }</b>님의 글 </th>
-			</tr>
-	       <tr>
-	          <th>제목</th>
-	          <td id="subject">${ vo.b_subject }</td>
-	       </tr>
-	       <tr>
-	          <th>내용</th>
-	          <td id="content">${ vo.b_content }</td>
-	       </tr>
-	       
-	       <tr>
-	          <td colspan="2" align="center">
-	          
-	          <c:if test="${ user.user_grade eq '관리자' }">
-			   	<input class="btn btn-link" type="button" value="답글달기" 
-			   				onclick="location.href='reply_form.do?b_idx=${ vo.b_idx }&page=${ param.page }&'">
-			  </c:if>
-	          <!-- 글주인 or 관리자만 활성화 -->
-	   			<c:if test="${ (vo.user_idx eq user.user_idx) or (user.user_grade eq '관리자') }"><!-- request:vo | session:user -->
-		   	      <input type="button" class="button special"  value="수정하기" 
-	              			onclick="send(this.form)">
-		   	      <input class="button alt" type="button" value="삭제하기" 
-		   			onclick="delete_board('${ vo.b_idx }');">
-	    		</c:if>
-	              <input type="button" class="button"  value="목록보기" 
-	              			onclick="location.href='list.do'">
-	          </td>
-	       </tr>
-		</table>
+			<input type="hidden"  name="user_idx"   value="${ user.user_idx }">
+    		<input type="hidden"  name="b_idx"  value="${ vo.b_idx }">
+			<table class="table-wrapper">
+				<tr>
+					<th colspan="2"><b>${ vo.user_name }</b>님의 글 </th>
+				</tr>
+		       <tr>
+		          <th>제목</th>
+		          <td id="subject">${ vo.b_subject }</td>
+		       </tr>
+		       <tr>
+		          <th>내용</th>
+		          <td id="content">${ vo.b_content }</td>
+		       </tr>
+		       
+		       <tr>
+		          <td colspan="2" align="center">
+		          
+		          <c:if test="${ user.user_grade eq '관리자' }">
+				   	<input class="btn btn-link" type="button" value="답글달기" 
+				   				onclick="location.href='reply_form.do?b_idx=${ vo.b_idx }&page=${ param.page }&'">
+				  </c:if>
+		          <!-- 글주인 or 관리자만 활성화 -->
+		   			<c:if test="${ (vo.user_idx eq user.user_idx) or (user.user_grade eq '관리자') }"><!-- request:vo | session:user -->
+			   	      <input type="button" class="button special"  value="수정하기" 
+		              			onclick="modify_form('${ vo.b_idx }');">
+			   	      <input class="button alt" type="button" value="삭제하기" 
+			   			onclick="delete_board('${ vo.b_idx }');">
+		    		</c:if>
+		              <input type="button" class="button"  value="목록보기" 
+		              			onclick="location.href='list.do'">
+		          </td>
+		       </tr>
+			</table>
 		</form>
 		
 		<br>

@@ -134,7 +134,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update board set b_use='n' where b_idx=#{ b_idx }
 	</update>
 	
- <!-- 수정 -->
+  <!-- 수정 -->
   <update id="board_update"  parameterType="vo.BoardVo">
   
      update board set b_subject = #{ b_subject },

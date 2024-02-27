@@ -28,25 +28,31 @@
 	    
 		   location.href="../user/login_form.do?url=" + encodeURIComponent(location.href) ;
 	}
-	function send(f) {
+   function send(f) {
+
+		//입력사항체크(제목/내용/사진)
 		let b_subject = f.b_subject.value.trim();
 		let b_content = f.b_content.value.trim();
 		
-		if (b_subject=='') {
-			alter("제목을 입력하세요");
-			f.b_subject.value='';
-			f.b_subject.value.focus();
+
+		if (b_subject == '') {
+			alert('제목을 입력하세요!');
+			f.b_subject.value = '';
+			f.b_subject.focus();
 			return;
 		}
-		
-		if (b_content=='') {
-			alter("제목을 입력하세요");
-			f.b_content.value='';
-			f.b_content.value.focus();
+
+		if (b_content == '') {
+			alert('내용을 입력하세요!');
+			f.b_content.value = '';
+			f.b_content.focus();
 			return;
 		}
-		f.action = "insert.do"; // /board/insert.do  <- BoardController
+
+
+		f.action = "modify.do";// PhotoModifyAction
 		f.submit();
+
 	}
 </script>
 <style type="text/css">
@@ -109,33 +115,37 @@ th{
 		<hr>
 			<br>
 		
-			<h1>게시물 작성</h1>
+			<h1>게시물 수정</h1>
 			
 			<br>
-		<form action="form-inline">
-		<table class="table-wrapper">
-			<tr>
-				<th colspan="2"><b>${ user.user_name }</b>님의 글 작성</th>
-			</tr>
-	       <tr>
-	          <th>제목</th>
-	          <td><input class="query" type="text" name="b_subject"></td>
-	       </tr>
-	       <tr>
-	          <th>내용</th>
-	          <td><textarea class="message" rows="5" name="b_content"></textarea></td>
-	       </tr>
-	       
-	       <tr>
-	          <td colspan="2" align="center">
-	              <input type="button" class="button special"  value="새글쓰기" 
-	              			onclick="send(this.form)">
-	              <input type="button" class="button"  value="목록보기" 
-	              			onclick="location.href='list.do'">
-	          </td>
-	       </tr>
-		</table>
-		</form>
+			
+	<form action="form-inline">
+		<input type="hidden"  name="user_idx"   value="${ user.user_idx }">
+		<input type="hidden"  name="b_idx"   value="${ vo.b_idx }">
+	  	<input type="hidden"  name="user_name"  value="${ user.user_name }">
+	<table class="table-wrapper">
+		<tr>
+			<th colspan="2"><b>${ user.user_name }</b>님의 글 작성하신 글</th>
+		</tr>
+	      <tr>
+	         <th>제목</th>
+	         <td><input class="query" type="text" name="b_subject" value="${ vo.b_subject }"></td>
+	      </tr>
+	      <tr>
+	         <th>내용</th>
+	         <td><textarea class="message" rows="5" name="b_content" >${ vo.b_content }</textarea></td>
+	      </tr>
+	      
+	      <tr>
+	         <td colspan="2" align="center">
+	             <input type="button" class="button special" value="수정하기" 
+	             			onclick="send(this.form);">
+	             <input type="button" class="button"  value="목록보기" 
+	             			onclick="location.href='list.do'">
+	         </td>
+	      </tr>
+	</table>
+	</form>
 			
 				
 				

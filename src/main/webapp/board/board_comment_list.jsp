@@ -64,14 +64,6 @@
 	<c:if test="${ not empty cmt_list }">
 	   ${ pageMenu }
 	</c:if>
-	<!-- CommentController에서 아래와 같이 생성해서 와야 된다 : pageing.getCommentPaging -->
-	<!-- <ul class="pagination">
-		<li><a href="#" onclick="comment_list(1);">1</a></li>
-		<li><a href="#" onclick="comment_list(2);">2</a></li>
-		<li><a href="#" onclick="comment_list(3);">3</a></li>
-		<li><a href="#" onclick="comment_list(4);">4</a></li>
-		<li><a href="#" onclick="comment_list(5);">5</a></li>
-	</ul> -->
 
 <hr>
 <c:forEach var="cmt" items="${ cmt_list }">
