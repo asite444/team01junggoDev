@@ -96,17 +96,34 @@ function limitInputLength(input) {
 	<h2 align="center">카드 정보</h2>
 	<table>
 		<tr>
-			<th>카드 정보를 입력해 주세요</th>
+			<th colspan="2">카드 정보를 입력해 주세요</th>
 		</tr>
 		<tr>
-			<td align="left">카드번호</td>
+			<td align="left" colspan="2">카드번호</td>
 		</tr>
-		<tr >
-			<td align="center"  style="width: 50px" >
+		<tr>
+			<td align="center"  style="width: 50px" colspan="2">
 			<input  type="number"  inputmode="numeric"  inputmode="numeric" maxlength="4" placeholder="0000" oninput="limitInputLength(this)" >
 			-<input type="number" maxlength="4" placeholder="0000" oninput="limitInputLength(this)"  >
 			-<input type="password" inputmode="numeric" maxlength="4" placeholder="0000" oninput="limitInputLength(this)"  Number_keypad="on">
-			-<input type="password" inputmode="numeric" maxlength="4" placeholder="0000" oninput="limitInputLength(this)"  Number_keypad="on"></td>
+			-<input type="password" inputmode="numeric" maxlength="4" placeholder="0000" oninput="limitInputLength(this)"  Number_keypad="on">
+			</td>
+		</tr>
+		<tr>
+		<td>유효기간</td>
+		<td>cvv</td>
+		</tr>
+		<tr>
+		<td><input width="50%" type="password" inputmode="numeric" maxlength="4" placeholder="MMYY" oninput="limitInputLength(this)"  Number_keypad="on"></td>
+		<td><input width="100%" type="text" inputmode="numeric" maxlength="3" placeholder="카드 뒷면 3자리 숫자" oninput="limitInputLength(this)"  Number_keypad="on"></td>
+		</tr>
+		<tr>
+		<td colspan="2" align="left">카드 비밀번호</td>
+
+		</tr>
+		<tr>
+		<td colspan="2" align="left"><input width="100%" type="text" inputmode="numeric" maxlength="2" placeholder="앞2자리" oninput="limitInputLength(this)"  Number_keypad="on"></td>
+		
 		</tr>
 	</table>
 </div>
