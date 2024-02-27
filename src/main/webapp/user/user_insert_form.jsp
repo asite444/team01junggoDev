@@ -181,6 +181,7 @@
 							<div data-lastpass-icon-root="true"
 								style="position: relative !important; height: 0px !important; width: 0px !important; float: left !important;"></div>
 							</div>
+							<span id="id_msg"></span>
 						</td>
 					</tr>
 					<tr>

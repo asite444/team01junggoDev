@@ -149,7 +149,7 @@ public class UserController {
 	  	 
 	  	
 	  }//end: insert.do
-	  
+	   
 	  
 	  	//아이디 체크
 		@RequestMapping(value="/user/check_id.do",produces="application/json;charset=utf-8;")
