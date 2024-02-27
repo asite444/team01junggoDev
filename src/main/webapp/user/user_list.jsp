@@ -1,98 +1,122 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>    
     
-<!DOCTYPE html>
+<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+    
+<!DOCTYPE HTML>
+<!--
+	Intensify by TEMPLATED
+	templated.co @templatedco
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+-->
 <html>
 <head>
+<title>1조 TeamProject</title>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-
-<!-- Bootstrap 3.x -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-
-<style type="text/css">
-
-	#box{
-	  width: 900px;
-	  margin: auto;
-	  margin-top: 10px;
-	}
-	
-	#title{
-		text-align: center;
-		font-size: 50px;
-		font-weight: normal;
-		color: lime;
-	}
-	
-	/* ellipsis */
-	
-	#mem_id{
-		display: inline-block;
-		width: 50px;
-		overflow: hidden;
-  		white-space: nowrap;
-  		text-overflow: ellipsis;
- 	    word-break: break-all;
-
-	}
-	
-	
-
-</style>
+<meta name="robots"
+	content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../assets/css/main.css">
 
 <script type="text/javascript">
-
-	function del(user_idx) {
-		
-		//삭제확인
-		if(confirm("정말 삭제하시나요?")==false)return;
-		
-		//삭제처리
-		location.href = "delete.dp?user_idx=" + user_idx; //UserDeleteAction
-		
+	function login(){
+	    
+		   location.href="user/user_login_form.jsp";
 	}
-
-
-
 </script>
-
-
-
+<style type="text/css">
+	#query{ 
+	margin: auto;
+	width: 800px; }
+</style>
 
 </head>
 <body>
 
-<div id="box">
-	<h2 id="title">😊😂😁회원목록입니다😊😂😁</h2>
-	
-	<!-- 로그인과 로그아웃 -->
-	<div style="text-align: right;">
-	
-		<!-- 로그인이 안될경우 : 세션영역에 user가 없는가? -->
-		<c:if test="${ empty sessionScope.user }">
-			<input class="btn btn-success" type="button" value="로그인"
-			        onclick="location.href='/SecondhandMarket/user/user_login_form.jsp'">
-		</c:if>
+	<!-- Header -->
+	<header id="header">
+		<nav class="left">
+			<a href="#menu"><span>Menu</span></a>
+		</nav>
+		<a href="main.jsp" class="logo">중고로Go</a>
+		<nav class="right">
+			<c:if test="${ empty sessionScope.user }">
+				<input class="button alt" value="Login"
+					onclick="login();">
+			</c:if>
+
+			<!-- 로그인이 됐을경우 : 세션영역에 user가 있는가?  -->
+			<c:if test="${ not empty sessionScope.user }">
+				<b>${ sessionScope.user.user_name }</b>님 환영합니다!!
+			<input class="button alt" type="button" value="Logout"
+					onclick="location.href='user/logout.do'">
+					
+			</c:if>
+			
+		</nav>
+
+
+
+
+	</header>
+	<!-- Menu -->
+	<nav id="menu">
+		<ul class="links">
+			<li><a href="../main.jsp">Home</a></li>
+			<li><a href="../all_items.jsp">전체매물</a></li>
+			<li><a href="../category.jsp">Category</a></li>
+			<li><a href="../board/list.do">community</a></li>
+			<li><a href="../generic.jsp">Generic</a></li>
+			<li><a href="../elements.jsp">Elements</a></li>
+		</ul>
+		<ul class="actions vertical">
+			<li>
+				<input class="button fit" value="Login" 
+						onclick="login();" >			
+			</li>
+		</ul>
 		
-		<!-- 로그인이 됐을경우 : 세션영역에 user가 있는가?  -->
-		<c:if test="${ not empty sessionScope.user }">
-			<b>${ sessionScope.user.user_name }</b>님 환영합니다!!
-			<input class="btn btn-info" type="button" value="로그아웃"
-			       onclick="location.href='logout.do'">
-		</c:if>
+		
+	</nav>
+	<!-- Banner -->
+	<section id="banner">
+		<div class="content">
+			<h1>☆Wellcome SecondHand Shop!!☆</h1>
+			<p>
+				어서오세요!
+				반갑슴둥
+				<br>
+				Look around ours shop!!!!
+			</p>
+			<ul class="actions">
+				<li><a href="#one" class="button scrolly">Get Started</a></li>
+			</ul>
+		</div>
+	</section>
 	
-	</div>
+	<!-- <hr>
+	Search
+		<form method="post" action="#">
+			<div class="row uniform">
+				<div class="9u 12u$(small)">
+					<input type="text" name="query" id="query" value="매물검색"
+						placeholder="Query">
+				</div>
+				<div class="3u$ 12u$(small)">
+					<input type="submit" value="Search" class="fit">
+				</div>
+			</div>
+		</form>
+	<hr>	 -->
 	
-	<!-- 회원가입 -->
-	<div style="margin: -bottom: 5px;">
-		<button class="btn btn-danger" onclick="location.href='/SecondhandMarket/user/user_insert_form.jsp'">회원가입</button>
-	</div>
+	<!-- One -->
+	<section id="one" class="wrapper">
+	<h2 id="title" align="center">👪👨‍👩‍👧‍👦‍회원목록👪👨‍👩</h2>
+	
+	
+	
+	
 	
 	
 	<table class="table">
@@ -133,9 +157,37 @@
 	   </c:forEach>
 	</table>
 	
-</div>
+	
+		
+		
+		
+		
+		
+		
+		
+	</section>
+	<!-- Footer -->
+	<footer id="footer">
+		<div class="inner">
+			<h2>Get In Touch</h2>
+			<ul class="actions">
+				<li><span class="icon fa-phone"></span> <a href="#">(000)
+						000-0000</a></li>
+				<li><span class="icon fa-envelope"></span> <a href="#">information@untitled.tld</a></li>
+				<li><span class="icon fa-map-marker"></span> 123 Somewhere
+					Road, Nashville, TN 00000</li>
+			</ul>
+		</div>
+	</footer>
+	<div class="copyright">
+		Powered by: <a href="https://templated.co/">TEMPLATED</a>
+	</div>
 
-
-
+	<!-- Scripts -->
+	<script src="../assets/js/jquery.min.js"></script>
+	<script src="../assets/js/jquery.scrolly.min.js"></script>
+	<script src="../assets/js/skel.min.js"></script>
+	<script src="../assets/js/util.js"></script>
+	<script src="../assets/js/main.js"></script>
 </body>
 </html>
