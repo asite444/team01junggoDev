@@ -1,13 +1,17 @@
 use secondhanddb;
 -- drop table product;
+drop table product
 -- 상품 테이블
 CREATE TABLE `Product` (
 	`p_idx`	int PRIMARY KEY  auto_increment	NOT NULL,
-	`c_idx`	int	NOT NULL,
+	`categories`	varchar(100)	NOT NULL,
 	`user_idx`	int	NOT NULL,
 	`p_subject`	varchar(100)	NOT NULL,
 	`p_content`	varchar(500)	NOT NULL,
 	`p_filename`	varchar(100)	NOT NULL,
+	`p_filename1`	varchar(100)	NOT NULL,
+	`p_filename2`	varchar(100)	NOT NULL,
+	`p_filename3`	varchar(100)	NOT NULL,
 	`p_ip`	varchar(100)	NOT NULL,
 	`p_regdate`	datetime	NULL	DEFAULT now(),
 	`p_modifydate`	datetime	NULL	DEFAULT now(),
@@ -15,8 +19,16 @@ CREATE TABLE `Product` (
 	`p_status`	varchar(100)	NOT NULL,
 	`p_price`	int	NOT NULL	DEFAULT 0,
 	`p_nego`	varchar(100)	NOT NULL,
-	`p_deal`	varchar(100)	NULL
+	`p_deal`	varchar(100)	NULL,
+	`p_name`	varchar(100)	NULL,
+	`p_local`	varchar(100)	NULL,
+	`p_som`	varchar(100)	NULL,
+	`p_company` varchar(100)	NULL,
+	`p_num`	varchar(100)	NULL
 );
+
+insert into board values(2,'웃기지마','똥멍충이','192.168.0.25',now(),0,2,'김관리',1,1,1,'y'); 
+
 
 -- FK 설정(카테고리 테이블)
 ALTER TABLE `Product` ADD CONSTRAINT `FK_categories_TO_Product_1` FOREIGN KEY (
@@ -35,13 +47,18 @@ REFERENCES `user` (
 );
 
 
+select * from product
 
 
+CREATE TABLE `categories` (
+	`c_idx`	int auto_increment PRIMARY KEY	NOT NULL,
+	`c_name`	varchar(100)	NULL,
+	`c_code`	varchar(100)	NULL
+);
 
+alter table Product add constraint fk_Product_categories foreign key(categories) references categories(c_code)
 
-
-
-
+alter table product add constraint fk_product_category foreign key(category) references category(category_code)
 commit;
 select * from user;
 select * from product;
