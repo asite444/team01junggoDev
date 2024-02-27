@@ -18,16 +18,16 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import annotation.RequestMapping;
 import annotation.ResponseBody;
 import dao.ProductDao;
-import dao.UserDao;
 import myconstant.MyConstant;
 import util.Paging;
 import util.WeatherUtil;
 import vo.ProductVo;
-import vo.UserVo;
 import vo.WeatherVo;
 
 public class ProductController {
 
+	
+	
 		@RequestMapping("/product/list.do")
 		public String list(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -79,12 +79,7 @@ public class ProductController {
 				e.printStackTrace();
 			}
 			
-			UserVo vo = UserDao.getInstance().selectOne("user_idx");
-			String user_name = vo.getUser_name();
-			
-			map.put("user_name", user_name);
 			List<ProductVo> list = ProductDao.getInstance().selectList(map);
-			
 			int rowTotal = ProductDao.getInstance().selectRowTotal(map);
 			
 			String pageMenu = Paging.getproductPaging("list.do", 
@@ -123,9 +118,6 @@ public class ProductController {
 			json.put("p_content", vo.getP_content());
 			json.put("p_ip", vo.getP_ip());
 			json.put("p_filename", vo.getP_filename());
-			json.put("p_filename1", vo.getP_filename1());
-			json.put("p_filename2", vo.getP_filename2());
-			json.put("p_filename3", vo.getP_filename3());
 			json.put("p_regdate", vo.getP_regdate());
 			json.put("p_modifydate", vo.getP_modifydate());
 			json.put("user_idx", vo.getUser_idx());
@@ -204,14 +196,11 @@ public class ProductController {
 			String p_content	= mr.getParameter("p_content");
 			String p_ip		= request.getRemoteAddr();  
 			int user_idx	= Integer.parseInt(mr.getParameter("user_idx"));  
-			String user_name	= mr.getParameter("user_name");  
+			String user_name	= mr.getParameter("mem_name");  
 			
-			/*
-			 * ProductVo vo = new ProductVo(p_subject, p_content,
-			 * p_filename,p_filename1,p_filename2,p_filename3, p_ip,user_idx,user_name );
-			 */
+			//ProductVo vo = new ProductVo(p_subject, p_content, p_filename,p_filename1,p_filename2,p_filename3, p_ip,user_idx,user_name );
 			
-			/* res1 = ProductDao.getInstance().insert(vo); */
+			//res1 = ProductDao.getInstance().insert(vo);
 			
 			return "redirect:../product/list.do";
 		}
