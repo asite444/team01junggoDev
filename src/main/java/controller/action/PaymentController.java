@@ -38,11 +38,11 @@ public class PaymentController {
 		// List<CategoryVo> category_list = CategoryDao.getInstance().selectList();
 		
 		int user_idx=user.getUser_idx();
-		// List<CardVo> card_list=CardDao.getInstance().selectList(user_idx);
+		 List<CardVo> card_list=CardDao.getInstance().selectList(user_idx);
 		request.setAttribute("payment_list", payment_list);
 		// request.setAttribute("category_list", category_list);
 		request.setAttribute("payment_total_amount", payment_total_amount);
-		// request.setAttribute("card_list", card_list);
+		request.setAttribute("card_list", card_list);
 		
 		
 		return "payment_list.jsp";

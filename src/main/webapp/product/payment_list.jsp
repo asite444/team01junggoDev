@@ -18,7 +18,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="../assets/css/main.css">
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script type="text/javascript">
+$(document).ready(function() {
+    // select 요소가 변경될 때
+    $('#card_list').change(function() {
+        // 선택한 카드의 값과 hidden 값을 가져오기
+        var selectedCardNum = $('option:selected', this).data('card-number');
+        var selectedCardType = $('option:selected', this).data('card-type');
+        
+        // 가져온 값을 각각의 input 태그에 입력
+        $('#card_number').val(selectedCardNum);
+        $('#card_type').val(selectedCardType);
+    });
+});
+
+
 	function find_addr() {
 		new daum.Postcode({
 			oncomplete : function(data) {
@@ -33,6 +48,32 @@
 
 		f.action = 'payment.do'
 		f.submit();
+	}
+	
+
+	function openCardPopup() {
+		
+		
+            var form = document.createElement('form');
+            form.action = 'popup_card.jsp';
+            form.method = 'post';
+            form.target = '공지사항';
+            
+            var parameterValue = '${user}'; // 원하는 파라미터 값 설정
+            var input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'user';
+            input.value = parameterValue;
+            
+            form.appendChild(input);
+            document.body.appendChild(form);
+            
+            window.open('popup_card.jsp', '카드등록', 'width=600, height=600, top=200, left=850');
+            
+            form.submit();
+            
+            document.body.removeChild(form);
+        
 	}
 </script>
 </head>
@@ -165,15 +206,16 @@
 								<table class="table">
 									<tr>
 										<td style="width: 30%"><select id="card_list" style="width: 70%">
-												<option value="" style="text-align: center;">카드선택</option>
+												<option value="" style="text-align: center;" >카드선택</option>
 												<c:forEach var="card" items="${card_list}">
-													<option value="${card.card_num}" data-card-type="${card.card_type}">${card.card_name}</option>
+													<option value="${card.card_idx}" data-card-number="${card.card_number}"  data-card-type="${card.card_type}">${card.card_bank}</option>
 
 												</c:forEach>
 										</select> <!-- <input type="text" readonly="readonly" id="card_num" name="card_num" style="width: 20%">  --></td>
-										<td align="left"><input type="text" readonly="readonly" id="card_type" width="10px" name="card_type" style="width: 100%"></td>
-										<td><input type="text" readonly="readonly" id="card_num" name="card_num" style="width: 50%"></td>
-										<td><input type="button" value="카드등록" class="button small" onclick=""></td>
+										<td align="left"><input type="text" readonly="readonly" id="card_number" width="10px" name="card_type" style="width: 100%"></td>
+										<td><input type="text" readonly="readonly" id="card_type" name="card_type" style="width: 50%"></td>
+										
+										<td><input type="button" value="카드등록" class="button small" onclick="openCardPopup()"></td>
 									</tr>
 								</table>
 							</td>
