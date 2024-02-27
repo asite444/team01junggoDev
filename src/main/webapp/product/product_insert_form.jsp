@@ -113,7 +113,7 @@
 			                     onclick="send(this.form);">
 			                      
 			              <input class="btn btn-info"    type="button" value="메인화면" 
-			                     onclick="location.href='${ pageContext.request.contextPath}/product/list.do'"> 
+			                     onclick="location.href='../product/list.do'"> 
 			          </td>
 			       </tr>
 			       

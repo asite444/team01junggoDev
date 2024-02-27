@@ -239,7 +239,7 @@
  	function insert_form(){
 	  
 	  //로그인 여부 체크
-	 /*  if("${ empty user }"=="true"){
+	  if("${ empty user }"=="true"){
 		  
 		  if(confirm("사진등록은 로그인후에 이용가능합니다\n로그인하시겠습니까?")==false) return;
 		  
@@ -247,7 +247,7 @@
 		  location.href="${ pageContext.request.contextPath}/user/login_form.do";
 		  
 		  return;
-	  } */
+	  } 
 	  //사진등록폼으로 이동
 	  location.href="${ pageContext.request.contextPath}/product/insert_form.do"; // productInsertFormAction
   }//end:insert_form()
@@ -316,15 +316,15 @@
 		</li>
 	</ul>
 		<nav class="right">
-		<%-- <c:if test="${ empty sessionScope.user }">
-			<input type="reset" value="Join Us" class="button special" onclick="location.href='/SecondhandMarket/user/user_insert_form.jsp'">
-			<input type="submit" value="Login" onclick="send(this.form);">
+	<c:if test="${ empty sessionScope.user }">
+			<input type="button" value="Join Us" class="button special" onclick="location.href='/SecondhandMarket/user/user_insert_form.jsp'">
+			<input type="button" value="Login" onclick="location.href='${ pageContext.request.contextPath}/user/login.do'">
 			</c:if>
-			 --%>
-			<c:if test="${ not empty sessionScope.user }">
-			<b>${ user.mem_name }</b>님 환영합니다 
+		
+			 <c:if test="${ not empty sessionScope.user }">
+			<b>${ user.user_name }</b>님 환영합니다 
 			<a href="#" class="button alt" onclick="location.href='${ pageContext.request.contextPath}/user/logout.do'">로그아웃</a>
-			</c:if>
+			</c:if> 
 			<a href="#" class="button alt" onclick="insert_form();"> 상품등록</a>
 	
 				 <div id="ser" align="right" style="margin-bottom: 5px;">
@@ -361,7 +361,7 @@
 			
 	<div id="box">
 	<div id="image_box">
-		<img src="../images/aa.png" alt="My Image"  width="2000">
+		<img src="images/aa.png" alt="My Image"  width="2000">
 	</div>
 		<div id="product_box">
  
@@ -376,9 +376,9 @@
       <!-- for(productVo vo : list) 동일  -->
       <c:forEach var="vo"  items="${ list }">   
          <div class="product" onclick="location.href='view.do?p_idx=${vo.p_idx}&page=${ empty param.page ? 1 : param.page }'">
-            <img src="${ pageContext.request.contextPath }/upload/${ vo.p_filename }">
+            <img src="${ pageContext.request.contextPath }/images/${ vo.p_filename }">
             
-            <p class="subject">제목:${ vo.p_subject }<br>가격/지역<br><span class="glyphicon glyphicon-heart">관심도</span></p>
+            <p class="subject">제목:${ vo.p_subject }<br>${ vo.p_price }/${ vo.local }<br><span class="glyphicon glyphicon-heart">${ vo.p_hit }</span></p>
            
          </div>
       </c:forEach>
@@ -389,7 +389,7 @@
    </div>
   
 			
-		</div>
+		
 	</section>
 	<!-- Footer -->
 	<footer id="footer">
@@ -418,31 +418,31 @@
 	<c:forEach var="vo"  items="${ weatherlist }">   
        		<div id="weather" align="center">오늘의 날씨
         	<c:if test="${ (vo.icon eq '01d') }">
-           	<div><img src="../images/01d.png">상태 : 맑음&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }%</div>
+           	<div><img src="images/01d.png">상태 : 맑음&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }%</div>
            	</c:if>
            	<c:if test="${ (vo.icon eq '02d') }">
-           	<div><img src="../images/02d.png">상태 : 약간흐림&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }%</div>
+           	<div><img src="images/02d.png">상태 : 약간흐림&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }%</div>
            	</c:if>
            	<c:if test="${ (vo.icon eq '03d') }">
-           	<div><img src="../images/03d.png">상태 : 흐림&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }%</div>
+           	<div><img src="images/03d.png">상태 : 흐림&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }%</div>
            	</c:if>
            	<c:if test="${ (vo.icon eq '04d') }">
-           	<div><img src="../images/04d.png">상태 : 매우흐림&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }%</div>
+           	<div><img src="images/04d.png">상태 : 매우흐림&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }%</div>
            	</c:if>
            	<c:if test="${ (vo.icon eq '09d') }">
-           	<div><img src="../images/09d.png">상태 : 약한비&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }%</div>
+           	<div><img src="images/09d.png">상태 : 약한비&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }%</div>
            	</c:if>
            	<c:if test="${ (vo.icon eq '10d') }">
-           	<div><img src="../images/10d.png">상태 : 비&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }%</div>
+           	<div><img src="images/10d.png">상태 : 비&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }%</div>
            	</c:if>
            	<c:if test="${ (vo.icon eq '11d') }">
-           	<div><img src="../images/11d.png">상태 : 번개&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }%</div>
+           	<div><img src="images/11d.png">상태 : 번개&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }%</div>
            	</c:if>
            	<c:if test="${ (vo.icon eq '13d') }">
-           	<div><img src="../images/13d.png">상태 : 눈&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }%</div>
+           	<div><img src="images/13d.png">상태 : 눈&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }%</div>
            	</c:if>
            	<c:if test="${ (vo.icon eq '50d') }">
-           	<div><img src="../images/50d.png">상태 : 안개&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }%</div>
+           	<div><img src="images/50d.png">상태 : 안개&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }%</div>
            	</c:if>
          </div>
    </c:forEach>
