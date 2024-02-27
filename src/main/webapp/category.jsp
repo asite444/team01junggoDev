@@ -30,30 +30,34 @@
 <style type="text/css">
 	.mainmenu{
 		float: left;
-		width: 80px;
-		height: 30px;
+		width: 100px;
+	
+		
+		text-align: left;
 		list-style-type: none;
 		font-family: 'SejonghospitalBold';
     	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2312-1@1.1/SejonghospitalBold.woff2') format('woff2');
    		font-weight: 700;
     	font-style: normal;
-    	text-align: left;
+    	
 	}
 	
 	li.mainmenu ul{
 		margin: 0px;
 		list-style-type: none;
+		text-align:center;
 		padding: 0px;
 		position: absolute;
 	}
 	
 	.mainmenu a{
  		background : white; 
-		width: 200px;
+		width: 150px;
 		display: block; 
 		color: black;
-		text-decoration: none;
 		
+		text-decoration: none;
+		text-align:left;
 		border-bottom: 1px solid #ffffff;
 	}
 	
@@ -81,7 +85,7 @@
    }
    
    /* id selector  */
-   .photo_box{
+   .product_box{
       height: 700px;
       margin-top: 500px;
       border: 1px solid gray;
@@ -99,7 +103,7 @@
    }
    
    /* class selector */
-   .photo{
+   .product{
     width: 260px;
     height: 210px;
     margin-bottom:100px;
@@ -109,23 +113,23 @@
     float:left;
    }
    
-   .photo:hover{
+   .product:hover{
       border-color:  pink;
    }
    
    /* child selector */
-   .photo > img{
+   .product > img{
     width: 260px;
     height: 210px;
     border: 1px solid gray;
     outline: 1px solid black; 
    }
    
-    .photo> img:hover{
+    .product> img:hover{
       border-color:  pink;
    }
   
-    .photo > p{
+    .product > p{
       /* border: 1px solid gray; */
       padding: 5px;
         font-family: 'JalnanGothic';
@@ -144,10 +148,10 @@
       font-size: 12px;
        font-family: 'JalnanGothic';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_231029@1.1/JalnanGothic.woff') format('woff');
-    font-weight: normal;
+   	font-weight: normal;
     font-style: normal;
-      overflow: hidden;
-	  white-space: nowrap;
+     overflow: hidden;
+	 white-space: nowrap;
 	  text-overflow: ellipsis;
 	  word-break: break-all;
    }
@@ -157,9 +161,7 @@
    padding: 0px;;
     font-size: 20px;
    }
-   
-
-   
+  
     .subject:hover{
       border-color:  pink;
    }
@@ -196,7 +198,6 @@
 				$("#search_text").val("");
 			}
 		
-		
 		$("li.mainmenu ul").hide(); //하위메뉴 숨기기
 		
 		$("li.mainmenu").hover(function(){
@@ -223,9 +224,7 @@
 			$("#search_text").focus();
 			return;
 		}
-		
-		location.href="list.do?search=" + search + "&search_text=" + encodeURIComponent(search_text,"utf-8");
-		
+		location.href="${ pageContext.request.contextPath}/product/list.do?search=" + search + "&search_text=" + encodeURIComponent(search_text,"utf-8");
 	}
 	
 </script>
@@ -233,92 +232,27 @@
 
 <script type="text/javascript">
 
-
 	//번역변수
 	let g_p_idx;             //수정/삭제할 p_idx
 	let g_p_filename;      // 다운로드할 파일명
-  
 	
-
-
-
-	
-	
-  function insert_form(){
+ 	function insert_form(){
 	  
 	  //로그인 여부 체크
 	  if("${ empty user }"=="true"){
 		  
 		  if(confirm("사진등록은 로그인후에 이용가능합니다\n로그인하시겠습니까?")==false) return;
 		  
-		  //로그인폼으로 이동 : 현재위치=> /photo/list.do
-		  location.href="../member/login_form.do";
+		  //로그인폼으로 이동 : 현재위치=> /product/list.do
+		  location.href="${ pageContext.request.contextPath}/user/login_form.do";
 		  
 		  return;
 	  }
-		
 	  //사진등록폼으로 이동
-	  location.href="insert_form.do"; // PhotoInsertFormAction
-		  
-	  
+	  location.href="${ pageContext.request.contextPath}/product/insert_form.do"; // productInsertFormAction
   }//end:insert_form()
   
-  function show_detail(p_idx){
-	  
-	  //alert(p_idx+" 상세보기");
-	  
-	  //Ajax이용 p_idx에해당되는 사진정보 가져와서
-	  $.ajax({
-		  url		:	"photo_one.do",//PhotoOneAction
-		  data		:	{"p_idx":p_idx},
-		  dataType	:	"json",
-		  success	:	function(res_data){
-			  //res_data={"p_idx":1,"p_subject":"제목","p_content":"내용","mem_idx":3}
-			 
-			  g_p_idx        = res_data.p_idx;
-			  g_p_filename = res_data.p_filename;
-			  
-			   //팝업창
-			    $("#myModal").modal({backdrop: "static" });
-			 
-			   $("#btn_popup_download").hide();
-			   $("#btn_popup_update").hide();
-			   $("#btn_popup_delete").hide();
-			   
-			   //로그인이 된경우
-			   if("${ not empty user }"=="true"){
-				   //다운로드버튼
-				   $("#btn_popup_download").show();
-			   }
-			   
-			   //로그인유저가 관리자인 경우
-			   if("${ user.mem_grade eq '관리자' }" == "true"){
-				   $("#btn_popup_update").show();
-				   $("#btn_popup_delete").show();
-			   }
-			   
-			   //사진올린사람이 로그인유저와 동일한경우
-			   if( "${ user.mem_idx }" == res_data.p_idx){
-				   $("#btn_popup_update").show();
-				   $("#btn_popup_delete").show();
-			   }
-			   			   
-			   $("#popup_title").html(res_data.p_subject);
-			   $("#popup_content").html(res_data.p_content);
-			   $("#popup_regdate").html("올린날짜 : " + res_data.p_regdate);
-			   $("#popup_p_name").html("작 성 자 : " +res_data.p_name);
-			   
-			   //<img id="popup_image" src="">
-			   $("#popup_image").attr("src","../upload/" + res_data.p_filename)
-			   
-		  },
-		  error		:	function(err){
-			  alert(err.responseTex);
-		  }
-		  
-	  });//end:ajax
-
-	}
+}
 </script>
 
 </head>
@@ -380,13 +314,13 @@
 	</ul>
 		<nav class="right">
 		<c:if test="${ empty sessionScope.user }">
-			<a href="#" class="button alt" onclick="location.href='${ pageContext.request.contextPath}/member/insert_form.do'">회원가입</a>
-			<a href="#" class="button alt" onclick="location.href='${ pageContext.request.contextPath}/member/login_form.do'">로그인</a>
+			<a href="#" class="button alt" onclick="location.href='${ pageContext.request.contextPath}/user/insert_form.do'">회원가입</a>
+			<a href="#" class="button alt" onclick="location.href='${ pageContext.request.contextPath}/user/login_form.do'">로그인</a>
 			</c:if>
 			
 			<c:if test="${ not empty sessionScope.user }">
 			<b>${ user.mem_name }</b>님 환영합니다 
-			<a href="#" class="button alt" onclick="location.href='${ pageContext.request.contextPath}/member/logout.do'">로그아웃</a>
+			<a href="#" class="button alt" onclick="location.href='${ pageContext.request.contextPath}/user/logout.do'">로그아웃</a>
 			</c:if>
 			<a href="#" class="button alt" onclick="insert_form();"> 상품등록</a>
 	
@@ -426,7 +360,7 @@
 	<div id="image_box">
 		<img src="images/aa.png" alt="My Image"  width="2000">
 	</div>
-		<div id="photo_box">
+		<div id="product_box">
  
       <!-- 등록된 사진이 없으면  -->
       <c:if test="${ empty list }">
@@ -436,9 +370,9 @@
       </c:if>
       
       <%-- <c:forEach begin="1"  end="20"> --%>
-      <!-- for(PhotoVo vo : list) 동일  -->
+      <!-- for(productVo vo : list) 동일  -->
       <c:forEach var="vo"  items="${ list }">   
-         <div class="photo" onclick="location.href='view.do?p_idx=${vo.p_idx}&page=${ empty param.page ? 1 : param.page }'">
+         <div class="product" onclick="location.href='view.do?p_idx=${vo.p_idx}&page=${ empty param.page ? 1 : param.page }'">
             <img src="${ pageContext.request.contextPath }/upload/${ vo.p_filename }">
             
             <p class="subject">제목:${ vo.p_subject }<br>가격/지역<br><span class="glyphicon glyphicon-heart">관심도</span></p>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="product">
+
+	<select id="product_list" resultType="vo.ProductVo">
+ 		select * from product
+ 	</select>
+ 	
+ 		<select id="product_condition_list" parameterType="Map" resultType="vo.ProductVo"> 
+ 		select 
+		* 
+		from
+		(
+			select 
+				* , rank() over(order by p_idx desc) as no
+			from product
+				<trim prefix="where"  prefixOverrides="or">
+			
+				<if test="name!=null">
+					mem_name like concat('%', #{name}, '%')
+				</if>
+				<if test="subject!=null">
+					p_subject like concat('%', #{subject}, '%')
+				</if>
+				<if test="content!=null">
+					or	p_content like concat('%', #{content}, '%')
+				</if>
+					
+			</trim>
+			
+		) b
+		where b.no between #{start} and #{end}
+	</select>
+
+ 
+ 	<select id="product_one" parameterType="int" resultType="vo.ProductVo">
+	select * from product where p_idx = #{ p_idx }
+	</select>
+ 	
+ 	<insert id="product_insert"  parameterType="vo.ProductVo">
+	insert into product(p_subject,p_content,p_filename, p_ip, mem_idx,mem_name) values( #{ p_subject } , #{ p_content } , #{ p_filename} , #{ p_ip } , #{ mem_idx }, #{  mem_name })
+	</insert>
+  
+	<delete id="product_delete" parameterType="int">
+	delete from product where p_idx = #{ p_idx }
+	</delete>
+	
+	<update id="product_update" parameterType="vo.ProductVo">
+	update product set p_subject= #{ p_subject },p_content=#{ p_content },p_modifydate= now() where p_idx=#{ p_idx }
+	</update>
+	
+	<update id="product_update_filename" parameterType="vo.ProductVo">
+	update product set p_filename= #{ p_filename },p_modifydate=now() where p_idx=#{ p_idx }
+	</update>
+	
+		<select id="product_condition_row_total" parameterType="Map" resultType="int">
+		select ifnull(count(*),0) from product	
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

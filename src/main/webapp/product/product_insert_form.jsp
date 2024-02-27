@@ -32,7 +32,9 @@
 	  let p_subject = f.p_subject.value.trim();
 	  let p_content = f.p_content.value.trim();
 	  let photo		= f.photo.value;
-	  
+	  let photo1		= f1.photo1.value;
+	  let photo2		= f2.photo2.value;
+	  let photo3		= f3.photo3.value;
 	  
 	  if(p_subject==''){
 		  alert('제목을 입력하세요!');
@@ -52,10 +54,22 @@
 		  alert('사진을 선택하세요!');
 		  return;
 	  }
+	  if(photo1==''){
+		  alert('사진을 선택하세요!');
+		  return;
+	  }
+	  if(photo2==''){
+		  alert('사진을 선택하세요!');
+		  return;
+	  }
+	  if(photo3==''){
+		  alert('사진을 선택하세요!');
+		  return;
+	  }
 	  
 	  
 	  
-	  f.action = "insert.do";// PhotoInsertAction
+	  f.action = "${ pageContext.request.contextPath}/product/insert.do";// PhotoInsertAction
 	  f.submit();
 	  
   }
@@ -66,8 +80,8 @@
 <body>
 
 <form method="POST"  enctype="multipart/form-data">
-    <input type="hidden"  name="mem_idx"   value="${ user.mem_idx }">
-    <input type="hidden"  name="mem_name"  value="${ user.mem_name }">
+    <input type="hidden"  name="user_idx"   value="${ user.user_idx }">
+    <input type="hidden"  name="user_name"  value="${ user.user_name }">
 
 	<div id="box">
 		<div class="panel panel-primary">
@@ -97,7 +111,7 @@
 			                     onclick="send(this.form);">
 			                      
 			              <input class="btn btn-info"    type="button" value="메인화면" 
-			                     onclick="location.href='list.do'"> 
+			                     onclick="location.href='${ pageContext.request.contextPath}/product/list.do'"> 
 			          </td>
 			       </tr>
 			       

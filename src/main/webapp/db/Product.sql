@@ -42,7 +42,7 @@ REFERENCES `user` (
 );
 
 
-
+select * from product
 
 
 
