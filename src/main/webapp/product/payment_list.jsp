@@ -25,7 +25,7 @@
 				// {"zonecode":"03366","address":"서울 은평구 불광로 2길 33"}
 				$("#user_zipcode").val(data.zonecode);
 				$("#user_addr").val(data.address);
-			}
+			} 
 		}).open();
 	}
 
