@@ -113,7 +113,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			where b_ref=#{ b_ref } and b_step > #{ b_step }
 	</update>
 	
- 	<!-- 답글쓰기 -->
+ 	<!-- 답글쓰기: insert -->
  	<select id="board_reply" parameterType="vo.BoardVo">
 	 	insert into board(
 	 		  b_idx
