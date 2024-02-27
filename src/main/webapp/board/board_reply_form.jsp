@@ -48,9 +48,9 @@
 			f.b_content.focus();
 			return;
 		}
-		if (confirm("정말 수정하시겠습니까?")==false)return;
+		if (confirm("답글을 입력하시겠습니까?")==false)return;
 
-		f.action = "modify.do";// PhotoModifyAction
+		f.action = "reply.do";// /board/reply.do  <- BoardController
 		f.submit();
 
 	}
@@ -79,7 +79,7 @@ th{
 			<c:if test="${ not empty sessionScope.user }">
 				<b>${ sessionScope.user.user_name }</b>님 환영합니다!!
 				<input class="button alt" type="button" value="Logout"
-			       onclick="location.href='logout.do'">
+			       onclick="location.href='../user/logout.do'">
 			</c:if>	
 		</nav>
 	</header>
@@ -121,11 +121,11 @@ th{
 			
 	<form action="form-inline">
 		<input type="hidden"  name="user_idx"   value="${ user.user_idx }">
-		<input type="hidden"  name="b_idx"   value="${ vo.b_idx }">
+		<input type="hidden"  name="b_idx"   value="${ param.b_idx }">
 	  	<input type="hidden"  name="user_name"  value="${ user.user_name }">
 	<table class="table-wrapper">
 		<tr>
-			<th colspan="2"><b>${ vo.b_subject }</b>의 글의 답글</th>
+			<th colspan="2">▶<b>${ vo.b_subject }</b>◀ 글의 답글</th>
 		</tr>
 	      <tr>
 	         <th>제목</th>

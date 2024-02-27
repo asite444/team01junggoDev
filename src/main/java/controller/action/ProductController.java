@@ -198,9 +198,9 @@ public class ProductController {
 			int user_idx	= Integer.parseInt(mr.getParameter("user_idx"));  
 			String user_name	= mr.getParameter("mem_name");  
 			
-			ProductVo vo = new ProductVo(p_subject, p_content, p_filename,p_filename1,p_filename2,p_filename3, p_ip,user_idx,user_name );
+			//ProductVo vo = new ProductVo(p_subject, p_content, p_filename,p_filename1,p_filename2,p_filename3, p_ip,user_idx,user_name );
 			
-			res1 = ProductDao.getInstance().insert(vo);
+			//res1 = ProductDao.getInstance().insert(vo);
 			
 			return "redirect:../product/list.do";
 		}

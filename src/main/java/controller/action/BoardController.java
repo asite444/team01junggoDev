@@ -153,7 +153,14 @@ public class BoardController {
 	//답글글쓰기폼
 	@RequestMapping("/board/reply_form.do")
 	public String reply_form(HttpServletRequest request, HttpServletResponse response) {
-
+		
+		int b_idx = Integer.parseInt(request.getParameter("b_idx"));
+		//int user_name = Integer.parseInt(request.getParameter("_name"));
+		
+		BoardVo vo = BoardDao.getInstance().selectOne(b_idx);
+		
+		request.setAttribute("vo", vo);
+		
 		return "board_reply_form.jsp";
 	}
 	
