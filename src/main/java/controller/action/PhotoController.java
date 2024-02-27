@@ -94,7 +94,7 @@ public class PhotoController {
 			request.setAttribute("pageMenu", pageMenu);
 			request.setAttribute("weatherlist", weatherlist);
 			
-			return "photo_list.jsp";
+			return "category.jsp";
 			
 		}//end:photo_list.do
 		
