@@ -171,7 +171,8 @@
 			<input class="btn btn-link" type="button"  value="글쓰기"
 	            	onclick="insert_form();">
 			<div>
-			
+			<br>
+						
 			
 			<table class="table-wrapper">
 			<tr>
