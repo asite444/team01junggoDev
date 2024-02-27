@@ -68,6 +68,7 @@
 			<li><a href="board/list.do">community</a></li>
 			<li><a href="generic.jsp">Generic</a></li>
 			<li><a href="elements.jsp">Elements</a></li>
+			<li><a href="product/cart_list.do">장바구니(임시)</a></li>
 		</ul>
 		<ul class="actions vertical">
 			<li>
