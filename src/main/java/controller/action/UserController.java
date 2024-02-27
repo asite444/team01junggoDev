@@ -149,7 +149,7 @@ public class UserController {
 	  	 
 	  	
 	  }//end: insert.do
-	   
+	  
 	  
 	  	//아이디 체크
 		@RequestMapping(value="/user/check_id.do",produces="application/json;charset=utf-8;")
@@ -157,19 +157,17 @@ public class UserController {
 		public String check_id(HttpServletRequest request, HttpServletResponse response) {
 			
 			String user_id = request.getParameter("user_id");
-			// System.out.println("아이디 체크");
+			//System.out.println("아이디 체크");
 			UserVo vo = UserDao.getInstance().selectOne(user_id);
 			
-			//true : 사용가능한 아이디
-			//false: 이미사용중 아이디
 			boolean bResult = (vo==null);
 			
-			JSONObject json = new JSONObject();     
+			JSONObject json = new JSONObject();
 			json.put("result", bResult);
-			System.out.println(bResult);
+			System.out.println();
 			
 			
-			return json.toString(); 
+			return json.toString();
 		}
 	  
 	  	
