@@ -50,7 +50,7 @@
 			<c:if test="${ not empty sessionScope.user }">
 				<b>${ sessionScope.user.user_name }</b>님 환영합니다!!
 			<input class="button alt" type="button" value="Logout"
-					onclick="location.href='user/logout.do'">
+					onclick="location.href='logout.do'">
 					
 			</c:if>
 			
