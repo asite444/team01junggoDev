@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="card">
+
+ <insert id="card_insert" parameterType="vo.CardVo">
+ insert into creditcard (
+ user_idx
+ , card_number
+ , card_holder_name
+ , card_nickname
+ , expiration_date
+ , cvv
+ , card_bank
+ , card_type
+ , card_category
+ , regist_date) values(
+  #{card_idx}
+ ,#{user_idx}
+ ,#{card_number}
+ ,#{card_holder_name}
+ ,#{card_nickname}
+ ,#{expiration_date}
+ ,#{cvv}
+ ,#{card_bank}
+ ,#{card_type}
+ ,#{card_category}
+ ,now()
+ )
+ </insert>
+  
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -205,7 +205,8 @@ $(document).ready(function() {
 							<td>
 								<table class="table">
 									<tr>
-										<td style="width: 30%"><select id="card_list" style="width: 70%">
+										<td style="width: 30%">
+										<select id="card_list" style="width: 70%">
 												<option value="" style="text-align: center;" >카드선택</option>
 												<c:forEach var="card" items="${card_list}">
 													<option value="${card.card_idx}" data-card-number="${card.card_number}"  data-card-type="${card.card_type}">${card.card_bank}</option>
