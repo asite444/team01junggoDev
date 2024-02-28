@@ -84,17 +84,20 @@
 </script>
 <style type="text/css">
 
-	 .search-container {
-        overflow: hidden; /* float 된 요소를 감싸기 위해 overflow 속성을 추가합니다. */
+	.select-wrapper  {
+        /* overflow: hidden; */ /* float 된 요소를 감싸기 위해 overflow 속성을 추가합니다. */
         float: left;
+		display: inline-block;        
     }
 
     #search_text {
-        float: left; /* 왼쪽으로 플로팅 */
+        float: right; /* 왼쪽으로 플로팅 */
+        display: inline-block;
     }
 
     #search_button {
-        float: left; /* 왼쪽으로 플로팅 */
+        float: right; /* 왼쪽으로 플로팅 */
+        display: inline-block;
     }
 </style>
 </head>
@@ -116,7 +119,7 @@
 			<c:if test="${ not empty sessionScope.user }">
 				<b>${ sessionScope.user.user_name }</b>님 환영합니다!!
 				<input class="button alt" type="button" value="Logout"
-				       onclick="location.href='logout.do'">
+				       onclick="location.href='../user/logout.do'">
 			</c:if>	
 			
 		</nav>
@@ -152,8 +155,8 @@
 			
 			<div>
 				<form>
-					<div class="select-wrapper" style="float: left; width: 150px;">
-						<select class="select-wrapper" name="category" id="category">
+					<div class="select-wrapper" style="width: 150px;">
+						<select class="select-wrapper" name="search" id="search">
 							<option value="all">전체보기</option>
 							<option value="id">아이디</option>
 							<option value="subject">제목</option>
@@ -183,15 +186,22 @@
 			<br>
 
 			<hr>
+			<!-- sample test -->
 			<div class="3u$">
-				<select class="select-wrapper" name="category" id="category">
+				<select class="select-wrapper" name="search" id="search">
 							<option value="all">전체보기</option>
 							<option value="id">아이디</option>
 							<option value="subject">제목</option>
 							<option value="conetent">내용</option>
 							<option value="subject_content">제목+내용</option>
 				</select>
+				
+				<input class="6u" type="text" id="search_text" value="${ param.search_text }" placeholder="search">
+				<input class="fit" type="button" value="Search" onclick="find();">
+			
 			</div>
+			
+			
 			
 			<hr>
 			<input class="btn btn-link" type="button"  value="글쓰기"
