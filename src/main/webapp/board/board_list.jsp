@@ -84,21 +84,24 @@
 </script>
 <style type="text/css">
 
-	.select-wrapper  {
-        /* overflow: hidden; */ /* float 된 요소를 감싸기 위해 overflow 속성을 추가합니다. */
+	 .search-container {
+        overflow: hidden; /* float 된 요소를 감싸기 위해 overflow 속성을 추가합니다. */
         float: left;
-		display: inline-block;        
     }
 
+	.search{
+		width: 150px;
+	}
     #search_text {
-        float: right; /* 왼쪽으로 플로팅 */
-        display: inline-block;
+        float: left; /* 왼쪽으로 플로팅 */
+        width: 500px;
     }
 
-    #search_button {
-        float: right; /* 왼쪽으로 플로팅 */
-        display: inline-block;
-    }
+	form{
+		padding-left: 200px;
+		margin: auto;
+	}
+	
 </style>
 </head>
 <body>
@@ -152,55 +155,35 @@
 
 				</div>
 			<p>자유로운 커뮤니티 모아보기</p>
-			
-			<div>
-				<form>
-					<div class="select-wrapper" style="width: 150px;">
-						<select class="select-wrapper" name="search" id="search">
+
+   
+		</div>
+			<br><br><br>
+		<!-- 검색기능 -->
+			<form>
+			<div class="row">
+				<div class="select-wrapper" style="float: left; width: 200px;">
+						<select class="select-wrapper" name="category" id="category">
 							<option value="all">전체보기</option>
 							<option value="id">아이디</option>
 							<option value="subject">제목</option>
 							<option value="conetent">내용</option>
 							<option value="subject_content">제목+내용</option>
 						</select>
-					</div>		
-					<div class="row uniform 9u$" style="float: right;">
-						<div class="6u 12u$(xsmall)">
-							<input class="6u" type="text" id="search_text" value="${ param.search_text }" placeholder="search">
-						</div>
 					</div>
-				</form>
-				
-				
+				<div class="12u$(small)">
+					<input type="text" name="search" id="search_text" value="${ param.search_text }"
+						placeholder="search">
+				</div>
 				<div class="3u$ 12u$(small)">
-					<input  type="button" value="Search" class="fit"
-							onclick="find();">
+					<input class="fit" type="button" value="Search" onclick="find();">
 				</div>
 			</div>
-		           
-			</div>
-			
-			
-			<br>
-			<br>
-			<br>
+			</form>
 
-			<hr>
-			<!-- sample test -->
-			<div class="3u$">
-				<select class="select-wrapper" name="search" id="search">
-							<option value="all">전체보기</option>
-							<option value="id">아이디</option>
-							<option value="subject">제목</option>
-							<option value="conetent">내용</option>
-							<option value="subject_content">제목+내용</option>
-				</select>
-				
-				<input class="6u" type="text" id="search_text" value="${ param.search_text }" placeholder="search">
-				<input class="fit" type="button" value="Search" onclick="find();">
-			
-			</div>
-			
+			<!-- +++++++++++++++ -->
+
+
 			
 			
 			<hr>

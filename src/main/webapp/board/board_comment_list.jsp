@@ -14,7 +14,7 @@
 		border: 1px solid #FFB6C1 !important;
 	}
 		
-	b{ /* mem-id */
+	b{ /* user-id */
 		color: 	#FFB6C1;
 	  	font-weight: bold;
 	  }
@@ -61,22 +61,23 @@
 </head>
 <body>
 	<!-- PageMenu : 댓글이 있으면 메뉴 넣어라...  -->
-	<c:if test="${ not empty cmt_list }">
+	<c:if test="${ not empty cmt }">
 	   ${ pageMenu }
 	</c:if>
 
 <hr>
-<c:forEach var="cmt" items="${ cmt_list }">
+<c:forEach var="cmt" items="${ cmt }">
 		<div class="row">
 			<div class="col-sm-9">
-				<b>${ cmt.mem_mask_id }</b>님의 댓글
+				<b>${ cmt.user_mask_id }</b>님의 댓글
 			</div>
 			<div class="col-sm-3" >
 			<!-- 본인글인 경우만 보여준다 -->
-			<c:if test="${ user.mem_idx eq cmt.mem_idx or (user.mem_grade eq '관리자') }">
-				<input class="btn btn-link" type="button" value="삭제"
+			<c:if test="${ user.user_idx eq cmt.user_idx or (user.user_grade eq '관리자') }">
+				<input class="button small" type="button" value="삭제"
 						onclick="delete_comment('${ cmt.cmt_idx}');">
-				<input class="btn btn-link" type="button" value="수정"
+				&nbsp;&nbsp;
+				<input class="button alt small" type="button" value="수정"
 						onclick="modify_comment('${ cmt.cmt_idx}');">
 			 </c:if>	
 			</div>

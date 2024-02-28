@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="comment">
+
+	<!-- 전체조회 : b_idx의 뎃글들 -->
+ 	<select id="comment_list" parameterType="int" resultType="vo.CommentVo">
+ 		select * from comment where b_idx=#{ b_idx }
+ 			order by cmt_idx desc
+ 	</select>
+ 	
+ 	<!-- 조건별(페이징)조회 -->
+ 	<select id="comment_condition_list" parameterType="Map" resultType="vo.CommentVo">
+ 		  select * from
+			  (
+				  select 
+				   *,
+				   rank() over(order by cmt_idx desc) as no
+				  from comment 
+				  where b_idx=#{ b_idx }
+			  ) c
+			  where no between #{ start } and #{ end }
+ 	</select>
+ 	
+ 	<!-- b_idx별 전체게시물 수 -->
+ 	<select id="comment_row_total" parameterType="int" resultType="int">
+ 		select ifnull(count(*),0) from comment where b_idx=#{ b_idx }
+ 	</select>
+ 	
+	<!-- 추가 -->
+	<insert id="comment_insert" parameterType="int">
+		INSERT INTO comment(`cmt_idx`, `cmt_ip`, `b_idx`, `user_idx`, `user_id`, `user_name`, `cmt_content`, `cmt_regdate`) 
+					VALUES (null,
+							#{cmt_ip},
+							#{b_idx},
+							#{user_idx}, 
+							#{user_id}, 
+							#{user_name}, 
+							#{cmt_content}, 
+							now())
+
+	</insert>
+  
+	<!-- 삭제 -->
+	<delete id="comment_delete" parameterType="int">
+		delete from comment where cmt_idx=#{ cmt_idx }
+	</delete>
+	<!-- 댓글 수정 -->
+	<!-- <update id="comment_modify" parameterType="int">
+		update board set b_subject = #{ b_subject },
+                      b_content = #{ b_content },
+                      b_ip = #{ b_ip },
+                      b_regdate=now()
+     	where b_idx = #{ b_idx }     
+	</update> -->
+	
+	<!-- b_idx글 삭제시 여기 달린 댓글 모두 삭제 -->
+	<delete id="comment_delete_b_idx" parameterType="int">
+		delete from comment where b_idx=${ b_idx } 
+	</delete>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -29,7 +29,7 @@
 		   location.href="../user/login_form.do?url=" + encodeURIComponent(location.href) ;
 	}//end : login
 	
-	function delete_board(b_idx) { //delete는 javascript예약어이야.
+	function delete_board(b_idx) { //delete는 javascript예약어이다.
 		
 		if (confirm("정말 삭제하시겠습니다?")==false)return;
 			
@@ -39,7 +39,7 @@
 	
 	//개시물의 댓글
 	$(document).ready(function (){
-		//comment_list(1); //page1
+		comment_list(1); //page1
 	});
 		
 	//Ajax 통해서 삭제 => boaed_comment_list.jsp	
@@ -51,6 +51,7 @@
 			url		:	"comment_list.do",
 			data	:	{ "b_idx" : "${ vo.b_idx }", "page" : p },
 			success	:	function (res_data){
+				
 				$("#disp").html(res_data);
 			},
 			error	:	function (err){
@@ -69,7 +70,7 @@
 			location.href="../user/login_form.do?url=" + encodeURIComponent(location.href);			
 			return;
 		
-		}//end: comment_insert();
+		}//로그인여부
 
 		   //내용입력 여부체크
 		   let cmt_content = $("#cmt_content").val().trim();
@@ -109,7 +110,7 @@
 			   error	:	function(err){
 				   
 				   alert(err.responseText);
-				   
+				   alert('에러');
 			   }
 		   });
 		   
@@ -161,7 +162,7 @@ textarea{
 			<c:if test="${ not empty sessionScope.user }">
 				<b>${ sessionScope.user.user_name }</b>님 환영합니다!!
 				<input class="button alt" type="button" value="Logout"
-			       onclick="location.href='logout.do'">
+			       onclick="location.href='../user/logout.do'">
 			</c:if>	
 		</nav>
 	</header>
@@ -220,7 +221,7 @@ textarea{
 		          <td colspan="2" align="center">
 		          
 		          <c:if test="${ user.user_grade eq '관리자' }">
-				   	<input class="btn btn-link" type="button" value="답글달기" 
+				   	<input class="button" type="button" value="답글달기" 
 				   				onclick="location.href='reply_form.do?b_idx=${ vo.b_idx }&page=${ param.page }&'">&nbsp;
 				  </c:if>
 		          <!-- 글주인 or 관리자만 활성화 -->
@@ -237,18 +238,14 @@ textarea{
 			</table>
 		</form>
 		
-		<br>
-		<br>
-		<br>
+		<br><br>
 			
 		<!-- 댓글등록폼 -->
 		<div class="row">
 			<form action="">
 				<div class="row uniform">
 					<div class="12u$">
-						<textarea name="message" id="message"
-										placeholder="Enter your message" rows="6" data-gramm="false"
-										wt-ignore-input="true"></textarea>
+						<textarea id="cmt_content" placeholder="로그인 후에 댓글쓰기가 가능합니다" rows="6"></textarea>
 						<input class="button comment" id="cmt_btn_register" type="button" value="댓글쓰기"
 							onclick="comment_insert();">
 					</div>
@@ -256,12 +253,12 @@ textarea{
 			</form>
 		</div>
 		
-		</div>
 		
 		<hr>
 			<!-- 댓글목록 출력 -->
 		<div id="disp"></div>	
 				
+		</div><!-- end : inner -->
 		
 	
 	</section>
