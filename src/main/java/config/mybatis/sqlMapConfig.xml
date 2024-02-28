@@ -26,5 +26,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<mapper resource="config/mybatis/mapper/payment.xml" />
 		<mapper resource="config/mybatis/mapper/product.xml" />
 		<mapper resource="config/mybatis/mapper/card.xml" />
+		<mapper resource="config/mybatis/mapper/comment.xml" />
 	</mappers>
 </configuration>
