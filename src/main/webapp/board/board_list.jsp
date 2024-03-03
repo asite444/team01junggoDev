@@ -24,14 +24,9 @@
 	<script src="../assets/js/util.js"></script>
 	<script src="../assets/js/main.js"></script>
 <script type="text/javascript">
+
 	
-	
-	function home() {
-		lacation.herf="list.do";
-		return ;
-	}//end: home();
-	
-	function insert_form() {
+	function insert_form() { //글쓰기
 		
 		//로그인이 안된경우
 		if("${ empty user }" == "true"){
@@ -42,12 +37,12 @@
 			return;
 		}
 		//글쓰기 폼으로 이동
-		location.href="board_insert_form.do"; // /board/insert_form.do
+		location.href="board_insert_form.do?community_page=1"; // /board/insert_form.do
 	}//end:insert_form()
 	
-	function find() {
+	function find() { //검색
 		
-		let search		= $("#search").val();
+		let search		= $("#category").val();
 		let search_text	= $("#search_text").val().trim();
 		
 		//전체검색이 아닌데 검색어가 비어있으면
@@ -59,18 +54,19 @@
 			return ;
 		}
 		
-		location.href="list.do?search=" + search + 
+		location.href="list.do?category=" + search + 
 						"&search_text=" + encodeURIComponent(search_text,"utf-8"); //한글을 javascript에서 넘길떄 인코딩필수 
 						
-	}
+	}//end : find();
+						
 		/* 초기화 */
 		$(document).ready(function(){
-	   if("${ not empty param.search }" =="true"){ 
-		   $("#search").val("${ param.search }");
+	   if("${ not empty param.category }" =="true"){ 
+		   $("#category").val("${ param.category }");
 	   }
 	   
 	   //전체보기면 검색어 지워라
-	   if("${ param.search eq 'all' }" == "true"){  
+	   if("${ param.category eq 'all' }" == "true"){  
 		   $("#search_text").val("");
 	   }
    });
@@ -84,64 +80,48 @@
 </script>
 <style type="text/css">
 
-	 .search-container {
-        overflow: hidden; /* float 된 요소를 감싸기 위해 overflow 속성을 추가합니다. */
-        float: left;
-    }
 
+	.search{
+		width: 150px;
+	}
     #search_text {
-        float: left; /* 왼쪽으로 플로팅 */
+       
+        width: 500px;
     }
 
-    #search_button {
-        float: left; /* 왼쪽으로 플로팅 */
+	form{
+		margin: auto;
+	}
+	
+
+
+ .commentFocus {
+            text-decoration: none; /* 밑줄 제거 */
+            color: inherit; /* 기본 텍스트 색상 사용 */
+            cursor: pointer; /* 커서 모양 설정 */
     }
+
+        /* 호버(마우스를 올렸을 때) 스타일 */
+  .commentFocus:hover {
+            text-decoration: underline; /* 밑줄 추가 */
+            color: inherit; /* 기본 텍스트 색상 사용 */
+ }	
 </style>
 </head>
 <body>
 
+	<jsp:include page="../include/header.jsp"></jsp:include>
 	<!-- Header -->
-	<header id="header">
-		<nav class="left">
-			<a href="#menu"><span>Menu</span></a>
-		</nav>
-		<a href="../main.jsp" class="logo">중고로Go</a>
-		
-		<nav class="right">
-			<c:if test="${ empty sessionScope.user }">
-			<input class="button alt" value="Login"
-					onclick="login();">
-		  </c:if>
-			<!-- 로그인이 됐을경우 : 세션영역에 user가 있는가?  -->
-			<c:if test="${ not empty sessionScope.user }">
-				<b>${ sessionScope.user.user_name }</b>님 환영합니다!!
-				<input class="button alt" type="button" value="Logout"
-				       onclick="location.href='logout.do'">
-			</c:if>	
-			
-		</nav>
-	</header>
-	<!-- Menu -->
-	<nav id="menu">
-		<ul class="links">
-			<li><a href="../main.jsp">Home</a></li>
-			<li><a href="../all_items.jsp">전체매물</a></li>
-			<li><a href="../category.jsp">Category</a></li>
-			<li><a href="../board/list.do">community</a></li>
-			<li><a href="../generic.jsp">Generic</a></li>
-			<li><a href="../elements.jsp">Elements</a></li>
-		</ul>
-		<ul class="actions vertical">
-			<li><a href="#" class="button fit">Login</a></li>
-		</ul>
-	</nav>
+	
+	
+	<jsp:include page="../include/menu.jsp"></jsp:include>
 	<section id="main" class="wrapper">
 		<div class="inner">
 			<header class="align-center">
 				<h1>community</h1>
 				<p>
 					<b>
-						<a href="../board/list.do">커뮤니티</a> | <a href="board_notice.jsp">Notice</a> | <a href="board_qna.jsp">Q&A</a>
+						<a href="../board/list.do?community_page=1&">커뮤니티</a> | <a href="notice_list.do?community_page=2&">Notice</a> | <a href="qna_list.do?community_page=3&">Q&A</a>
 					</b>
 				</p>
 			</header>
@@ -149,57 +129,40 @@
 
 				</div>
 			<p>자유로운 커뮤니티 모아보기</p>
+			<br><br><br>
 			
-			<div>
-				<form>
-					<div class="select-wrapper" style="float: left; width: 150px;">
-						<select class="select-wrapper" name="category" id="category">
+		<!-- 검색기능 -->
+			<form>
+			<input type="hidden" value="${ param.community_page }">
+			<input type="hidden" value="${ community_page }">
+			<div class="row">
+				<div class="select-wrapper" style="float: left; width: 200px;">
+						<select class="select-wrapper" id="category">
 							<option value="all">전체보기</option>
-							<option value="id">아이디</option>
+							<option value="name">작성자</option>
 							<option value="subject">제목</option>
 							<option value="conetent">내용</option>
 							<option value="subject_content">제목+내용</option>
 						</select>
-					</div>		
-					<div class="row uniform 9u$" style="float: right;">
-						<div class="6u 12u$(xsmall)">
-							<input class="6u" type="text" id="search_text" value="${ param.search_text }" placeholder="search">
-						</div>
 					</div>
-				</form>
-				
-				
+				<div class="12u$(small)">
+					<input type="text" name="search" id="search_text" value="${ param.search_text }"
+						placeholder="search">
+				</div>
 				<div class="3u$ 12u$(small)">
-					<input  type="button" value="Search" class="fit"
-							onclick="find();">
+					<input class="fit" type="button" value="Search" onclick="find();">
 				</div>
 			</div>
-		           
-			</div>
-			
-			
-			<br>
-			<br>
-			<br>
+			</form>
+		</div>
 
-			<hr>
-			<div class="3u$">
-				<select class="select-wrapper" name="category" id="category">
-							<option value="all">전체보기</option>
-							<option value="id">아이디</option>
-							<option value="subject">제목</option>
-							<option value="conetent">내용</option>
-							<option value="subject_content">제목+내용</option>
-				</select>
-			</div>
-			
-			<hr>
+<hr>
+		<div class="inner table-wrapper">
 			<input class="btn btn-link" type="button"  value="글쓰기"
 	            	onclick="insert_form();">
-			<div>
-			<br>
-						
 			
+			<br><br>
+						
 			<table class="table-wrapper">
 			<tr>
 				<th>번호</th>
@@ -223,11 +186,11 @@
 						
 						<!-- 사용중인 게시물 -->
 						<c:if test="${ vo.b_use eq 'y' }">
-							 <a href="view.do?b_idx=${ vo.b_idx }&page=${ empty param.page ? 1 : param.page }&search=${ param.search }&search_text=${ param.search_text }">${ vo.b_subject }</a>
+							 <a href="view.do?b_idx=${ vo.b_idx }&page=${ empty param.page ? 1 : param.page }&search=${ param.search }&search_text=${ param.search_text }&community_page=1&">${ vo.b_subject }</a>
 						
 						<!-- badge: 댓글갯수 -->
 							<c:if test="${ vo.cmt_count gt 0 }">
-		              	    	<span class="badge" style="background: #FFB6C1;">${ vo.cmt_count }</span>
+		              	    	<a class="commentFocus" href="view.do?b_idx=${ vo.b_idx }&page=${ empty param.page ? 1 : param.page }&search=${ param.search }&search_text=${ param.search_text }&commentFocus=true&community_page=1"><span class="badge" style="background: #FFB6C1;">${ vo.cmt_count }</span></a>
 		              	 	</c:if>
 						
 						</c:if>
@@ -266,15 +229,9 @@
 				</td>
 			</tr>
 			</table>
-			
-			</div>
-			
-			
-			
-			<p></p>
 		</div>
-		
-		
+			
+
 	</section>
 	
 	

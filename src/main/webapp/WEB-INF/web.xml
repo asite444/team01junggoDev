@@ -16,7 +16,9 @@
          controller.action.BoardController,
          controller.action.PaymentController,
          controller.action.ProductController,
-         controller.action.CardController
+         controller.action.CardController,
+         controller.action.CommentController
+         
          </param-value> <!-- action 등록  -->
      </init-param>
   </servlet>

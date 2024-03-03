@@ -14,7 +14,7 @@
 		border: 1px solid #FFB6C1 !important;
 	}
 		
-	b{ /* mem-id */
+	b{ /* user-id */
 		color: 	#FFB6C1;
 	  	font-weight: bold;
 	  }
@@ -22,13 +22,14 @@
 	 color: gray;
 	 font-size: small;
 	 }
+	 .buttonbox{
+	 	float: right;
+	 }
 </style>
 
 <script type="text/javascript">
 
 	function delete_comment(cmt_idx) {
-		//alert(cmt_idx);
-		//comment_list(1); //board_list.jsp에서 동적으로 가져온 정보
 		
 		if(confirm("정말 삭제하시겠습니까?")==false) return;
 		
@@ -54,30 +55,88 @@
 		
 		
 	}//end:delete_comment();
+
+	function modify_comment(cmt_idx) {
+       
+		var editFormId = 'editForm' + cmt_idx; // 고유한 수정 폼의 id 생성
+	    document.getElementById(editFormId).style.display = 'block'; // 생성한 id로 해당 수정 폼을 보이도록 설정
+	}
 	
+	function save_comment(cmt_idx) {
+    	
+        //내용입력 여부체크
+		   let cmt_content = $("#cmt_update_content"+cmt_idx).val().trim();
+		   if(cmt_content==''){
+			   alert('댓글 내용을 입력하세요!');
+			   $("#cmt_update_content").val(cmt_content);
+			   $("#cmt_update_content").focus();
+			   return;
+		   }
+		   
+		   // Ajax로 전송
+		   $.ajax({
+			   url		:	"update_comment.do",
+			   data		:	{ 
+				               "cmt_idx" : cmt_idx,
+				               "cmt_content" : cmt_content
+			                },
+			   dataType	:	"json",
+			   success	:	function(res_data){
+				   // res_data = {"result" : true } or {"result" : false}
+				   if(res_data.result){
+					   //성공시 : 댓글목록 가져오기
+					   comment_list(1);
+					   
+				   }else{
+					   //실패시
+					   alert("댓글쓰기 실패!!");
+				   }
+				   
+				   //이전댓글내용 지우기
+				   $("#cmt_content"+cmt_idx).val();
+				   
+			   },
+			   error	:	function(err){
+				   
+				   alert(err.responseText);
+				   alert('에러');
+			   }
+		   });
+
+    }
+    
+
+    
+        
 	
-	
+
 </script>
+
+
+
 </head>
 <body>
 	<!-- PageMenu : 댓글이 있으면 메뉴 넣어라...  -->
-	<c:if test="${ not empty cmt_list }">
+	<c:if test="${ not empty cmt }">
 	   ${ pageMenu }
 	</c:if>
 
 <hr>
-<c:forEach var="cmt" items="${ cmt_list }">
-		<div class="row">
-			<div class="col-sm-9">
-				<b>${ cmt.mem_mask_id }</b>님의 댓글
+<c:forEach var="cmt" items="${ cmt }">
+		<div class="main_subject">
+			<div>
+				<b>${ cmt.user_mask_id }</b>님의 댓글
 			</div>
-			<div class="col-sm-3" >
+			<div>
 			<!-- 본인글인 경우만 보여준다 -->
-			<c:if test="${ user.mem_idx eq cmt.mem_idx or (user.mem_grade eq '관리자') }">
-				<input class="btn btn-link" type="button" value="삭제"
+			<c:if test="${ user.user_idx eq cmt.user_idx or (user.user_grade eq '관리자') }">
+				<div class="buttonbox">
+				<input class="button small" type="button" value="삭제"
 						onclick="delete_comment('${ cmt.cmt_idx}');">
-				<input class="btn btn-link" type="button" value="수정"
+				&nbsp;&nbsp;
+				<input class="button alt small editBtn" type="button" value="수정"
 						onclick="modify_comment('${ cmt.cmt_idx}');">
+			 	</div>
 			 </c:if>	
 			</div>
 		</div>
@@ -89,6 +148,12 @@
 		<div id="cmt3">
 		   ${ cmt.cmt_content }
 		</div>
+		<!-- 수정하기 폼 -->
+		<div id="editForm${ cmt.cmt_idx}" style="display: none;">
+        	<textarea id="cmt_update_content${ cmt.cmt_idx}">${ cmt.cmt_content }</textarea>
+        	<input class="saveBtn special small" type="button" value="저장"
+        			onclick="save_comment('${ cmt.cmt_idx}');">
+    	</div>
 		
 		<hr>
 </c:forEach>

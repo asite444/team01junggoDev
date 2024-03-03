@@ -12,6 +12,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
 <title>Insert title here</title>
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -101,6 +103,13 @@
 </style>
 <style type="text/css">
 
+#weather{
+	
+	padding: 0%;
+	width: 2500px;
+	height: 1200px;
+}
+
 
 .container > img {
   position: absolute;
@@ -112,8 +121,8 @@
 
 #maincon{
 	margin-left: 300px;
-margin-top: 30px;
-font-size: 30px;
+	margin-top: 30px;
+	font-size: 30px;
 
 }
 
@@ -137,11 +146,11 @@ font-size: 30px;
 }
 
 #cate{
-width: 1200px;
+width: 1000px; 
 height: 30px;
 font-size: 20px;
 margin-top: 150px; 
-margin-left: 50px;
+margin-left: 50px; 
 
 	float: left;
 
@@ -178,7 +187,7 @@ margin-left: 50px;
 }
 
 
-#line{
+ #line{
 width: 1220px;
 height: 1px;
 border: 1px solid #D8D8D8;
@@ -187,19 +196,18 @@ margin-left: 50px;
 
 	float: left;
 
-}
+} 
 
 
-#time{
+ #time{
 width: 1200px;
 height: 30px;
 font-size: 20px;
 margin-top: 5px; 
-margin-left: 50px;
+margin-left: 50px; 
 
-	float: left;
-
-}
+float:left;
+} 
 
 #local{
 width: 400px;
@@ -208,7 +216,7 @@ font-size: 20px;
 margin-top: 5px; 
 margin-left: 50px;
 
-	float: left;
+float:left;
 
 }
 
@@ -219,7 +227,7 @@ font-size: 20px;
 margin-top: 5px; 
 margin-left: 50px;
 
-	float: left;
+float:left;
 
 
 }
@@ -229,8 +237,7 @@ height: 30px;
 font-size: 20px;
 margin-top: 5px; 
 margin-left: 50px;
-	float: left;
-
+	float:left;
 }
 
 #bo{
@@ -242,9 +249,10 @@ float: left;
 
 
    #box{
-      	width:2000px;
-   	
-   	
+      	width: 2500px;
+      
+   		padding-top: 0%;
+   		
 		margin: auto;
   
    }
@@ -274,6 +282,7 @@ border: 1px solid #D8D8D8;
 margin-top: 170px; 
 margin-left:270px;
 }
+
 #footer{
 	margin-left: 300px;
 margin-top: 10px;
@@ -281,35 +290,63 @@ font-size: 30px;
 
 }
 
+#bu{
 
+width: 400px; 
+height: 60px; 
+margin-top: 50px; 
+margin-left: 50px;"
 
+}
 	
 
 
 </style>
-
-
-
-
 <script type="text/javascript">
 
 
 	  
     //로그인(아웃)상태 체크	  
 	  function add_cart(){
-		 
+		  
+	       //로그인(아웃)상태 체크	  
+	       if("${ empty user }" == "true"){
+	    	   
+	    	   if(confirm("장바구니 등록은 로그인후 가능합니다\n로그인하시겠습니까?") == false)return;
+	    	   
+	    	   //현재 주소
+	    	   const url = location.href;
+	    	   //alert(url);
+	    	   
+	    	   //로그인 폼으로 이동                             charset생략시 현재 pageEncoding을 설정    
+	    	  location.href="${ pageContext.request.contextPath}/user/login_form.do?url" +  encodeURIComponent(url , "utf-8");
+	    	   
+	    	   return;
+	       }
+	       
 	       //Ajax처리(장바구니 등록)
 	       $.ajax({
 	    	   
-	    	   url			:	"api.do",  // CartInsertAction  : cart_insert.do?p_idx=5&mem_idx=1 
-	    	   data		:	{"p_idx":"${ vo.p_idx }" ,"mem_idx": "${ user.mem_idx }"   },
+	    	   url			:	"cart_insert.do",  // CartInsertAction  : cart_insert.do?p_idx=5&mem_idx=1 
+	    	   data		:	{"p_idx":"${ vo.p_idx }" ,"user_idx": "${ user.user_idx }"   },
 	    	   dataType	:	"json",
 	    	   success	:	function(res_data){
-	    		  
-	    		   $("#weather").html(res_data);
+	    		   
+	    		   if(res_data.result == 'exist'){
+	    			   alert("현재상품은 이미 장바구니에 담겨져있습니다");
+	    			   return;
+	    		   }
+	    		   
+	    		   if(res_data.result == 'success'){
+	    			   
+	    			   if(confirm("장바구니에 상품을 등록했습니다\n장바구니보기로 이동하시겠습니까?")==false)return;
+	    			   
+	    			   //장바구니 보기
+	    			   location.href="cart_list.do";
+	    		   }
 	    	   },
 	    	   error	:	function(err){
-	    		   
+	    		  
 	    		   alert(err.responseText);
 	    	   }
 	    	   
@@ -318,40 +355,20 @@ font-size: 30px;
 	       
 	  }
 
-	  function photo(){
-			 
-	       //Ajax처리(장바구니 등록)
-	       $.ajax({
-	    	   
-	    	   url			:	"view.do",  // CartInsertAction  : cart_insert.do?p_idx=5&mem_idx=1 
-	    	   data		:	{"p_idx":"${ vo.p_idx }" ,"mem_idx": "${ user.mem_idx }"   },
-	    	   dataType	:	"json",
-	    	   success	:	function(res_data){
-	    		  
-	    		   $("#product").html(res_data);
-	    	   },
-	    	   error	:	function(err){
-	    		   
-	    		   alert(err.responseText);
-	    	   }
-	    	   
-	       });
-	       
-	       
-	  }
+
 </script>
+
+
+
+
 
 <script type="text/javascript">
 
-
-	
 	function del(p_idx){
 		
-		
-		if(confirm("정말 삭제할꺼니?")==false) return;
+		if(confirm("해당 상품을 삭제하시겠습니까?")==false) return;
 		
 		location.href="delete.do?p_idx=" + p_idx;
-		
 	}
 	
 	function modify_form(p_idx){
@@ -366,7 +383,6 @@ font-size: 30px;
 	$(document).ready(function(){
 		//span요소 감추기 
 
-		
 		// mybtn은 버튼 처럼 클릭하게 
 		$(".mybtn").click(function(){
 			$("#list").slideToggle(1000);
@@ -395,97 +411,70 @@ font-size: 30px;
 			$("#img1").attr("src",src);
 		}
 		);
-		
-		
 	});
 </script>
 </head>
 <body>
 
-<div id="box" align="center">
-   <h1 id="title">◈◈◈◈ 중고로Go ◈◈◈◈</h1>
-  
-<%--    <div style="text-align: right">
-   	
-      <!-- 로그인안된경우 -->
-      <c:if test="${ empty sessionScope.user }">
-          <input class="btn btn-info"  type="button"  value="회원가입" 
-                 onclick="location.href='${ pageContext.request.contextPath}/member/insert_form.do'">
-                 
-          <input class="btn btn-warning"  type="button"  value="로그인" 
-                 onclick="location.href='${ pageContext.request.contextPath}/member/login_form.do'">
-      </c:if>
-      
-      <!-- 로그인이된경우 -->
-      <c:if test="${ not empty sessionScope.user }">
-          <b>${ user.mem_name }</b>님 환영합니다 
-          <input class="btn btn-warning"  type="button"  value="로그아웃" 
-                 onclick="location.href='../member/logout.do'">
-      </c:if>
-      <input class="btn btn-success"  type="button"  value="상품등록" 
-             onclick="insert_form();">       
-                          </div>
-              --%>
-
-	
-					
-				
-
-
- 
-   <%-- 현재 컨텍스트 경로 : ${ pageContext.request.contextPath } --%>
-
-
-</div>
-
-
-				<div id="weather"></div>
+   <h1 id="title"> 중고로Go </h1>
+		
+			<div id="weather">
 
 			<div id="cat">
 			 <div id="list">
-				<img src="${ pageContext.request.contextPath }/upload/${ vo.p_filename }" style="width: 120px; height: 100px; margin-top:50px;border: 1px solid black;" onclick="photo();" />
-				<img src="${ pageContext.request.contextPath }/upload/${ vo.p_filename1 }" style="width: 120px; height: 100px; margin-top: 3px; border: 1px solid black;" onclick="photo();" />
-				<img src="${ pageContext.request.contextPath }/upload/${ vo.p_filename2 }" style="width: 120px; height: 100px; margin-top: 3px; border: 1px solid black;" onclick="photo();" />
-				<img src="${ pageContext.request.contextPath }/upload/${ vo.p_filename3 }" style="width: 120px; height: 100px; margin-top: 3px; border: 1px solid black;" onclick="photo();" />
+				<img src="${ pageContext.request.contextPath }/upload/${ vo.p_filename }" style="width: 120px; height: 100px; margin-top:50px;border: 1px solid black;"  />
+				<img src="${ pageContext.request.contextPath }/upload/${ vo.p_filename1 }" style="width: 120px; height: 100px; margin-top: 3px; border: 1px solid black;"  />
+				<img src="${ pageContext.request.contextPath }/upload/${ vo.p_filename2 }" style="width: 120px; height: 100px; margin-top: 3px; border: 1px solid black;"  />
+				<img src="${ pageContext.request.contextPath }/upload/${ vo.p_filename3 }" style="width: 120px; height: 100px; margin-top: 3px; border: 1px solid black;"  />
 			</div>
 			</div>
 	
-		
 			<div class="movieinfo">
 			<div id="product" align="center" >
 				<img src="${ pageContext.request.contextPath }/upload/${ vo.p_filename }" id="img1" style="width: 500px; height: 450px; margin-top: 50px;"/>
 				<%-- <input type="button" class="btn btn-success" value="다운로드" onclick="download('${vo.p_filename}');"> --%>
+				<c:if test="${ (vo.user_idx eq user.user_idx) or (user.user_grade eq '관리자') }">	
        			<input type="button" class="btn btn-info"  value="수정"onclick="modify_form(${vo.p_idx});"> 
-       			<input type="button" class="btn btn-warning"  value="삭제" onclick="del(${vo.p_idx});">      
+       			<input type="button" class="btn btn-warning"  value="삭제" onclick="del(${vo.p_idx});"> 
+       			</c:if>     
        			<input type="button" class="btn btn-danger"  value="메인화면" onclick="location.href='list.do?page=${page}'">
 			</div>
 			</div>
-			<div id="cate">카테고리</div>
+			<div id="cate">카테고리 ${ vo.c_idx }</div>
 			<div id="sub">제품명 : ${ vo.p_subject }</div>
-			<div id="con">${ vo.p_content }</div>
-			<div id="price">가격</div>
+			<div id="con">설명 : ${ vo.p_content }</div>
+			<div id="price">가격 : ${ vo.p_price }원</div>
 		
 			<div id="line"></div>
-
-			<div id="time" > <span class="glyphicon glyphicon-heart">관심도</span></div>
+			<div id="time"><div id="tim" class="glyphicon glyphicon-heart" style="font-size: 40px; color: red"></div>${vo.p_hit }</div>
+		
 			<div id="local">지역</div>
 			<div id="bo"></div>
 			<div id="name">판매자</div>
 			<div id="bo"></div>
 			<div id="state">제품상태</div>
 			
-			<div id="local">경기</div>
+	 		<div id="local">${ vo.p_local }</div>
+	 		<div id="bo"></div>
+			<div id="name">${ user_name }</div>
 			<div id="bo"></div>
-			<div id="name">${ vo.mem_name }</div>
-			<div id="bo"></div>
-			<div id="state">제품상태</div>
-			
-			<input type="button" class="btn btn-info"  style="width: 500px; height: 60px; margin-top: 50px; margin-left: 50px; "value="관심중고"/>
-			<input type="button" class="btn btn-success"  style="width: 700px; height: 60px; margin-top: 50px; margin-left: 10px;"value="바로구매"/>
+			<div id="state">${ vo.p_status }</div> 
+
+			<c:if test="${ (vo.user_idx ne user.user_idx)}">	
+			<input type="button" class="btn btn-info"  		style="width: 600px; height: 60px; margin-top: 80px; margin-left: 50px;"   value="위시리스트 담기" 	onclick="add_cart();"/>
+			<input type="button" class="btn btn-warning"  style="width: 200px; height: 60px; margin-top: 80px; margin-left: 10px;" value="위시리스트 보기" 	onclick="location.href='cart_list.do'"/> 
+			<input type="button" class="btn btn-success" 	style="width: 400px; height: 60px; margin-top: 80px; margin-left: 10px;" value="바로구매" 			onclick="location.href='direct_payment_list_form.do?p_idx=${vo.p_idx}'"/> 
+		   	</c:if>
+		   
+		  	<c:if test="${ (vo.user_idx eq user.user_idx)}">	
+		  	<input disabled="disabled" type="button" class="btn btn-info"  style="width: 600px; height: 60px; margin-top: 80px; margin-left: 50px;"   value="위시리스트 담기" 	onclick="add_cart();"/>
+			<input type="button" class="btn btn-warning"  style="width: 200px; height: 60px; margin-top: 80px; margin-left: 10px;" value="위시리스트 보기" 	onclick="location.href='cart_list.do'"/> 
+			<input disabled="disabled" type="button" class="btn btn-success" 	style="width: 400px; height: 60px; margin-top: 80px; margin-left: 10px;" value="바로구매" 			onclick="location.href='direct_payment_list_form.do?p_idx=${vo.p_idx}'"/>
+			</c:if>
 			
 			<div id="line1"></div>
-			<div id="maincon" >${ vo.p_content }</div>
-			<div id="line1"></div>
-			<div id="footer">footer</div>
+		</div>
+		
+		
 </body>
 </html>

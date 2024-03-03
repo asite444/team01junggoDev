@@ -27,6 +27,20 @@
 <!-- Daum 주소검색 API  -->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
+<style type="text/css">
+
+    .row {
+        display: flex;
+        align-items: center; /* 세로 중앙 정렬 */
+    }
+
+    .row .6u {
+        margin-right: 0px; /* 오른쪽 여백 조정 (필요에 따라 조절) */
+    }
+
+
+</style>
+
 <script type="text/javascript">
 
   $(document).ready(function(){
@@ -117,7 +131,7 @@
 	  
 	  if(regular_email.test(user_email)==false){
 		  
-		  alert('이메일 형식이 틀립니다\n옳바른 형식으로 입력하세요!');
+		  alert('이메일 형식이 틀립니다\n올바른 형식으로 입력하세요!');
 		  f.user_email.value='';
 		  f.user_email.focus();
 		  return;
@@ -152,7 +166,7 @@
 	<section id="main" class="wrapper">
 		<div class="inner">
 			<header class="align-center">
-				<h2>회원가입</h2>			
+				<h1>회원가입</h1>			
 			</header>
 			
 
@@ -165,15 +179,15 @@
 				<div class="row uniform">
 					<table>
 					<tr>
-						<th>이름</th>
+						<th><label>이름</label></th>
 						<td>
 							<div class="6u 12u$(xsmall)">
-							<input type="text" name="user_name"  value="${ user_name }">
+							<input type="text" name="user_name"  value="${ user_name }" placeholder="2글자 이상입력">
 							</div>
 						</td>
 					</tr>
 					<tr>
-						<th>아이디</th>
+						<th><label>아이디</label></th>
 						<td>
 							<div class="6u 12u$(xsmall)">
 							<input type="text" name="user_id" id="user_id" value="${ user_id }"
@@ -185,7 +199,7 @@
 						</td>
 					</tr>
 					<tr>
-						<th>비밀번호</th>
+						<th><label>비밀번호</label></th>
 						<td>
 							<div class="6u$ 12u$(xsmall)">
 								<input type="password" name="user_pwd" id="user_pwd" value="${ user_pwd }"
@@ -194,26 +208,33 @@
 						</td>
 					</tr>
 					<tr>
-						<th>이메일</th>
+						<th><label>이메일</label></th>
 						<td>
 							<div class="6u 12u$(xsmall)">
-							<input type="text" name="user_email"  value="${ user_email }">
+							<input type="text" name="user_email"  value="${ user_email }" placeholder="예) kim123@ict.com">
 							</div>
 						</td>
 					</tr>
 					<tr>
-		                 <th><label>우편번호</label></th>
-		                 <td>
-		                 	<div class="6u 12u$(xsmall)">
-		                     <input type="text"  name="user_zipcode"  id="user_zipcode">
-		                     <input type="button"  value="주소검색"  onclick="find_addr();">
-		                     </div>
-		                 </td>
-		              </tr>	
+							<th><div>우편번호</div></th>
+							<td>
+								<div class="row">
+									<div class="6u 12u$(small)">
+										<input type="text" name="user_zipcode" id="user_zipcode" placeholder="예) 12345"
+											style="width: 400px;">
+									</div>
+									<div class="6u 12u$(small)">
+										<input type="button" value="주소검색" 
+											onclick="find_addr();">
+									</div>
+								</div>
+							</td>
+						</tr>	
 					<tr>
-						<th>주소</th>
+						<th><label>주소</label></th>
 						<td>
-							<input type="text" name="user_addr"  value="${ user_addr }">
+							<input type="text" name="user_addr"  id="user_addr" placeholder="예) 서울 강남구 서초대로 77길 41"
+							 value="${ user_addr }">
 						</td>
 					</tr>
 					
@@ -225,12 +246,12 @@
 							<div class="12u$">
 								<ul class="actions">
 									<li>
-										<input type="reset" value="Join In" class="button special"
+										<input type="reset" value="Join In" class="button special" 
 												onclick="send(this.form);">
 									</li>
 									<li>
 										<input type="reset" value="Home" class="alt"
-												onclick="location.href='/SecondhandMarket/main.jsp'">
+												onclick="location.href='../main.jsp'">
 									</li>
 									
 								</ul>

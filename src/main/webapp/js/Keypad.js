@@ -24,10 +24,10 @@ var keypadLayer = "keypadLayer";
 if(typeof jQuery != 'function'){
 	document.write('<script type="text/javascript" src="/Keypad/js/jquery-1.7.2.min.js"></script>');
 }
-document.write('<script type="text/javascript" src="'+Secure_KeyPad_url+'/js/RSA/Keypad_jsbn.js"></script>');
-document.write('<script type="text/javascript" src="'+Secure_KeyPad_url+'/js/RSA/Keypad_rsa.js"></script>');
-document.write('<script type="text/javascript" src="'+Secure_KeyPad_url+'/js/RSA/Keypad_prng4.js"></script>');
-document.write('<script type="text/javascript" src="'+Secure_KeyPad_url+'/js/RSA/Keypad_rng.js"></script>');
+document.write('<script type="text/javascript" src="../js/RSA/Keypad_jsbn.js"></script>');
+document.write('<script type="text/javascript" src="../js/RSA/Keypad_rsa.js"></script>');
+document.write('<script type="text/javascript" src="../js/RSA/Keypad_prng4.js"></script>');
+document.write('<script type="text/javascript" src="../js/RSA/Keypad_rng.js"></script>');
 
 function Keypad_Loading(){
 	if(!Secure_KeyPad_Use)

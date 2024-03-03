@@ -48,9 +48,9 @@
 			f.b_content.focus();
 			return;
 		}
-		if (confirm("정말 수정하시겠습니까?")==false)return;
+		if (confirm("답글을 입력하시겠습니까?")==false)return;
 
-		f.action = "modify.do";// PhotoModifyAction
+		f.action = "reply.do";// /board/reply.do  <- BoardController
 		f.submit();
 
 	}
@@ -64,46 +64,18 @@ th{
 </head>
 <body>
 
+	<jsp:include page="../include/header.jsp"></jsp:include>
 	<!-- Header -->
-	<header id="header">
-		<nav class="left">
-			<a href="#menu"><span>Menu</span></a>
-		</nav>
-		<a href="../main.jsp" class="logo">중고로Go</a>
-		<nav class="right">
-			<c:if test="${ empty sessionScope.user }">
-			<input class="button alt" value="Login"
-					onclick="login();">
-			</c:if>
-			<!-- 로그인이 됐을경우 : 세션영역에 user가 있는가?  -->
-			<c:if test="${ not empty sessionScope.user }">
-				<b>${ sessionScope.user.user_name }</b>님 환영합니다!!
-				<input class="button alt" type="button" value="Logout"
-			       onclick="location.href='logout.do'">
-			</c:if>	
-		</nav>
-	</header>
-	<!-- Menu -->
-	<nav id="menu">
-		<ul class="links">
-			<li><a href="../main.jsp">Home</a></li>
-			<li><a href="../all_items.jsp">전체매물</a></li>
-			<li><a href="../category.jsp">Category</a></li>
-			<li><a href="../board/board_list.jsp">community</a></li>
-			<li><a href="../generic.jsp">Generic</a></li>
-			<li><a href="../elements.jsp">Elements</a></li>
-		</ul>
-		<ul class="actions vertical">
-			<li><a href="#" class="button fit">Login</a></li>
-		</ul>
-	</nav>
+	
+	
+	<jsp:include page="../include/menu.jsp"></jsp:include>
 	<section id="main" class="wrapper">
 		<div class="inner">
 			<header class="align-center">
 				<h1>community</h1>
 				<p>
 					<b>
-						<a href="../board/list.do">커뮤니티</a> | <a href="board_notice.jsp">Notice</a> | <a href="board_qna.jsp">Q&A</a>
+						<a href="../board/list.do?community_page=1&">커뮤니티</a> | <a href="notice_list.do?community_page=2&">Notice</a> | <a href="qna_list.do?community_page=3&">Q&A</a>
 					</b>
 				</p>
 			</header>
@@ -121,11 +93,13 @@ th{
 			
 	<form action="form-inline">
 		<input type="hidden"  name="user_idx"   value="${ user.user_idx }">
-		<input type="hidden"  name="b_idx"   value="${ vo.b_idx }">
+		<input type="hidden"  name="b_idx"   value="${ param.b_idx }">
 	  	<input type="hidden"  name="user_name"  value="${ user.user_name }">
+	  	<input type="hidden"  name="community_page"   value="${ param.community_page }"><!-- param에서 -->
+		<input type="hidden"  name="community_page"   value="${ community_page }"><!-- controller에서 -->
 	<table class="table-wrapper">
 		<tr>
-			<th colspan="2"><b>${ vo.b_subject }</b>의 글의 답글</th>
+			<th colspan="2">▶<b>${ vo.b_subject }</b>◀ 글의 답글</th>
 		</tr>
 	      <tr>
 	         <th>제목</th>

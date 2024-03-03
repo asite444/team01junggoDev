@@ -21,3 +21,6 @@ ALTER TABLE `CreditCard` ADD CONSTRAINT `FK_user_TO_CreditCard_1` FOREIGN KEY (
 REFERENCES `user` (
 	`user_idx`
 );
+
+select * from creditcard;
+commit;

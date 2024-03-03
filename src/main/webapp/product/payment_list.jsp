@@ -19,8 +19,19 @@
 <link rel="stylesheet" href="../assets/css/main.css">
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<style type="text/css">
+th{
+ vertical-align: middle;
+        text-align: center;
+}
+
+</style>
 <script type="text/javascript">
+
+let  isPersonal=false;
 $(document).ready(function() {
+	
+	
     // select 요소가 변경될 때
     $('#card_list').change(function() {
         // 선택한 카드의 값과 hidden 값을 가져오기
@@ -30,6 +41,23 @@ $(document).ready(function() {
         // 가져온 값을 각각의 input 태그에 입력
         $('#card_number').val(selectedCardNum);
         $('#card_type').val(selectedCardType);
+    });
+    
+    //사용자가 결제 방식을 개인간 거래로 선택했을 경우
+    $('#paymentMethod').change(function() {
+        // 선택된 값 가져오기
+        var selectedValue = $(this).val();
+
+        // 선택된 값이 비어있지 않으면
+        if (selectedValue == "personal") {
+            
+            alert("개인간 거래인 경우, 카드를 선택 해도 해당 카드로 결제되지 않습니다.");
+            isPersonal=true;
+        }
+        
+		if (selectedValue == "card") {
+            isPersonal=false;
+        }
     });
 });
 
@@ -46,75 +74,120 @@ $(document).ready(function() {
 
 	function send(f) {
 
-		f.action = 'payment.do'
+		if(confirm("해당상품을 결제하시겠습니까?") == false) return;
+		f.action = 'payment_insert.do'
 		f.submit();
 	}
 	
 
 	function openCardPopup() {
-		
-		
-            var form = document.createElement('form');
-            form.action = 'popup_card.jsp';
-            form.method = 'post';
-            form.target = '공지사항';
-            
-            var parameterValue = '${user}'; // 원하는 파라미터 값 설정
-            var input = document.createElement('input');
-            input.type = 'hidden';
-            input.name = 'user';
-            input.value = parameterValue;
-            
-            form.appendChild(input);
-            document.body.appendChild(form);
-            
-            window.open('popup_card.jsp', '카드등록', 'width=600, height=600, top=200, left=850');
-            
-            form.submit();
-            
-            document.body.removeChild(form);
-        
+	  
+
+	    var form = document.createElement('form');
+	    form.action = 'popup_card.jsp';
+	    form.method = 'post';
+	    form.target = '카드등록';
+
+	    // user 데이터 추가
+	    var userInput = document.createElement('input');
+	    userInput.type = 'hidden';
+	    userInput.name = 'user';
+	    userInput.value = '${user}';
+	    form.appendChild(userInput);
+
+
+	    // 폼을 body에 추가
+	    document.body.appendChild(form);
+
+	    // 팝업 창 열기
+	    window.open('popup_card.jsp', '카드등록', 'width=600, height=600, top=200, left=850');
+
+	    // 폼 전송
+	    form.submit();
+
+	    // 폼 삭제
+	    document.body.removeChild(form);
 	}
+
+	function handleDataFromPopup(data) {
+	    if (data == "true") {
+	        // 현재 페이지의 URL 가져오기
+	        var currentUrl = window.location.href;
+
+	        // cart_idx 값 추출 (배열로)
+	        var cartIdxArray = getParametersByName('cart_idx', currentUrl);
+	        // p_idx 값 추출
+	        var pIdx = getParameterByName('p_idx', currentUrl);
+
+	        
+	        // cart_idx 값을 쿼리 문자열로 변환
+	        if(cartIdxArray!=null){
+	        var cartIdxQueryString = cartIdxArray.map(function (value) {
+	            return 'cart_idx=' + encodeURIComponent(value);
+	        }).join('&');
+	    
+
+	        // 새로운 URL 생성
+	        var newUrl = "payment_form.do?" + cartIdxQueryString;
+	        }
+	        
+	        // 만약 p_idx가 존재하면 추가
+	        if (pIdx) {
+	            newUrl =  "direct_payment_list_form.do?p_idx=" + encodeURIComponent(pIdx);
+	        }
+
+	        
+	        // 이동
+	        location.href = newUrl;
+	    }
+	}
+
+	// URL 파라미터 추출 함수 (특정 값만 추출)
+	function getParameterByName(name, url) {
+	    if (!url) url = window.location.href;
+	    name = name.replace(/[\[\]]/g, "\\$&");
+	    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");
+	    var results = regex.exec(url);
+	    if (!results) return null;
+	    if (!results[2]) return '';
+	    return decodeURIComponent(results[2].replace(/\+/g, " "));
+	}
+
+	// URL 파라미터 추출 함수 (모든 값 추출)
+	function getParametersByName(name, url) {
+	    if (!url) url = window.location.href;
+	    name = name.replace(/[\[\]]/g, "\\$&");
+	    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)", "g");
+	    var results = [];
+	    var match;
+	    while ((match = regex.exec(url)) !== null) {
+	        results.push(decodeURIComponent(match[2].replace(/\+/g, " ")));
+	    }
+	    return results.length === 0 ? null : results;
+	}
+	
 </script>
 </head>
 <body>
 
+	<jsp:include page="../include/header.jsp"></jsp:include>
 	<!-- Header -->
-	<header id="header">
-		<nav class="left">
-			<a href="#menu"><span>Menu</span></a>
-		</nav>
-		<a href="main.jsp" class="logo">intensify</a>
-		<nav class="right">
-			<a href="#" class="button alt">Log in</a>
-		</nav>
-	</header>
-	<!-- Menu -->
-	<nav id="menu">
-		<ul class="links">
-			<li><a href="../main.jsp">Home</a></li>
-			<li><a href="../all_items.jsp">전체매물</a></li>
-			<li><a href="../category.jsp">Category</a></li>
-			<li><a href="../board/list.do">community</a></li>
-			<li><a href="../generic.jsp">Generic</a></li>
-			<li><a href="../elements.jsp">Elements</a></li>
-		</ul>
-		<ul class="actions vertical">
-			<li><a href="#" class="button fit">Login</a></li>
-		</ul>
-	</nav>
+	
+	
+	<jsp:include page="../include/menu.jsp"></jsp:include>
 	<section id="main" class="wrapper">
 		<div class="inner">
 			<header class="align-center">
 				<h1>결제정보</h1>
 			</header>
 			<form class="form-inline">
-				<input type="hidden" value="${user.user_idx}" name="mem_idx">
+				<input type="hidden" value="${user.user_idx}" name="user_idx">
+				
 				<div style="width: 1300px; margin: auto;">
 					<table class="table table-wrapper">
 						<tr>
 							<th><label>우편번호</label></th>
-							<td><input class="form-control" name="user_zipcode" id="user_zipcode" value="${user.user_zipcode}"> <input class="btn btn-info" type="button" value="주소검색" onclick="find_addr();"></td>
+							<td><input class="form-control" name="user_zipcode" id="user_zipcode" value="${user.user_zipcode}"> <input class="button special small" type="button" value="주소검색" onclick="find_addr();"></td>
 						</tr>
 						<tr>
 							<th><label>배송지</label></th>
@@ -123,10 +196,10 @@ $(document).ready(function() {
 
 						<tr>
 							<th><label>결제방식</label></th>
-							<td><select style="width: 20%">
+							<td><select style="width: 20%" id="paymentMethod">
 									<option>결제 방식을 선택하세요</option>
 									<option value="card">카드결제</option>
-									<option value="tong">통장</option>
+									<option value="personal">1 대 1 개인거래</option>
 
 							</select></td>
 						</tr>
@@ -152,12 +225,17 @@ $(document).ready(function() {
 
 									<!--  for(CartVo cart : cart_list)   -->
 									<c:forEach var="payment" items="${payment_list}">
-										<input type="hidden" value="${payment.cart_idx}" name="c_idx">
+										<input type="hidden" value="${payment.cart_idx}" name="cart_idx">
+										<input type="hidden" value="${payment.p_idx}" name="p_idx">
+										<input type="hidden" value="${payment.sell_user_name}" name="sell_user_name">
+										<input type="hidden" value="${payment.p_price}" name="p_price">
 										<tr align="center">
-
+										
 											<td colspan="2">${ payment.p_name }<input type="hidden" value="${payment.p_name}" name="p_name"></td>
-											<td><b><fmt:formatNumber value="${ payment.p_price}" /> </b></td>
-											<td><img src="${pageContext.request.contextPath}/images/${payment.p_filename}" width="100" height="90"> <input type="hidden" value="${ payment.p_filename}" name="p_image_s"></td>
+											<td><b><fmt:formatNumber value="${payment.p_price}"/> </b>
+											
+											</td>
+											<td><img src="${pageContext.request.contextPath}/upload/${payment.p_filename}" width="100" height="90"> <input type="hidden" value="${ payment.p_filename}" name="p_image_s"></td>
 
 
 										</tr>
@@ -206,14 +284,14 @@ $(document).ready(function() {
 								<table class="table">
 									<tr>
 										<td style="width: 30%">
-										<select id="card_list" style="width: 70%">
+										<select id="card_list" style="width: 70%" >
 												<option value="" style="text-align: center;" >카드선택</option>
 												<c:forEach var="card" items="${card_list}">
 													<option value="${card.card_idx}" data-card-number="${card.card_number}"  data-card-type="${card.card_type}">${card.card_bank}</option>
 
 												</c:forEach>
 										</select> <!-- <input type="text" readonly="readonly" id="card_num" name="card_num" style="width: 20%">  --></td>
-										<td align="left"><input type="text" readonly="readonly" id="card_number" width="10px" name="card_type" style="width: 100%"></td>
+										<td align="left"><input type="text" readonly="readonly" id="card_number" width="10px" name="card_number" style="width: 100%"  ></td>
 										<td><input type="text" readonly="readonly" id="card_type" name="card_type" style="width: 50%"></td>
 										
 										<td><input type="button" value="카드등록" class="button small" onclick="openCardPopup()"></td>

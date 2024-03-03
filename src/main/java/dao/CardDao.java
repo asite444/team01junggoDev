@@ -34,4 +34,18 @@ public class CardDao {
 		return list;
 	}
 
+	/**
+	 * 카드 인서트
+	 * @param vo
+	 * @return
+	 */
+	public int insert(CardVo vo) {
+		int res=0;
+		SqlSession sqlSession=factory.openSession(true);
+		res=sqlSession.insert("card.card_insert",vo);
+		
+		sqlSession.close();
+		return res;
+	}
+
 }

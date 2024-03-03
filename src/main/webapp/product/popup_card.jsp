@@ -19,7 +19,8 @@
 <script type="text/javascript" src="../js/Keypad.js" ></script>
 
 <link type="text/css" href="../css/Keypad.css" rel="stylesheet" />
-  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>  
 <script>
 //공개키 기반의 모듈값을 세팅
 var PKIModulus = '<%=PKIModulus%>';
@@ -87,23 +88,127 @@ width: 20%;
         }
 </style>
 <script type="text/javascript">
+
+
 function limitInputLength(input) {
     if (input.value.length > 4) {
         input.value = input.value.slice(0, 4);
     }
 }
-function send(f) {
+
+
+
+function send() {
 	
-	//체크 없음 나중에 하자고 
 	
-	f.action="card_insert.do";
-	f.submit();
+	
+	let card_number1=$("#card_number1").val();
+	let card_number2=$("#card_number2").val();
+	let card_number3=$("#card_number3").val();
+	let card_number4=$("#card_number4").val();
+    
+	if(card_number1=='' || card_number2=='' || card_number3=='' || card_number4==''  ){
+		alert('카드번호를 입력해 주세요');
+		$("#card_number1").focus();
+		return;
+	}
+	
+	let card_number=card_number1+"-"+card_number2+"-"+card_number3+"-"+card_number4;
+	
+	let card_holder_name=$("#card_holder_name").val().trim();
+	let card_password=$("#card_password").val();	
+	
+	let expiration_date=$("#expiration_date").val();
+	let cvv=$("#cvv").val();
+	let card_nickname=$("#card_nickname").val().trim();
+	let card_bank=$("#card_bank").val().trim();
+	let card_category=$("#card_category").val();
+	let card_type=$("#card_type").val();
+	
+	if(card_holder_name==''){
+		alert('소유자명을 입력해 주세요');
+		$("#card_holder_name").focus();
+		return;
+	}
+	
+	
+	if(expiration_date==''){
+		alert('유효기간을 입력해 주세요');
+		$("#expiration_date").focus();
+		return;
+	}
+	
+	if(cvv==''){
+		alert('cvv를 입력해 주세요');
+		$("#cvv").focus();
+		return;
+	}
+	
+	
+	if(card_password==''){
+		alert('비밀번호를 입력해 주세요');
+		$("#card_password").focus();
+		return;
+	}
+	
+
+	if(card_bank==''){
+		alert('은행을 입력해 주세요');
+		$("#card_bank").focus();
+		return;
+	}
+	
+	if(card_category=='선택'){
+		alert('카드 범주를 선택해 주세요');
+		return;
+	}
+	
+	if(card_type=='선택'){
+		alert('카드 종류를 선택해 주세요');
+		return;
+	}
+	
+	
+
+
+	
+ 	$.ajax({
+        url     : "card_insert.do",
+        data	:{"user_idx":"${user.user_idx}"
+        		  ,"card_number":card_number
+        		  ,"card_holder_name":card_holder_name,
+        		  "card_password":card_password,
+        		  "expiration_date":expiration_date,
+        		  "cvv":cvv,
+        		  "card_nickname":card_nickname,
+        		  "card_bank":card_bank,
+        		  "card_category":card_category,
+        		  "card_type":card_type
+        },
+        dataType	:	"json",
+        success : function(res_data){
+        	
+        	
+        alert('카드 등록이 완료되었습니다.');
+        
+        window.opener.handleDataFromPopup("true");
+        
+        window.close();
+        },
+        
+        error   : function(err){
+            alert(err.responseText);
+           
+        }
+    });
+	
+	
 }
 </script>
 </head>
 <body>
 <div id="wrap">
-	<h2 align="center">카드 정보</h2>
+	<h2 align="center">카드 정보 </h2>
 	<form>
 	<table>
 		<tr>
@@ -114,26 +219,34 @@ function send(f) {
 		</tr>
 		<tr>
 			<td align="center"  style="width: 50px" colspan="2">
-			<input  type="number"  inputmode="numeric"  inputmode="numeric" maxlength="4" placeholder="0000" oninput="limitInputLength(this)" name="card_number" >
-			-<input type="number" maxlength="4" placeholder="0000" oninput="limitInputLength(this)"  name="card_number">
-			-<input type="password" inputmode="numeric" maxlength="4" placeholder="0000" oninput="limitInputLength(this)"  Number_keypad="on" name="card_number">
-			-<input type="password" inputmode="numeric" maxlength="4" placeholder="0000" oninput="limitInputLength(this)"  Number_keypad="on" name="card_number"> 
+			<input  type="number"  inputmode="numeric"  inputmode="numeric" maxlength="4" placeholder="0000" oninput="limitInputLength(this)" name="card_number"  id="card_number1">
+			-<input type="number" maxlength="4" placeholder="0000" oninput="limitInputLength(this)"  name="card_number"  id="card_number2">
+			-<input type="password" inputmode="numeric" maxlength="4" placeholder="0000" oninput="limitInputLength(this)"  Number_keypad="on" name="card_number"  id="card_number3">
+			-<input type="password" inputmode="numeric" maxlength="4" placeholder="0000" oninput="limitInputLength(this)"  Number_keypad="on" name="card_number"  id="card_number4"> 
 			</td>
+		</tr>
+		<tr>
+		<td colspan="2">소유자명</td>
+		</tr>
+		<tr>
+		<td colspan="2">
+		<input type="text" id="card_holder_name">
+		</td>
 		</tr>
 		<tr>
 		<td>유효기간</td>
 		<td>cvv</td>
 		</tr>
 		<tr>
-		<td><input width="50%" type="password" inputmode="numeric" maxlength="4" placeholder="MMYY" oninput="limitInputLength(this)"  Number_keypad="on" name="expiration_date"></td>
-		<td><input width="100%" type="text" inputmode="numeric" maxlength="3" placeholder="카드 뒷면 3자리 숫자" oninput="limitInputLength(this)"  Number_keypad="on" name="cvv" style="width: 100px"></td>
+		<td><input width="50%" type="password" inputmode="numeric" maxlength="4" placeholder="MMYY" oninput="limitInputLength(this)"  Number_keypad="on" name="expiration_date" id="expiration_date"></td>
+		<td><input width="100%" type="text" inputmode="numeric" maxlength="3" placeholder="카드 뒷면 3자리 숫자" oninput="limitInputLength(this)"  Number_keypad="on" name="cvv" id="cvv" style="width: 100px"></td>
 		</tr>
 		<tr>
 		<td colspan="2" align="left">카드 비밀번호</td>
 
 		</tr>
 		<tr>
-		<td colspan="2" align="left"><input width="100%" type="text" inputmode="numeric" maxlength="2" placeholder="앞2자리" oninput="limitInputLength(this)"  Number_keypad="on" name="card_password"></td>
+		<td colspan="2" align="left"><input width="100%" type="text" inputmode="numeric" maxlength="2" placeholder="앞2자리" oninput="limitInputLength(this)"  Number_keypad="on" name="card_password" id="card_password"></td>
 		
 		</tr>
 		<tr>
@@ -146,10 +259,10 @@ function send(f) {
 		</tr>
 		
 		<tr>
-		<td><input type="text" style="width: 200px" placeholder="미 입력시 소유자명" name="card_nickname">
+		<td><input type="text" style="width: 200px" placeholder="미 입력시 소유자명" name="card_nickname" id="card_nickname">
 		</td>
 		<td>
-		<input type="text" style="width: 100px" placeholder="은행입력" name="card_bank">
+		<input type="text" style="width: 100px" placeholder="은행입력" name="card_bank" id="card_bank">
 		</td>
 		</tr>
 		<tr>
@@ -165,15 +278,15 @@ function send(f) {
 		</tr>
 		<tr>
 		<td>
-		<select id="card_list" style="width: 70%" name="card_category">
-		<option value="">선택</option>
+		<select style="width: 70%" name="card_category" id="card_category">
+		<option value="선택">선택</option>
 		<option value="개인" >개인</option>
 		<option value="법인">법인</option>
 		</select>
 		</td>
 		<td>
-		<select id="card_list" style="width: 70%" name="card_type">
-		<option value="">선택</option>
+		<select  style="width: 70%" name="card_type" id="card_type">
+		<option value="선택">선택</option>
 		<option value="체크" >체크</option>
 		<option value="신용">신용</option>
 		</select>
@@ -181,7 +294,7 @@ function send(f) {
 		</tr>
 		<tr>
 		<td colspan="2" align="right">
-		<button class="btn btn-primary" onclick="send(this.form);">카드 등록 </button>
+		<button class="btn btn-primary" onclick="send(); return false;">카드 등록 </button>
 		</td>
 		
 		</tr>

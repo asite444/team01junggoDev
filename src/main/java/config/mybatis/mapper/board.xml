@@ -4,9 +4,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="board">
 
-	<!-- 전체조회 -->
+	<!-- 페이지에 따른 전체조회 -->
 	<select id="board_list" resultType="vo.BoardVo">
-		select * from board order by b_ref desc, b_step asc
+		select * from board
+		 where community_page = ${community_page}
+		 order by b_ref desc, b_step asc 
 	</select>
 
 	<!-- 조건별(페이징/검색)조회 -->
@@ -18,11 +20,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    (
 	   select 
 	        * , rank() over(order by b_ref desc, b_step asc) as no
-	   from board
-	   
+	   from (select * from board where community_page = ${community_page}) bb
 		<trim prefix="where" prefixOverrides="or">
+			
 			<if test="name!=null">
-				user_name like concat('%',#{ name },'%')
+			  user_name like concat('%',#{ name },'%')
 			</if>
 			<if test="subject!=null"><!-- b_subject like '%길동%' -->
 				b_subject like concat('%',#{ subject },'%')
@@ -33,29 +35,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			
 		</trim>
 	)b
-	 where no between #{ start } and #{ end }
+	 where no between #{ start } and #{ end } 
 	</select>
+	
+	
+	
+	<!-- 검색된 게시물 수얻어오기 -->
+	<select id="board_condition_row_total" parameterType="Map" resultType="int">
+		select ifnull(count(*),0) from 
+		    (select * from board where community_page = ${community_page}) bb
+			<trim prefix="where" prefixOverrides="or">
+				<if test="name!=null">
+					user_name like concat('%',#{ name },'%')
+				</if>
+				<if test="subject!=null"><!-- b_subject like '%길동%' -->
+					b_subject like concat('%',#{ subject },'%')
+				</if>
+				<if test="content!=null"><!-- b_subject like '%길동%' -->
+					or b_content like concat('%',#{ content },'%')
+				</if>
+				
+			</trim>
+	</select>
+	
 	
 	<!-- Paging: 전체 게시물 수 -->
 	<select id="board_row_total" resultType="int">
 		select ifnull(count(*),0) from board
-	</select>
-	
-	<!-- 검색된 게시물 수얻어오기 -->
-	<select id="board_condition_row_total" resultType="int">
-		select ifnull(count(*),0) from board
-		<trim prefix="where" prefixOverrides="or">
-			<if test="name!=null">
-				user_name like concat('%',#{ name },'%')
-			</if>
-			<if test="subject!=null"><!-- b_subject like '%길동%' -->
-				b_subject like concat('%',#{ subject },'%')
-			</if>
-			<if test="content!=null"><!-- b_subject like '%길동%' -->
-				or b_content like concat('%',#{ content },'%')
-			</if>
-			
-		</trim>
 	</select>
 	
 	<!-- 게시물 1건 얻어오기 --><!-- no을 가져오기 위해서 ()가져옴 -->
@@ -87,6 +93,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  		, b_use
  		, user_idx
  		, user_name
+ 		, community_page 
  		) 
  		values(#{ b_idx },	 
 			  #{ b_subject },
@@ -98,7 +105,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				0,
 				'y',
 			     #{user_idx},
-			     #{user_name}
+			     #{user_name},
+			     #{community_page}
 			     )
  	</select>
 	
@@ -127,6 +135,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 		, b_use
 	 		, user_idx
 	 		, user_name
+	 		, community_page 
 	 		) values(#{ b_idx },	 
 				  #{ b_subject },
 					#{ b_content },
@@ -137,7 +146,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					#{ b_depth },
 					'y',
 				     #{user_idx},
-				     #{user_name}
+				     #{user_name},
+				     #{community_page}
 				     )
 
  	</select>	
@@ -156,8 +166,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                       b_regdate=now()
      where b_idx = #{ b_idx }                   
   </update>
-
- 
   
 
 </mapper>

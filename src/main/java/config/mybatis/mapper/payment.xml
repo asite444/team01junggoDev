@@ -4,10 +4,63 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="payment">
 
+<!-- 카트 리스트 결제정보에 전송 -->
 <select id="card_list" parameterType="int" resultType="vo.CardVo">
 select * from creditCard where user_idx=#{user_idx}
 </select>
 
+<!--  결제 테이블 등록 -->
+<insert id="payment_insert">
+insert into payment (
+user_idx
+, cart_idx
+, order_number
+, pay_zipcode
+, pay_addr
+, user_name
+, p_idx
+, p_name
+, pro_image
+, sell_user_name
+, p_total_amount
+, amount_appr
+, card_type
+, card_number
+, payment_date)
+values
+(
+ #{user_idx},
+ #{cart_idx},
+ #{order_number},
+ #{pay_zipcode}, 
+ #{pay_addr}, 
+ #{user_name}, 
+ #{p_idx}, 
+ #{p_name}, 
+ #{pro_image}, 
+ #{sell_user_name},
+ #{p_total_amount},
+ #{amount_appr},
+ #{card_type}, 
+ #{card_number},
+ now()
+)
+</insert>
+
+<!--  상품 결제완료 처리 -->
+<update id="product_update" parameterType="int">
+update product set p_deal='결제완료' where p_idx=#{p_idx}
+</update>
+
+<!-- 주문번호 얻어오기 -->
+<select id="payment_order_number" resultType="int">
+select ifnull(max(order_number),0) +1 as order_number from payment
+</select>
+
+<!-- 결제 내역 리스트 -->
+<select id="pay_list" parameterType="int" resultType="vo.PaymentVo">
+select * from payment where user_idx=#{user_idx} order by payment_date,order_number desc;
+</select>
 </mapper>
 
 

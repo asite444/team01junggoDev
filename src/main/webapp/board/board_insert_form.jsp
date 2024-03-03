@@ -58,83 +58,54 @@ th{
 </head>
 <body>
 
+	<jsp:include page="../include/header.jsp"></jsp:include>
 	<!-- Header -->
-	<header id="header">
-		<nav class="left">
-			<a href="#menu"><span>Menu</span></a>
-		</nav>
-		<a href="../main.jsp" class="logo">중고로Go</a>
-		<nav class="right">
-			<c:if test="${ empty sessionScope.user }">
-			<input class="button alt" value="Login"
-					onclick="login();">
-			</c:if>
-			<!-- 로그인이 됐을경우 : 세션영역에 user가 있는가?  -->
-			<c:if test="${ not empty sessionScope.user }">
-				<b>${ sessionScope.user.user_name }</b>님 환영합니다!!
-				<input class="button alt" type="button" value="Logout"
-			       onclick="location.href='logout.do'">
-			</c:if>	
-		</nav>
-	</header>
-	<!-- Menu -->
-	<nav id="menu">
-		<ul class="links">
-			<li><a href="../main.jsp">Home</a></li>
-			<li><a href="../all_items.jsp">전체매물</a></li>
-			<li><a href="../category.jsp">Category</a></li>
-			<li><a href="../board/board_list.jsp">community</a></li>
-			<li><a href="../generic.jsp">Generic</a></li>
-			<li><a href="../elements.jsp">Elements</a></li>
-		</ul>
-		<ul class="actions vertical">
-			<li><a href="#" class="button fit">Login</a></li>
-		</ul>
-	</nav>
+	
+	
+	<jsp:include page="../include/menu.jsp"></jsp:include>
 	<section id="main" class="wrapper">
 		<div class="inner">
 			<header class="align-center">
 				<h1>community</h1>
 				<p>
 					<b>
-						<a href="../board/list.do">커뮤니티</a> | <a href="board_notice.jsp">Notice</a> | <a href="board_qna.jsp">Q&A</a>
+						<a href="../board/list.do?community_page=1&">커뮤니티</a> | <a href="notice_list.do?community_page=2&">Notice</a> | <a href="qna_list.do?community_page=3&">Q&A</a>
 					</b>
 				</p>
 			</header>
-				<div class="image fit">
 
-				</div>
+
 			<br>
 			<br>
 		<hr>
 			<br>
 		
 			<h1>게시물 작성</h1>
-			
 			<br>
 		<form action="form-inline">
-		<table class="table-wrapper">
-			<tr>
-				<th colspan="2"><b>${ user.user_name }</b>님의 글 작성</th>
-			</tr>
-	       <tr>
-	          <th>제목</th>
-	          <td><input class="query" type="text" name="b_subject"></td>
-	       </tr>
-	       <tr>
-	          <th>내용</th>
-	          <td><textarea class="message" rows="5" name="b_content"></textarea></td>
-	       </tr>
-	       
-	       <tr>
-	          <td colspan="2" align="center">
-	              <input type="button" class="button special"  value="새글쓰기" 
-	              			onclick="send(this.form)">
-	              <input type="button" class="button"  value="목록보기" 
-	              			onclick="location.href='list.do'">
-	          </td>
-	       </tr>
-		</table>
+			<input type="hidden" name="community_page" value="${ community_page }">
+			<table class="table-wrapper">
+				<tr>
+					<th colspan="2"><b>${ user.user_name }</b>님의 글 작성</th>
+				</tr>
+		       <tr>
+		          <th>제목</th>
+		          <td><input class="query" type="text" name="b_subject"></td>
+		       </tr>
+		       <tr>
+		          <th>내용</th>
+		          <td><textarea class="message" rows="5" name="b_content"></textarea></td>
+		       </tr>
+		       
+		       <tr>
+		          <td colspan="2" align="center">
+		              <input type="button" class="button special"  value="새글쓰기" 
+		              			onclick="send(this.form)">
+		              <input type="button" class="button"  value="목록보기" 
+		              			onclick="location.href='list.do'">
+		          </td>
+		       </tr>
+			</table>
 		</form>
 			
 				

@@ -24,14 +24,16 @@
 	<script src="../assets/js/util.js"></script>
 	<script src="../assets/js/main.js"></script>
 <script type="text/javascript">
+
+
 	function login(){
 	    
 		   location.href="../user/login_form.do?url=" + encodeURIComponent(location.href) ;
 	}//end : login
 	
-	function delete_board(b_idx) { //delete는 javascript예약어이야.
+	function delete_board(b_idx) { //delete는 javascript예약어이다.
 		
-		if (confirm("정말 삭제하시겠습니다?")==false)return;
+		if (confirm("정말 삭제하시겠습니까?")==false)return;
 			
 		location.href='delete.do?b_idx=' + b_idx + "&page=${ param.page }&search=${param.search}&search_text=${param.search_text}" ;
 		//자리는 유지하되 내용만 감춘다.
@@ -39,9 +41,32 @@
 	
 	//개시물의 댓글
 	$(document).ready(function (){
-		//comment_list(1); //page1
-	});
+		comment_list(1); //page1
 		
+
+	    
+
+	    // 링크 클릭 시 스크롤 위치 저장 및 comment_list 함수 호출
+	    $("a.comment-link").on("click", function(e) {
+	        e.preventDefault();
+	        var pageIndex = $(this).data("index");
+	        preserveScrollPositionAndNavigate(pageIndex);
+	    });
+	    
+	    
+	    if("${param.commentFocus}"=="true"){
+			// $("#disp").focus();
+			
+			var offset = $("#disp").offset(); //해당 위치 반환
+			$("html, body").animate({scrollTop: offset.top},400); //스크롤 자동이동 0.4초 속도
+		}
+	});
+	
+	function preserveScrollPositionAndNavigate(p) {
+	    preserveScrollPosition(p);
+	    // 페이지 이동을 막음
+	    return false;
+	}
 	//Ajax 통해서 삭제 => boaed_comment_list.jsp	
 	var g_cmt_page=1;
 	
@@ -51,6 +76,7 @@
 			url		:	"comment_list.do",
 			data	:	{ "b_idx" : "${ vo.b_idx }", "page" : p },
 			success	:	function (res_data){
+				
 				$("#disp").html(res_data);
 			},
 			error	:	function (err){
@@ -62,14 +88,14 @@
 	
 	function comment_insert() {
 		
-		//로그인여부 체트
+		//로그인여부 체크
 		if ("${ empty user}" == "true") {
 			if(confirm("댓글쓰기는 로그인후에 가능합니다\n로그인하시겠습니까?")==false) return;
 			
 			location.href="../user/login_form.do?url=" + encodeURIComponent(location.href);			
 			return;
 		
-		}//end: comment_insert();
+		}//로그인여부
 
 		   //내용입력 여부체크
 		   let cmt_content = $("#cmt_content").val().trim();
@@ -80,15 +106,15 @@
 			   return;
 		   }
 		   
-		   // Ajax로 전송
+		   // 댓글에 대한: Ajax로 전송
 		   $.ajax({
 			   url		:	"comment_insert.do",
 			   data		:	{ 
 				               "b_idx" : "${ vo.b_idx }",
-				               "cmt_content" : cmt_content, 
+				               "cmt_content" :  cmt_content,
 				               "user_idx" : "${ user.user_idx }",
 				               "user_id"  : "${ user.user_id }",
-				               "user_name": "${ user.user_name }"
+				               "user_name": "${ user.user_name }"				              
 			                },
 			   dataType	:	"json",
 			   success	:	function(res_data){
@@ -109,16 +135,16 @@
 			   error	:	function(err){
 				   
 				   alert(err.responseText);
-				   
+				   alert('에러');
 			   }
 		   });
 		   
 		
 	}//end : comment_insert
 	function modify_form(b_idx) {
+		let community_page="${param.community_page}";
 		
-		console.log(b_idx);
-		location.href="modify_form.do?b_idx=" + b_idx; //PhotoModifyFormAction=BoardController
+		location.href="modify_form.do?b_idx=" + b_idx+"&community_page="+community_page; //PhotoModifyFormAction=BoardController
 
 	}//end : modify_form
 </script>
@@ -146,52 +172,22 @@ textarea{
 </head>
 <body>
 
+	<jsp:include page="../include/header.jsp"></jsp:include>
 	<!-- Header -->
-	<header id="header">
-		<nav class="left">
-			<a href="#menu"><span>Menu</span></a>
-		</nav>
-		<a href="../main.jsp" class="logo">중고로Go</a>
-		<nav class="right">
-			<c:if test="${ empty sessionScope.user }">
-			<input class="button alt" value="Login"
-					onclick="login();">
-			</c:if>
-			<!-- 로그인이 됐을경우 : 세션영역에 user가 있는가?  -->
-			<c:if test="${ not empty sessionScope.user }">
-				<b>${ sessionScope.user.user_name }</b>님 환영합니다!!
-				<input class="button alt" type="button" value="Logout"
-			       onclick="location.href='logout.do'">
-			</c:if>	
-		</nav>
-	</header>
-	<!-- Menu -->
-	<nav id="menu">
-		<ul class="links">
-			<li><a href="../main.jsp">Home</a></li>
-			<li><a href="../all_items.jsp">전체매물</a></li>
-			<li><a href="../category.jsp">Category</a></li>
-			<li><a href="../board/list.do">community</a></li>
-			<li><a href="../generic.jsp">Generic</a></li>
-			<li><a href="../elements.jsp">Elements</a></li>
-		</ul>
-		<ul class="actions vertical">
-			<li><a href="#" class="button fit">Login</a></li>
-		</ul>
-	</nav>
+	
+	
+	<jsp:include page="../include/menu.jsp"></jsp:include>
 	<section id="main" class="wrapper">
 		<div class="inner">
 			<header class="align-center">
 				<h1>community</h1>
 				<p>
 					<b>
-						<a href="../board/list.do">커뮤니티</a> | <a href="board_notice.jsp">Notice</a> | <a href="board_qna.jsp">Q&A</a>
+						<a href="../board/list.do?community_page=1&">커뮤니티</a> | <a href="notice_list.do?community_page=2&">Notice</a> | <a href="qna_list.do?community_page=3&">Q&A</a>
 					</b>
 				</p>
 			</header>
-				<div class="image fit">
-
-				</div>
+				
 			<br>
 			<br>
 		<hr>
@@ -201,7 +197,8 @@ textarea{
 			
 			<br>
 		<form action="form-inline">
-			<input type="hidden"  name="user_idx"   value="${ user.user_idx }">
+			<input type="hidden"  name="community_page"   value="${ param.community_page }"><!-- param에서 -->
+			<input type="hidden"  name="community_page"   value="${ community_page }"><!-- controller에서 -->
     		<input type="hidden"  name="b_idx"  value="${ vo.b_idx }">
 			<table class="table-wrapper">
 				<tr>
@@ -220,8 +217,8 @@ textarea{
 		          <td colspan="2" align="center">
 		          
 		          <c:if test="${ user.user_grade eq '관리자' }">
-				   	<input class="btn btn-link" type="button" value="답글달기" 
-				   				onclick="location.href='reply_form.do?b_idx=${ vo.b_idx }&page=${ param.page }&'">&nbsp;
+				   	<input class="button" type="button" value="답글달기" 
+				   				onclick="location.href='reply_form.do?b_idx=${ vo.b_idx }&page=${ param.page }&community_page=${ param.community_page }&'">&nbsp;
 				  </c:if>
 		          <!-- 글주인 or 관리자만 활성화 -->
 		   			<c:if test="${ (vo.user_idx eq user.user_idx) or (user.user_grade eq '관리자') }"><!-- request:vo | session:user -->
@@ -237,18 +234,14 @@ textarea{
 			</table>
 		</form>
 		
-		<br>
-		<br>
-		<br>
+		<br><br>
 			
 		<!-- 댓글등록폼 -->
 		<div class="row">
 			<form action="">
 				<div class="row uniform">
 					<div class="12u$">
-						<textarea name="message" id="message"
-										placeholder="Enter your message" rows="6" data-gramm="false"
-										wt-ignore-input="true"></textarea>
+						<textarea id="cmt_content" placeholder="로그인 후에 댓글쓰기가 가능합니다" rows="6"></textarea>
 						<input class="button comment" id="cmt_btn_register" type="button" value="댓글쓰기"
 							onclick="comment_insert();">
 					</div>
@@ -256,12 +249,12 @@ textarea{
 			</form>
 		</div>
 		
-		</div>
 		
 		<hr>
 			<!-- 댓글목록 출력 -->
 		<div id="disp"></div>	
 				
+		</div><!-- end : inner -->
 		
 	
 	</section>
