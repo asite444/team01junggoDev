@@ -342,7 +342,7 @@
 
 							<p class="subject">
 								제목:${ vo.p_subject }<br>가격 : ${vo.p_price }원 / 지역 : ${vo.p_local }<br>
-								<span class="glyphicon glyphicon-heart" style="font-size: 25px; color: red"></span>관심도(${vo.p_hit })
+								<span class="glyphicon glyphicon-heart" style="font-size: 25px; color: red"></span>관심도(${vo.p_hit }) (${ vo.p_deal })
 							</p>
 
 						</div>

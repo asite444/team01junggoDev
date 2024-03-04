@@ -50,7 +50,26 @@ form{
 	<script src="../assets/js/util.js"></script>
 	<script src="../assets/js/main.js"></script>
 <script type="text/javascript">
+$(document).ready(function(){
+	//  quickmenu의 top 이 얼마인지 알아오자
+		var top = 
+		parseInt($("#quickmenu").css("top"));
+		$("#quickmenu").css("top",130);
 	
+		
+	// 스크롤 되어질때 quickmenu의 속성값도 이동하게 설정
+	$(window).scroll(function(){
+		var scrollTop = $(window).scrollTop();
+		
+					
+		var quickTop = top + scrollTop;
+		
+	
+		
+		//$("#quickmenu").animate({top:quickTop},1);
+		$("#quickmenu").css("top",quickTop+100);
+	});
+});
 	function insert_form() {
 		
 		//로그인이 안된경우

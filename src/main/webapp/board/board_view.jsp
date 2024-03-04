@@ -24,7 +24,26 @@
 	<script src="../assets/js/util.js"></script>
 	<script src="../assets/js/main.js"></script>
 <script type="text/javascript">
-
+$(document).ready(function(){
+	//  quickmenu의 top 이 얼마인지 알아오자
+		var top = 
+		parseInt($("#quickmenu").css("top"));
+		$("#quickmenu").css("top",130);
+	
+		
+	// 스크롤 되어질때 quickmenu의 속성값도 이동하게 설정
+	$(window).scroll(function(){
+		var scrollTop = $(window).scrollTop();
+		
+					
+		var quickTop = top + scrollTop;
+		
+	
+		
+		//$("#quickmenu").animate({top:quickTop},1);
+		$("#quickmenu").css("top",quickTop+100);
+	});
+});
 
 	function login(){
 	    
@@ -154,13 +173,14 @@ th{
 	font-size: 20px;
 	width: 300px;
 }
-b{font-weight: bold;}
+
 .row{ margin: auto; }
 textarea{ 
 	width: 700px; 
     display: inline-block;
     margin-right: 20px; /* 요소 사이의 간격 조정 */
     vertical-align: middle; /* 요소의 수직 정렬 설정 */
+    resize: none;
 }
 .comment{
 	 vertical-align: middle;
@@ -253,7 +273,7 @@ textarea{
 		<hr>
 			<!-- 댓글목록 출력 -->
 		<div id="disp"></div>	
-				
+
 		</div><!-- end : inner -->
 		
 	

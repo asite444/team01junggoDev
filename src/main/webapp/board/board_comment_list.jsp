@@ -8,14 +8,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-	.btn-link{
-		color: 	#FFB6C1 !important;
-		font-weight: bold !important;
-		border: 1px solid #FFB6C1 !important;
-	}
+	
 		
 	b{ /* user-id */
-		color: 	#FFB6C1;
+		/* color: 	#FFB6C1; */
 	  	font-weight: bold;
 	  }
 	 .cmt2{
@@ -28,7 +24,26 @@
 </style>
 
 <script type="text/javascript">
-
+$(document).ready(function(){
+	//  quickmenu의 top 이 얼마인지 알아오자
+		var top = 
+		parseInt($("#quickmenu").css("top"));
+		$("#quickmenu").css("top",130);
+	
+		
+	// 스크롤 되어질때 quickmenu의 속성값도 이동하게 설정
+	$(window).scroll(function(){
+		var scrollTop = $(window).scrollTop();
+		
+					
+		var quickTop = top + scrollTop;
+		
+	
+		
+		//$("#quickmenu").animate({top:quickTop},1);
+		$("#quickmenu").css("top",quickTop+100);
+	});
+});
 	function delete_comment(cmt_idx) {
 		
 		if(confirm("정말 삭제하시겠습니까?")==false) return;
@@ -116,6 +131,11 @@
 
 </head>
 <body>
+	<!-- 댓글이 없는경우 -->
+	<c:if test="${ empty cmt }"> <!-- request Binding에서 줌 -->
+		<font color="red" align="center">등록된 댓글이 없습니다.</font>
+	</c:if>
+			
 	<!-- PageMenu : 댓글이 있으면 메뉴 넣어라...  -->
 	<c:if test="${ not empty cmt }">
 	   ${ pageMenu }

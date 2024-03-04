@@ -24,7 +24,26 @@
 	<script src="../assets/js/util.js"></script>
 	<script src="../assets/js/main.js"></script>
 <script type="text/javascript">
-
+$(document).ready(function(){
+	//  quickmenu의 top 이 얼마인지 알아오자
+		var top = 
+		parseInt($("#quickmenu").css("top"));
+		$("#quickmenu").css("top",130);
+	
+		
+	// 스크롤 되어질때 quickmenu의 속성값도 이동하게 설정
+	$(window).scroll(function(){
+		var scrollTop = $(window).scrollTop();
+		
+					
+		var quickTop = top + scrollTop;
+		
+	
+		
+		//$("#quickmenu").animate({top:quickTop},1);
+		$("#quickmenu").css("top",quickTop+100);
+	});
+});
 	
 	function insert_form() { //글쓰기
 		
@@ -78,34 +97,30 @@
 		
 		
 </script>
+
 <style type="text/css">
 
+	.search{width: 150px;}
+    #search_text {width: 500px;}
 
-	.search{
-		width: 150px;
-	}
-    #search_text {
-       
-        width: 500px;
-    }
-
-	form{
-		margin: auto;
-	}
-	
+	form{margin: auto;}
 
 
- .commentFocus {
+	.commentFocus {
             text-decoration: none; /* 밑줄 제거 */
             color: inherit; /* 기본 텍스트 색상 사용 */
             cursor: pointer; /* 커서 모양 설정 */
     }
 
         /* 호버(마우스를 올렸을 때) 스타일 */
-  .commentFocus:hover {
+	.commentFocus:hover {
             text-decoration: underline; /* 밑줄 추가 */
             color: inherit; /* 기본 텍스트 색상 사용 */
- }	
+	}	
+	span.badge{
+		background: #a7d9e7cf;
+		border-radius: 40%;
+	}
 </style>
 </head>
 <body>
@@ -129,6 +144,7 @@
 
 				</div>
 			<p>자유로운 커뮤니티 모아보기</p>
+			<p>자유로운 의견을 나누어 보세요!</p>
 			<br><br><br>
 			
 		<!-- 검색기능 -->
@@ -190,7 +206,9 @@
 						
 						<!-- badge: 댓글갯수 -->
 							<c:if test="${ vo.cmt_count gt 0 }">
-		              	    	<a class="commentFocus" href="view.do?b_idx=${ vo.b_idx }&page=${ empty param.page ? 1 : param.page }&search=${ param.search }&search_text=${ param.search_text }&commentFocus=true&community_page=1"><span class="badge" style="background: #FFB6C1;">${ vo.cmt_count }</span></a>
+		              	    	<a class="commentFocus" href="view.do?b_idx=${ vo.b_idx }&page=${ empty param.page ? 1 : param.page }&search=${ param.search }&search_text=${ param.search_text }&commentFocus=true&community_page=1">
+		              	    	<span class="badge"> &nbsp;${ vo.cmt_count }&nbsp; </span>
+		              	    	</a>
 		              	 	</c:if>
 						
 						</c:if>

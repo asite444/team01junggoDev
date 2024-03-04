@@ -60,6 +60,22 @@
 		
 	}
 	
+	function direct_Buy() {
+		
+      let p_idx="${vo.p_idx}";
+	    if("${ vo.p_deal}"== "결제완료"){
+	    	   
+	    	   alert('이미 거래 완료된 상품입니다.');
+	    	   return;
+	       }
+	    
+	    if("${ vo.p_deal}"== "거래중"){
+	    	   
+	    	   alert('거래가 진행중인 상품입니다.');
+	    	   return;
+	       }
+		location.href="direct_payment_list_form.do?p_idx="+p_idx;
+	}
 
 </script>
 <style type="text/css">
@@ -305,6 +321,17 @@ margin-left: 50px;"
     //로그인(아웃)상태 체크	  
 	  function add_cart(){
 		  
+		    if("${ vo.p_deal}"== "결제완료"){
+		    	   
+		    	   alert('이미 거래 완료된 상품입니다.');
+		    	   return;
+		       }
+		    
+		    if("${ vo.p_deal}"== "거래중"){
+		    	   
+		    	   alert('거래가 진행중인 상품입니다.');
+		    	   return;
+		       }
 	       //로그인(아웃)상태 체크	  
 	       if("${ empty user }" == "true"){
 	    	   
@@ -320,6 +347,10 @@ margin-left: 50px;"
 	    	   return;
 	       }
 	       
+	       
+	       
+	       
+	   
 	       //Ajax처리(장바구니 등록)
 	       $.ajax({
 	    	   
@@ -442,7 +473,7 @@ margin-left: 50px;"
 			<div id="price">가격 : ${ vo.p_price }원</div>
 		
 			<div id="line"></div>
-			<div id="time"><div id="tim" class="glyphicon glyphicon-heart" style="font-size: 40px; color: red"></div>${vo.p_hit }</div>
+			<div id="time"><div id="tim" class="glyphicon glyphicon-heart" style="font-size: 40px; color: red"></div>${vo.p_hit }<b>(${ vo.p_deal })</b></div>
 		
 			<div id="local">지역</div>
 			<div id="bo"></div>
@@ -459,13 +490,13 @@ margin-left: 50px;"
 			<c:if test="${ (vo.user_idx ne user.user_idx)}">	
 			<input type="button" class="btn btn-info"  		style="width: 600px; height: 60px; margin-top: 80px; margin-left: 50px;"   value="위시리스트 담기" 	onclick="add_cart();"/>
 			<input type="button" class="btn btn-warning"  style="width: 200px; height: 60px; margin-top: 80px; margin-left: 10px;" value="위시리스트 보기" 	onclick="location.href='cart_list.do'"/> 
-			<input type="button" class="btn btn-success" 	style="width: 400px; height: 60px; margin-top: 80px; margin-left: 10px;" value="바로구매" 			onclick="location.href='direct_payment_list_form.do?p_idx=${vo.p_idx}'"/> 
+			<input type="button" class="btn btn-success" 	style="width: 400px; height: 60px; margin-top: 80px; margin-left: 10px;" value="바로구매" 			onclick="direct_Buy();"/> 
 		   	</c:if>
 		   
 		  	<c:if test="${ (vo.user_idx eq user.user_idx)}">	
 		  	<input disabled="disabled" type="button" class="btn btn-info"  style="width: 600px; height: 60px; margin-top: 80px; margin-left: 50px;"   value="위시리스트 담기" 	onclick="add_cart();"/>
 			<input type="button" class="btn btn-warning"  style="width: 200px; height: 60px; margin-top: 80px; margin-left: 10px;" value="위시리스트 보기" 	onclick="location.href='cart_list.do'"/> 
-			<input disabled="disabled" type="button" class="btn btn-success" 	style="width: 400px; height: 60px; margin-top: 80px; margin-left: 10px;" value="바로구매" 			onclick="location.href='direct_payment_list_form.do?p_idx=${vo.p_idx}'"/>
+			<input disabled="disabled" type="button" class="btn btn-success" 	style="width: 400px; height: 60px; margin-top: 80px; margin-left: 10px;" value="바로구매" 			onclick="direct_Buy();"/>
 			</c:if>
 			<div id="line1"></div>
 		</div>
