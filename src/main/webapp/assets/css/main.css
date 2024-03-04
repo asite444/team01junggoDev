@@ -2684,13 +2684,19 @@
 		box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.075);
 		text-align: center;
 	}
-
+	
+@font-face {
+    font-family: 'ClimateCrisisKRVF';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2212@1.0/ClimateCrisisKRVF.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
 		#header .logo {
 			color: #f6755e;
-			font-family: "Pacifico", cursive;
-			font-size: 2.5em;
+			/* font-family: "Pacifico", cursive; */	/* 원래의 로고 font */
+			font-family: 'ClimateCrisisKRVF';
+			font-size: 4em;	/* 2.5em -> 4em */
 			letter-spacing: 2px;
-			margin-top: -5px;
 			text-decoration: none;
 			display: inline-block;
 		}
