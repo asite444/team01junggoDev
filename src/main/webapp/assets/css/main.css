@@ -2685,7 +2685,7 @@
 		text-align: center;
 	}
 	
-@font-face {
+@font-face {/* 폰트 적용: 기후위기-한글 VF  */
     font-family: 'ClimateCrisisKRVF';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2212@1.0/ClimateCrisisKRVF.woff2') format('woff2');
     font-weight: normal;
