@@ -154,13 +154,14 @@ th{
 	font-size: 20px;
 	width: 300px;
 }
-b{font-weight: bold;}
+
 .row{ margin: auto; }
 textarea{ 
 	width: 700px; 
     display: inline-block;
     margin-right: 20px; /* 요소 사이의 간격 조정 */
     vertical-align: middle; /* 요소의 수직 정렬 설정 */
+    resize: none;
 }
 .comment{
 	 vertical-align: middle;
@@ -253,7 +254,7 @@ textarea{
 		<hr>
 			<!-- 댓글목록 출력 -->
 		<div id="disp"></div>	
-				
+
 		</div><!-- end : inner -->
 		
 	

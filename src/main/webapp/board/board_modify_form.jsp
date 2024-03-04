@@ -59,6 +59,9 @@
 th{
 	font-size: 20px;
 }
+textarea{
+	resize: none;
+}
 </style>
 
 </head>

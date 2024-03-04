@@ -8,14 +8,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-	.btn-link{
-		color: 	#FFB6C1 !important;
-		font-weight: bold !important;
-		border: 1px solid #FFB6C1 !important;
-	}
+	
 		
 	b{ /* user-id */
-		color: 	#FFB6C1;
+		/* color: 	#FFB6C1; */
 	  	font-weight: bold;
 	  }
 	 .cmt2{
@@ -116,6 +112,11 @@
 
 </head>
 <body>
+	<!-- 댓글이 없는경우 -->
+	<c:if test="${ empty cmt }"> <!-- request Binding에서 줌 -->
+		<font color="red" align="center">등록된 댓글이 없습니다.</font>
+	</c:if>
+			
 	<!-- PageMenu : 댓글이 있으면 메뉴 넣어라...  -->
 	<c:if test="${ not empty cmt }">
 	   ${ pageMenu }

@@ -55,18 +55,7 @@
 		  alert('사진을 선택하세요!');
 		  return;
 	  }
-	  if(photo1==''){
-		  alert('사진을 선택하세요!');
-		  return;
-	  }
-	  if(photo2==''){
-		  alert('사진을 선택하세요!');
-		  return;
-	  }
-	  if(photo3==''){
-		  alert('사진을 선택하세요!');
-		  return;
-	  }
+	
 	  
 	  
 	  

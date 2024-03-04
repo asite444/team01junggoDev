@@ -423,9 +423,15 @@ margin-left: 50px;"
 			<div id="cat">
 			 <div id="list">
 				<img src="${ pageContext.request.contextPath }/upload/${ vo.p_filename }" style="width: 120px; height: 100px; margin-top:50px;border: 1px solid black;"  />
+				<c:if test="${ vo.p_filename1 ne 'no_file' }">
 				<img src="${ pageContext.request.contextPath }/upload/${ vo.p_filename1 }" style="width: 120px; height: 100px; margin-top: 3px; border: 1px solid black;"  />
+				</c:if>
+				<c:if test="${ vo.p_filename2 ne 'no_file' }">
 				<img src="${ pageContext.request.contextPath }/upload/${ vo.p_filename2 }" style="width: 120px; height: 100px; margin-top: 3px; border: 1px solid black;"  />
+				</c:if>
+				<c:if test="${ vo.p_filename3 ne 'no_file' }">
 				<img src="${ pageContext.request.contextPath }/upload/${ vo.p_filename3 }" style="width: 120px; height: 100px; margin-top: 3px; border: 1px solid black;"  />
+				</c:if>
 			</div>
 			</div>
 	
