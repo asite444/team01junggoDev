@@ -8,6 +8,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  		select * from product
  	</select>
  	
+ 	<select id="product_list_p_hit" resultType="vo.ProductVo">
+ 		select * , rank() over(order by p_hit desc) from product
+ 	</select>
+ 	
+ 	
+ 	<update id="product_update_readhit" parameterType="int">
+		update product set p_hit =p_hit + 1 where p_idx = #{p_idx}
+	</update>
+ 	
+ 	
  		<select id="product_condition_list" parameterType="Map" resultType="vo.ProductVo"> 
  		select 
 		* 
@@ -16,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			select 
 				* , rank() over(order by p_idx desc) as no
 			from product
-				<trim prefix="where"  prefixOverrides="or">
+				<trim prefix="where"  prefixOverrides="or|and">
 			
 				<if test="name!=null">
 					mem_name like concat('%', #{name}, '%')
@@ -27,6 +37,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				<if test="content!=null">
 					or	p_content like concat('%', #{content}, '%')
 				</if>
+				
+				<if test="c_idx!=0">
+				   and c_idx=#{ c_idx }
+				</if>
 					
 			</trim>
 			
@@ -34,13 +48,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where b.no between #{start} and #{end}
 	</select>
 
+    <select id="product_condition_row_total" parameterType="Map" resultType="int">
+		select ifnull(count(*),0) from product
+		<trim prefix="where"  prefixOverrides="or|and">
+			
+				<if test="name!=null">
+					mem_name like concat('%', #{name}, '%')
+				</if>
+				<if test="subject!=null">
+					p_subject like concat('%', #{subject}, '%')
+				</if>
+				<if test="content!=null">
+					or	p_content like concat('%', #{content}, '%')
+				</if>
+				
+				<if test="c_idx!=0">
+				   and c_idx=#{ c_idx }
+				</if>
+		</trim>	
+	</select>
+	
  
  	<select id="product_one" parameterType="int" resultType="vo.ProductVo">
 	select * from product where p_idx = #{ p_idx }
 	</select>
  	
  	<insert id="product_insert"  parameterType="vo.ProductVo">
-	insert into product(p_subject,p_content,p_filename, p_ip, mem_idx,mem_name) values( #{ p_subject } , #{ p_content } , #{ p_filename} , #{ p_ip } , #{ mem_idx }, #{  mem_name })
+	insert into product(c_idx, user_idx, p_name, p_price, p_nego, p_deal, p_local, p_company, p_subject, p_content, p_filename, p_filename1, p_filename2, p_filename3, p_ip, p_hit, p_status, p_regdate, p_modifydate)  values(#{c_idx},#{user_idx},#{p_name},#{p_price},#{p_nego},#{p_deal},#{p_local},#{p_company}, #{ p_subject } , #{ p_content } , #{ p_filename} ,#{p_filename1},#{p_filename2},#{p_filename3}, #{ p_ip } , #{ p_hit }, #{p_status },now(),now())
 	</insert>
   
 	<delete id="product_delete" parameterType="int">
@@ -48,16 +82,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	<update id="product_update" parameterType="vo.ProductVo">
-	update product set p_subject= #{ p_subject },p_content=#{ p_content },p_modifydate= now() where p_idx=#{ p_idx }
+	update product set c_idx=#{c_idx},user_idx=#{user_idx},p_name=#{p_name},p_price=#{p_price},p_nego=#{p_nego},p_deal=#{p_deal},p_local=#{p_local},p_company=#{p_company}, p_subject= #{ p_subject },p_content=#{ p_content },p_status=#{p_status},p_ip=#{p_ip},  p_modifydate= now() where p_idx=#{ p_idx }
 	</update>
 	
 	<update id="product_update_filename" parameterType="vo.ProductVo">
 	update product set p_filename= #{ p_filename },p_modifydate=now() where p_idx=#{ p_idx }
 	</update>
 	
-		<select id="product_condition_row_total" parameterType="Map" resultType="int">
-		select ifnull(count(*),0) from product	
-	</select>
+	<update id="product_update_filename1" parameterType="vo.ProductVo">
+	update product set p_filename1= #{ p_filename1 } where p_idx=#{ p_idx }
+	</update>
+	
+		<update id="product_update_filename2" parameterType="vo.ProductVo">
+	update product set p_filename2= #{ p_filename2 } where p_idx=#{ p_idx }
+	</update>
+	
+		<update id="product_update_filename3" parameterType="vo.ProductVo">
+	update product set p_filename3= #{ p_filename3 } where p_idx=#{ p_idx }
+	</update>
+	
 	
 </mapper>
 

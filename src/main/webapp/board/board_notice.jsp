@@ -17,6 +17,32 @@
 	content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="../assets/css/main.css">
+
+<style type="text/css">
+.search{
+	width: 150px;
+}
+   #search_text {
+      
+       width: 500px;
+   }
+form{
+	margin: auto;
+}
+
+.commentFocus {
+            text-decoration: none; /* 밑줄 제거 */
+            color: inherit; /* 기본 텍스트 색상 사용 */
+            cursor: pointer; /* 커서 모양 설정 */
+    }
+
+        /* 호버(마우스를 올렸을 때) 스타일 */
+  .commentFocus:hover {
+            text-decoration: underline; /* 밑줄 추가 */
+            color: inherit; /* 기본 텍스트 색상 사용 */
+ }	
+</style>
+
 <!-- Scripts -->
 	<script src="../assets/js/jquery.min.js"></script>
 	<script src="../assets/js/jquery.scrolly.min.js"></script>
@@ -25,29 +51,23 @@
 	<script src="../assets/js/main.js"></script>
 <script type="text/javascript">
 	
-	
-	function home() {
-		lacation.herf="list.do";
-		return ;
-	}//end: home();
-	
 	function insert_form() {
 		
 		//로그인이 안된경우
 		if("${ empty user }" == "true"){
 			
-			if (confirm("글쓰기는 로그인 후에 가능합니다\n로그인 하시겠습니까?")==false) return; {
-				location.href="../member/login_form.do";
+			if (confirm("글쓰기는 관리자 로그인 후에 가능합니다\n로그인 하시겠습니까?")==false) return; {
+				location.href="../user/login_form.do";
 			}
 			return;
 		}
 		//글쓰기 폼으로 이동
-		location.href="insert_form.do"; // /board/insert_form.do
+		location.href="notice_insert_form.do"; // /board/insert_form.do
 	}//end:insert_form()
 	
 	function find() {
 		
-		let search		= $("#search").val();
+		let search		= $("#category").val();
 		let search_text	= $("#search_text").val().trim();
 		
 		//전체검색이 아닌데 검색어가 비어있으면
@@ -59,25 +79,25 @@
 			return ;
 		}
 		
-		location.href="list.do?search=" + search + 
+		location.href="notice_list.do?category=" + search + 
 						"&search_text=" + encodeURIComponent(search_text,"utf-8"); //한글을 javascript에서 넘길떄 인코딩필수 
 						
 	}
 		/* 초기화 */
 		$(document).ready(function(){
-	   if("${ not empty param.search }" =="true"){ 
-		   $("#search").val("${ param.search }");
+	   if("${ not empty param.category }" =="true"){ 
+		   $("#category").val("${ param.category }");
 	   }
 	   
 	   //전체보기면 검색어 지워라
-	   if("${ param.search eq 'all' }" == "true"){  
+	   if("${ param.category eq 'all' }" == "true"){  
 		   $("#search_text").val("");
 	   }
    });
 		
    function login(){
 	      
-	   location.href="../member/login_form.do?url=" + encodeURIComponent(location.href) ;
+	   location.href="../user/login_form.do?url=" + encodeURIComponent(location.href) ;
    }
 		
 		
@@ -85,99 +105,67 @@
 </head>
 <body>
 
+	<jsp:include page="../include/header.jsp"></jsp:include>
 	<!-- Header -->
-	<header id="header">
-		<nav class="left">
-			<a href="#menu"><span>Menu</span></a>
-		</nav>
-		<a href="../main.jsp" class="logo">중고로Go</a>
-		<nav class="right">
-			<c:if test="${ empty sessionScope.user }">
-			<input class="button alt" value="Login"
-					onclick="login();">
-			</c:if>
-			<!-- 로그인이 됐을경우 : 세션영역에 user가 있는가?  -->
-			<c:if test="${ not empty sessionScope.user }">
-				<b>${ sessionScope.user.user_name }</b>님 환영합니다!!
-				<input class="button alt" type="button" value="Logout"
-			       onclick="location.href='../user/logout.do'">
-			</c:if>	
-		</nav>
-	</header>
-	<!-- Menu -->
-	<nav id="menu">
-		<ul class="links">
-			<li><a href="../main.jsp">Home</a></li>
-			<li><a href="../all_items.jsp">전체매물</a></li>
-			<li><a href="../category.jsp">Category</a></li>
-			<li><a href="../board/board_list.jsp">community</a></li>
-			<li><a href="../generic.jsp">Generic</a></li>
-			<li><a href="../elements.jsp">Elements</a></li>
-		</ul>
-		<ul class="actions vertical">
-			<li><a href="#" class="button fit">Login</a></li>
-		</ul>
-	</nav>
+	
+	
+	<jsp:include page="../include/menu.jsp"></jsp:include>
 	<section id="main" class="wrapper">
 		<div class="inner">
 			<header class="align-center">
 				<h1>Notice</h1>
 				<p>
 					<b>
-						<a href="../board/list.do">커뮤니티</a> | <a href="board_notice.jsp">Notice</a> | <a href="board_qna.jsp">Q&A</a>
+						<a href="../board/list.do">커뮤니티</a> | <a href="#">Notice</a> | <a href="qna_list.do?community_page=3&">Q&A</a>
 					</b>
 				</p>
 			</header>
-				<div class="image fit">
-
-				</div>
 			<p>공지사항</p>
+			<br><br><br>
 			
-			<div>
-				<form method="post" action="#">
-					<div class="select-wrapper" style="float: left; width: 150px;">
-						<select class="select-wrapper" name="category" id="category">
-							<option value="all">전체보기</option>
-							<option value="id">아이디</option>
-							<option value="subject">제목</option>
-							<option value="conetent">내용</option>
-							<option value="subject_content">제목+내용</option>
-						</select>
-					</div>		
-					<div class="row uniform 9u$" style="float: right;">
-						<div class="6u 12u$(xsmall)">
-							<input class="6u" type="text" id="search_text" value="${ param.search_text }" placeholder="search">
+				<form>
+				<input type="hidden" name="community_page" value="${ param.community_page }">
+					<div class="row">
+						<div class="select-wrapper" style="float: left; width: 200px;">
+								<select class="select-wrapper" name="category" id="category">
+									<option value="all">전체보기</option>
+									<option value="name">작성자</option>
+									<option value="subject">제목</option>
+									<option value="conetent">내용</option>
+									<option value="subject_content">제목+내용</option>
+								</select>
+							</div>
+						<div class="12u$(small)">
+							<input type="text" name="search" id="search_text" value="${ param.search_text }"
+								placeholder="search">
+						</div>
+						<div class="3u$ 12u$(small)">
+							<input class="fit" type="button" value="Search" onclick="find();">
 						</div>
 					</div>
 				</form>
-				
-				
-				<div class="3u$ 12u$(small)">
-					<input  type="button" value="Search" class="fit"
-							onclick="find();">
-				</div>
-			</div>
-		           
-			</div>
+				    
+		</div>
 			
 			
 			<br>
-			<br>
-			<br>
-			
-			<hr>
-			<input class="btn btn-link" type="button"  value="글쓰기"
-	            	onclick="insert_form();">
-			<div>
-			
-			
-			<table>
+
+
+<hr>
+		<div class="inner table-wrapper">
+			<c:if test="${ user.user_grade eq '관리자' }">
+				<input class="btn btn-link" type="button"  value="글쓰기"
+		            	onclick="insert_form();">
+			</c:if>
+			<br><br>
+						
+			<table class="table-wrapper">
 			<tr>
 				<th>번호</th>
 				<th>제목</th>
 				<th>작성자</th>
-				<th>아이피</th>
 				<th>작성일</th>
+				<th>아이피</th>
 				<th>조회수</th>
 			</tr>
 				<!-- for(BoardVo vo : list) -->
@@ -194,11 +182,11 @@
 						
 						<!-- 사용중인 게시물 -->
 						<c:if test="${ vo.b_use eq 'y' }">
-							 <a href="view.do?b_idx=${ vo.b_idx }&page=${ empty param.page ? 1 : param.page }&search=${ param.search }&search_text=${ param.search_text }">${ vo.b_subject }</a>
+							 <a href="view.do?b_idx=${ vo.b_idx }&page=${ empty param.page ? 1 : param.page }&search=${ param.search }&community_page=2&">${ vo.b_subject }</a>
 						
 						<!-- badge: 댓글갯수 -->
 							<c:if test="${ vo.cmt_count gt 0 }">
-		              	    	<span class="badge" style="background: #FFB6C1;">${ vo.cmt_count }</span>
+		              	    	<span class="badge" style="background: #FFB6C1;"> <a class="commentFocus"  href="view.do?b_idx=${ vo.b_idx }&page=${ empty param.page ? 1 : param.page }&search=${ param.search }&community_page=2&commentFocus=true">${ vo.cmt_count }</a></span>
 		              	 	</c:if>
 						
 						</c:if>
@@ -209,9 +197,10 @@
 						</c:if>
 					</td>
 					
-					<td >${ vo.mem_name }</td>
+					<td >${ vo.user_name }</td>
 					<!-- <td >ip:{ vo.b_ip }</td> -->
 					<td >${ fn:substring(vo.b_regdate,0,16) }</td>
+					<td >${ vo.b_ip }</td>
 					<td >${ vo.b_readhit }</td>
 				</tr>	
 			</c:forEach>
@@ -219,7 +208,7 @@
 			<c:if test="${ empty list }"> <!-- request Binding에서 줌 -->
 				<tr>
 					<td colspan="6" align="center">
-						<font color="red">등록된 게시글이 없습니다.</font>
+						<font color="red">등록된 공지가 없습니다.</font>
 					</td>
 				</tr>	
 			</c:if>
@@ -236,15 +225,9 @@
 				</td>
 			</tr>
 			</table>
+		</div>	
 			
-			</div>
-			
-			
-			
-			<p></p>
-		</div>
-		
-		
+
 	</section>
 	
 	

@@ -17,25 +17,46 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import annotation.RequestMapping;
 import annotation.ResponseBody;
+import dao.CategoryDao;
 import dao.ProductDao;
+import dao.UserDao;
 import myconstant.MyConstant;
 import util.Paging;
 import util.WeatherUtil;
+import vo.CategoryVo;
 import vo.ProductVo;
+import vo.UserVo;
 import vo.WeatherVo;
 
 public class ProductController {
-
+	
+		@RequestMapping("/product/all_items.do")
+		public String all_items(HttpServletRequest request, HttpServletResponse response) {
+			
+			List<ProductVo> list = ProductDao.getInstance().selectList_p_hit();
+		
+			request.setAttribute("list", list);
+			
+			return "../all_items.jsp";
+		}
 	
 	
 		@RequestMapping("/product/list.do")
 		public String list(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-			int nowPage = 1;
+			int c_idx = 0;
+			try {
+			   c_idx = Integer.parseInt(request.getParameter("c_idx"));	
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
 			
+			int nowPage = 1;
 			String page = request.getParameter("page");
 			String search = request.getParameter("search");
 			String search_text = request.getParameter("search_text");
+			String action = request.getParameter("action");
+			
 			
 			if(search==null || search.isEmpty()) {
 				search = "all";		
@@ -50,6 +71,7 @@ public class ProductController {
 			
 			Map<String, Object> map = new HashMap<String,Object>();
 			
+			map.put("c_idx", c_idx);
 			map.put("start", start);
 			map.put("end", end);
 			
@@ -82,19 +104,28 @@ public class ProductController {
 			List<ProductVo> list = ProductDao.getInstance().selectList(map);
 			int rowTotal = ProductDao.getInstance().selectRowTotal(map);
 			
+			String search_filter = String.format("&search=%s&search_text=%s", search,search_text);
+			
 			String pageMenu = Paging.getproductPaging("list.do", 
+					search_filter,
 					nowPage,  //현재페이지
 					rowTotal,  // 전체게시물수
 					MyConstant.Product.BLOCK_LIST,		 //1화면에 보여질 게시물수	 
 					MyConstant.Product.BLOCK_PAGE);   // 1화면에 보여질 메뉴수
 			
+			request.getSession().removeAttribute("show");
 			request.setAttribute("list",list);
 			request.setAttribute("pageMenu", pageMenu);
 			request.setAttribute("weatherlist", weatherlist);
 			
-			return "../category.jsp";
+//			if(action.equals("1")) {
+//				return "../all_items.jsp";
+//			} else {
+				return "../category.jsp";
 			
 		}//end:product_list.do
+		
+	
 		
 		/**
 		 * 포토정보 데이터 하나 가져오는 메서드 서블릿
@@ -121,7 +152,6 @@ public class ProductController {
 			json.put("p_regdate", vo.getP_regdate());
 			json.put("p_modifydate", vo.getP_modifydate());
 			json.put("user_idx", vo.getUser_idx());
-			
 			
 			return json.toString();
 			
@@ -183,24 +213,37 @@ public class ProductController {
 				p_filename = f.getName();
 			}
 			if(f1 != null) {
-				p_filename1 = f.getName();
+				p_filename1 = f1.getName();
 			}
 			if(f2 != null) {
-				p_filename2 = f.getName();
+				p_filename2 = f2.getName();
 			}
 			if(f3 != null) {
-				p_filename3= f.getName();
+				p_filename3= f3.getName();
 			}
+			
+			String c_name	= mr.getParameter("c_name");  
+			CategoryVo cate = CategoryDao.getInstance().selectOne(c_name);
+			int c_idx = cate.getC_idx();
+		
+			int user_idx	= Integer.parseInt(mr.getParameter("user_idx"));  
+			
+			String p_name	= mr.getParameter("p_name");  
+			int p_price = Integer.parseInt(mr.getParameter("p_price"));
+			String p_nego	= mr.getParameter("p_nego");
+			String p_deal	= mr.getParameter("p_deal");
+			String p_local	= mr.getParameter("p_local");
+			String p_company	= mr.getParameter("p_company");
 			
 			String p_subject	= mr.getParameter("p_subject");  
 			String p_content	= mr.getParameter("p_content");
 			String p_ip		= request.getRemoteAddr();  
-			int user_idx	= Integer.parseInt(mr.getParameter("user_idx"));  
-			String user_name	= mr.getParameter("mem_name");  
+			int p_hit = 0;//Integer.parseInt(mr.getParameter("p_hit"));
+			String p_status	= mr.getParameter("p_status");
 			
-			//ProductVo vo = new ProductVo(p_subject, p_content, p_filename,p_filename1,p_filename2,p_filename3, p_ip,user_idx,user_name );
+			ProductVo vo = new ProductVo( c_idx, user_idx, p_name, p_price, p_nego, p_deal, p_local, p_company, p_subject, p_content, p_filename, p_filename1, p_filename2, p_filename3, p_ip, p_hit, p_status);
 			
-			//res1 = ProductDao.getInstance().insert(vo);
+			res1 = ProductDao.getInstance().insert(vo);
 			
 			return "redirect:../product/list.do";
 		}
@@ -212,11 +255,16 @@ public class ProductController {
 			
 			//2. p_idx - > ProductVo
 			ProductVo vo = ProductDao.getInstance().selectOne(p_idx);
+			int c_idx = vo.getC_idx();
+			
+			CategoryVo cate = CategoryDao.getInstance().select_one_c_idx(c_idx);
+			String c_name = cate.getC_name();
 			
 			//<br> -> \n
 			String p_content = vo.getP_content().replace("<br>", "\n");
 			vo.setP_content(p_content);
 			//3. request binding
+			request.setAttribute("c_name", c_name);
 			request.setAttribute("vo", vo);
 			request.setAttribute("page", page);
 			
@@ -226,16 +274,43 @@ public class ProductController {
 		@RequestMapping("/product/modify.do")
 		public String modify(HttpServletRequest request, HttpServletResponse response) {
 
+			String c_name	= request.getParameter("c_name");  
+			CategoryVo cate = CategoryDao.getInstance().selectOne(c_name);
+		
+			
 			int     p_idx			= Integer.parseInt(request.getParameter("p_idx"));
+			int 	c_idx = cate.getC_idx();
+			int 	user_idx	= Integer.parseInt(request.getParameter("user_idx"));  
+			
+			String p_name	= request.getParameter("p_name");  
+			int 	p_price = Integer.parseInt(request.getParameter("p_price"));
+			String p_nego	= request.getParameter("p_nego");
+			String p_deal	= request.getParameter("p_deal");
+			String p_local	= request.getParameter("p_local");
+			String p_company	= request.getParameter("p_company");
+			
 			String p_subject		= request.getParameter("p_subject");  
 			String p_content	= request.getParameter("p_content").replaceAll("\n", "<br>");
+			String p_ip		= request.getRemoteAddr(); 
+			String p_status	= request.getParameter("p_status");
 			String page = request.getParameter("page");
 			//String p_ip			= request.getRemoteAddr();  
 		
 		   ProductVo  vo = new ProductVo();
 		   vo.setP_idx(p_idx);
+		   vo.setC_idx(c_idx);
+		   vo.setUser_idx(user_idx);
+		   vo.setP_name(p_name);
+		   vo.setP_price(p_price);
+		   vo.setP_nego(p_nego);
+		   vo.setP_deal(p_deal);
+		   vo.setP_local(p_local);
+		   vo.setP_company(p_company);
 		   vo.setP_subject(p_subject);
 		   vo.setP_content(p_content);
+		   vo.setP_status(p_status);
+		   vo.setP_ip(p_ip);
+		 
 		   
 		   int res = ProductDao.getInstance().update(vo);
 		   
@@ -265,27 +340,16 @@ public class ProductController {
 					                                    );
 			//업로드된 화일명 얻어온다
 			String p_filename="no_file";
-			String p_filename1="no_file";
-			String p_filename2="no_file";
-			String p_filename3="no_file";
+		
 			//업로드된 화일정보 얻어온다
 			File f = mr.getFile("photo");
-			File f1 = mr.getFile("photo1");
-			File f2 = mr.getFile("photo2");
-			File f3 = mr.getFile("photo3");
+			
 			
 			if(f != null) {
 				p_filename = f.getName();
 			}
-			if(f1 != null) {
-				p_filename1 = f1.getName();
-			}
-			if(f2 != null) {
-				p_filename2 = f2.getName();
-			}
-			if(f3 != null) {
-				p_filename3 = f3.getName();
-			}
+			
+
 			
 			//p_idx
 			int p_idx = Integer.parseInt(mr.getParameter("p_idx"));
@@ -294,38 +358,227 @@ public class ProductController {
 			
 			//기존화일을 삭제
 			File oldFile = new File(saveDir,vo.getP_filename());
+			
+			
 			oldFile.delete();
+			
 			
 			//DB p_filename update
 			// update product set p_filename=? where p_idx=?
 			vo.setP_filename(p_filename); //old -> new filename
-			vo.setP_filename(p_filename1);
-			vo.setP_filename(p_filename2);
-			vo.setP_filename(p_filename3);
+	
 			
 			int res = ProductDao.getInstance().update_filename(vo);
-			
+		
 			//결과전송
 			JSONObject json = new JSONObject();
 			json.put("p_filename", p_filename);
-			json.put("p_filename", p_filename1);
-			json.put("p_filename", p_filename2);
-			json.put("p_filename", p_filename3);
-			
+	
+
 			return json.toString();
 		}
 		
+		@RequestMapping(value="/product/product_upload1.do",produces="application/json;charset=utf-8;")
+		@ResponseBody
+		public String product_upload1(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+			ServletContext application = request.getServletContext();
+			
+			String webPath = "/upload/";         //웹경로(상대적경로) 
+			//                                   저장위치(절대경로)
+			String saveDir = application.getRealPath(webPath);
+			
+			int    maxSize    = 1024*1024*100;   //업로드(최대)크기(byte)
+					
+			MultipartRequest  mr = new MultipartRequest(request,//처리위임 
+					                                    saveDir,//저장위치(절대경로) 
+					                                    maxSize,//업로드크기
+					                                    "utf-8",//수신인코딩 
+					                                    //동일화일인경우 이름을 변경해서 저장
+					                                    new DefaultFileRenamePolicy()
+					                                    );
+			//업로드된 화일명 얻어온다
+			String p_filename1="no_file";
+		
+			//업로드된 화일정보 얻어온다
+			File f1 = mr.getFile("photo1");
+			
+			
+			if(f1 != null) {
+				p_filename1 = f1.getName();
+			}
+			
+
+			
+			//p_idx
+			int p_idx = Integer.parseInt(mr.getParameter("p_idx"));
+			
+			ProductVo vo = ProductDao.getInstance().selectOne(p_idx);
+			
+			//기존화일을 삭제
+			File oldFile1 = new File(saveDir,vo.getP_filename1());
+			
+			
+			oldFile1.delete();
+			
+			
+			//DB p_filename update
+			// update product set p_filename=? where p_idx=?
+			vo.setP_filename1(p_filename1); //old -> new filename
+	
+			
+			int res = ProductDao.getInstance().update_filename1(vo);
+		
+			//결과전송
+			JSONObject json = new JSONObject();
+			json.put("p_filename1", p_filename1);
+	
+
+			return json.toString();
+		}
+		
+		@RequestMapping(value="/product/product_upload2.do",produces="application/json;charset=utf-8;")
+		@ResponseBody
+		public String product_upload2(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+			ServletContext application = request.getServletContext();
+			
+			String webPath = "/upload/";         //웹경로(상대적경로) 
+			//                                   저장위치(절대경로)
+			String saveDir = application.getRealPath(webPath);
+			
+			int    maxSize    = 1024*1024*100;   //업로드(최대)크기(byte)
+					
+			MultipartRequest  mr = new MultipartRequest(request,//처리위임 
+					                                    saveDir,//저장위치(절대경로) 
+					                                    maxSize,//업로드크기
+					                                    "utf-8",//수신인코딩 
+					                                    //동일화일인경우 이름을 변경해서 저장
+					                                    new DefaultFileRenamePolicy()
+					                                    );
+			//업로드된 화일명 얻어온다
+			String p_filename2="no_file";
+		
+			//업로드된 화일정보 얻어온다
+			File f2 = mr.getFile("photo2");
+			
+			
+			if(f2 != null) {
+				p_filename2 = f2.getName();
+			}
+			
+
+			
+			//p_idx
+			int p_idx = Integer.parseInt(mr.getParameter("p_idx"));
+			
+			ProductVo vo = ProductDao.getInstance().selectOne(p_idx);
+			
+			//기존화일을 삭제
+			File oldFile2 = new File(saveDir,vo.getP_filename2());
+			
+			
+			oldFile2.delete();
+			
+			
+			//DB p_filename update
+			// update product set p_filename=? where p_idx=?
+			vo.setP_filename2(p_filename2); //old -> new filename
+	
+			
+			int res = ProductDao.getInstance().update_filename2(vo);
+		
+			//결과전송
+			JSONObject json = new JSONObject();
+			json.put("p_filename2", p_filename2);
+	
+
+			return json.toString();
+		}
+		
+		@RequestMapping(value="/product/product_upload3.do",produces="application/json;charset=utf-8;")
+		@ResponseBody
+		public String product_upload3(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+			ServletContext application = request.getServletContext();
+			
+			String webPath = "/upload/";         //웹경로(상대적경로) 
+			//                                   저장위치(절대경로)
+			String saveDir = application.getRealPath(webPath);
+			
+			int    maxSize    = 1024*1024*100;   //업로드(최대)크기(byte)
+					
+			MultipartRequest  mr = new MultipartRequest(request,//처리위임 
+					                                    saveDir,//저장위치(절대경로) 
+					                                    maxSize,//업로드크기
+					                                    "utf-8",//수신인코딩 
+					                                    //동일화일인경우 이름을 변경해서 저장
+					                                    new DefaultFileRenamePolicy()
+					                                    );
+			//업로드된 화일명 얻어온다
+			String p_filename3="no_file";
+		
+			//업로드된 화일정보 얻어온다
+			File f3 = mr.getFile("photo3");
+			
+			
+			if(f3 != null) {
+				p_filename3 = f3.getName();
+			}
+			
+
+			
+			//p_idx
+			int p_idx = Integer.parseInt(mr.getParameter("p_idx"));
+			
+			ProductVo vo = ProductDao.getInstance().selectOne(p_idx);
+			
+			//기존화일을 삭제
+			File oldFile3 = new File(saveDir,vo.getP_filename3());
+			
+			
+			oldFile3.delete();
+			
+			
+			//DB p_filename update
+			// update product set p_filename=? where p_idx=?
+			vo.setP_filename3(p_filename3); //old -> new filename
+	
+			
+			int res = ProductDao.getInstance().update_filename3(vo);
+		
+			//결과전송
+			JSONObject json = new JSONObject();
+			json.put("p_filename3", p_filename3);
+	
+
+			return json.toString();
+		}
+		
+	
 		
 		@RequestMapping("/product/view.do")
 		public String view(HttpServletRequest request, HttpServletResponse response) {
 			
 			int p_idx = Integer.parseInt(request.getParameter("p_idx"));
+			ProductVo vo = ProductDao.getInstance().selectOne(p_idx);
+			int user_idx = vo.getUser_idx();
+			
+			UserVo user = UserDao.getInstance().selectOne(user_idx);
+			
+			String user_name = user.getUser_name();
 			
 			String page = request.getParameter("page");
 			
-			ProductVo vo = ProductDao.getInstance().selectOne(p_idx);
-			 
+			if(request.getSession().getAttribute("show")==null) {
+				//조회수 증가
+				int res1 = ProductDao.getInstance().update_readhit(p_idx);
+				
+				request.getSession().setAttribute("show", true);
+				
+				}
 			
+			request.setAttribute("user_name", user_name);
 			request.setAttribute("vo", vo);
 			request.setAttribute("page", page);
 
