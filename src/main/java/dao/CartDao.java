@@ -156,5 +156,15 @@ public class CartDao {
 	
 		return list;
 	}
+
+	public int delete_select_p_idx(int p_idx) {
+		// TODO Auto-generated method stub
+		int res=0;
+		SqlSession sqlSession=factory.openSession(true);
+		res=sqlSession.delete("cart.cart_delete_p_idx",p_idx);
+		
+		sqlSession.close();
+		return res;
+	}
 	
 }

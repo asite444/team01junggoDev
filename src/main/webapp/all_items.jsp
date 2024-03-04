@@ -38,7 +38,7 @@
   
 }
 
-img{
+#prod_img{
 	width: 500px;
 	heigth: 400px;
 	margin-left: 100px;
@@ -47,6 +47,8 @@ img{
 	
 	 float:left;
 }
+
+
 
 .content{
 width: 500px;
@@ -115,7 +117,26 @@ heigth: 40px;
 </style>
 
 <script type="text/javascript">
-
+$(document).ready(function(){
+	//  quickmenu의 top 이 얼마인지 알아오자
+		var top = 
+		parseInt($("#quickmenu").css("top"));
+		$("#quickmenu").css("top",130);
+	
+		
+	// 스크롤 되어질때 quickmenu의 속성값도 이동하게 설정
+	$(window).scroll(function(){
+		var scrollTop = $(window).scrollTop();
+		
+					
+		var quickTop = top + scrollTop;
+		
+	
+		
+		//$("#quickmenu").animate({top:quickTop},1);
+		$("#quickmenu").css("top",quickTop+100);
+	});
+});
 function login(){
 	
 	 location.href="../user/login_form.do?url=" + encodeURIComponent(location.href) ;
@@ -132,11 +153,9 @@ function login(){
 </head>
 <body>
  <jsp:include page="include/header.jsp"></jsp:include>
-	<!-- Header -->
+ <jsp:include page="include/menu.jsp"></jsp:include>
 
-
-	<jsp:include page="include/menu.jsp"></jsp:include>
-	<!-- Menu -->
+	
 	<section id="main" class="wrapper">
 		<div class="inner">
 			<header class="align-center">
@@ -160,7 +179,7 @@ function login(){
 					<c:forEach var="vo" items="${ list }">
 						<div class="product"
 							onclick="location.href='${ pageContext.request.contextPath }/product/view.do?p_idx=${vo.p_idx}&page=${ empty param.page ? 1 : param.page }'">
-							<img
+							<img id="prod_img"
 								src="${ pageContext.request.contextPath }/upload/${ vo.p_filename }">
 						<div class="content">
 							<div id="subject"> 제목 : ${ vo.p_subject }</div>&emsp;&emsp;&emsp;&emsp;
@@ -180,20 +199,6 @@ function login(){
 	</div>
 	</section>
 	<!-- Footer -->
-	<footer id="footer">
-		<div class="inner">
-			<h2>Get In Touch</h2>
-			<ul class="actions">
-				<li><span class="icon fa-phone"></span> <a href="#">(000)
-						000-0000</a></li>
-				<li><span class="icon fa-envelope"></span> <a href="#">information@untitled.tld</a></li>
-				<li><span class="icon fa-map-marker"></span> 123 Somewhere
-					Road, Nashville, TN 00000</li>
-			</ul>
-		</div>
-	</footer>
-	<div class="copyright">
-		Powered by: <a href="https://templated.co/">TEMPLATED</a>.
-	</div>
+	<jsp:include page="include/footer.jsp"></jsp:include>
 </body>
 </html>

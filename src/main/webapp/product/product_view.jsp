@@ -60,11 +60,7 @@
 		
 	}
 	
-	
-	
-	
-	
-	
+
 </script>
 <style type="text/css">
 	.mainmenu{
@@ -77,7 +73,6 @@
     	font-style: normal;
  	position: relative;
    
-    	
 	}
 	
 	li.mainmenu ul{
@@ -101,13 +96,14 @@
 		background-color: pink;
 	}
 </style>
+
 <style type="text/css">
 
 #weather{
 	
 	padding: 0%;
 	width: 2500px;
-	height: 1200px;
+	height: 700px;
 }
 
 
@@ -471,10 +467,7 @@ margin-left: 50px;"
 			<input type="button" class="btn btn-warning"  style="width: 200px; height: 60px; margin-top: 80px; margin-left: 10px;" value="위시리스트 보기" 	onclick="location.href='cart_list.do'"/> 
 			<input disabled="disabled" type="button" class="btn btn-success" 	style="width: 400px; height: 60px; margin-top: 80px; margin-left: 10px;" value="바로구매" 			onclick="location.href='direct_payment_list_form.do?p_idx=${vo.p_idx}'"/>
 			</c:if>
-			
 			<div id="line1"></div>
 		</div>
-		
-		
 </body>
 </html>

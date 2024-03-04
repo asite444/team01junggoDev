@@ -11,7 +11,9 @@ import org.json.JSONObject;
 import annotation.RequestMapping;
 import annotation.ResponseBody;
 import dao.UserDao;
+import util.WeatherUtil;
 import vo.UserVo;
+import vo.WeatherVo;
 
 
 public class UserController {
@@ -23,6 +25,15 @@ public class UserController {
 		List<UserVo> list = UserDao.getInstance().selectList();
 
 		// request binding
+		List<WeatherVo> weatherlist = null;
+		try {
+			weatherlist =WeatherUtil.search_weather_json();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		request.setAttribute("weatherlist", weatherlist);
 		request.setAttribute("list", list);
 		
 		return "user_list.jsp";
@@ -81,7 +92,7 @@ public class UserController {
 		session.setAttribute("user", user);
 		
 		// return "redirect:../user/list.do";
-	    return "redirect:../main.jsp";
+	    return "redirect:../main.do";
 		
 		//메인페이지 이동: 현재경로 /user/login.do
 //		if(url.isEmpty()) {
@@ -103,7 +114,7 @@ public class UserController {
 		request.getSession().removeAttribute("user");
 
 		// 메인페이지
-		return "redirect:../main.jsp";
+		return "redirect:../main.do";
 	
 	  }//end: logout
 	  
@@ -144,7 +155,7 @@ public class UserController {
 	  		int res = UserDao.getInstance().insert(vo);
 	  		
 	  		//5.목록보기(차후:로그인창 이동)
-	  		return "redirect:../main.jsp";
+	  		return "redirect:../main.do";
 	  		
 	  	 
 	  	
@@ -193,6 +204,15 @@ public class UserController {
 		UserVo vo = UserDao.getInstance().selectOne(user_idx);
 		
 		//3.request binding
+		List<WeatherVo> weatherlist = null;
+		try {
+			weatherlist =WeatherUtil.search_weather_json();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		request.setAttribute("weatherlist", weatherlist);
 		request.setAttribute("vo", vo);
 	
 
@@ -237,6 +257,15 @@ public class UserController {
 		UserVo vo = UserDao.getInstance().selectOne(user_idx);
 		
 		//request binding
+		List<WeatherVo> weatherlist = null;
+		try {
+			weatherlist =WeatherUtil.search_weather_json();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		request.setAttribute("weatherlist", weatherlist);
 		request.setAttribute("vo", vo);
 
 		return "user_mypage_form.jsp";
@@ -279,16 +308,3 @@ public class UserController {
 
 
 }
-
-
-
-
-
-
-
-
-
-	
-	
-
-

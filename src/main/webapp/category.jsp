@@ -50,12 +50,12 @@
 	
 	.mainmenu a{
  		background : white; 
-		width: 150px;
+		width: 250px;
 		display: block; 
 		color: black;
 		
 		text-decoration: none;
-		text-align:left;
+		text-align: center;
 		border-bottom: 1px solid #ffffff;
 	}
 	
@@ -76,7 +76,7 @@
    
    #title{
       text-align: center;
-      font-size: 30px;
+      font-size: 100px;
       font-weight: bold;
       color: black;
       text-shadow: 1px 1px 2px black; 
@@ -96,8 +96,8 @@
     height: 400px;
    	margin: 50px;
   	background: #ffffff;
-    border: 1px solid black;
-   	
+    
+   	text-align: 
    }
    
    /* class selector */
@@ -119,8 +119,8 @@
    .product > img{
     width: 260px;
     height: 210px;
-    border: 1px solid gray;
-    outline: 1px solid black; 
+   
+
    }
    
     .product> img:hover{
@@ -164,11 +164,7 @@
       border-color:  pink;
    }
    
-   /* attribute selector */
-   input[type='button']{
-      width: 80px;
-   }
-   
+
    #str{
    width: 2000px;
    margin-top: 50px;
@@ -178,14 +174,39 @@
    
    #foo{
     margin-left: 270px;
-   
+
    font-size: 40px;
    }
+   
+   
+   #ser{
+    width:600px;
+
+   margin-left: 1050px;
+   }
+   
    
 </style>
 <script type="text/javascript">
 	$(document).ready(function(){
+		//  quickmenu의 top 이 얼마인지 알아오자
+		var top = 
+		parseInt($("#quickmenu").css("top"));
+		$("#quickmenu").css("top",130);
+	
 		
+	// 스크롤 되어질때 quickmenu의 속성값도 이동하게 설정
+	$(window).scroll(function(){
+		var scrollTop = $(window).scrollTop();
+		
+					
+		var quickTop = top + scrollTop;
+		
+	
+		
+		//$("#quickmenu").animate({top:quickTop},1);
+		$("#quickmenu").css("top",quickTop+100);
+	});
 		if("${ not empty param.search}" == "true"){
 			$("#search").val("${ param.search}");
 			}
@@ -225,6 +246,10 @@
 		location.href="${ pageContext.request.contextPath}/product/list.do?search=" + search + "&search_text=" + encodeURIComponent(search_text,"utf-8");
 	}
 	
+	function login(){
+	    
+		   location.href="../user/login_form.do";
+	}
 </script>
 
 
@@ -262,63 +287,19 @@
 </head>
 <body>
 
+	<jsp:include page="include/header.jsp"></jsp:include>
 	<!-- Header -->
 
-	<header id="header">
-		<div align="center" style="margin-right: 500px;:">
-		<c:forEach var="vo"  items="${ weatherlist }">   
-        	<c:if test="${ (vo.icon eq '01d') }">
-           	<div align="center">오늘의 날씨 : <img src="../images/01d.png">상태 : 맑음&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }% &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="main.jsp" class="logo"> 중고로Go </a></div>
-           	</c:if>
-           	<c:if test="${ (vo.icon eq '02d') }">
-           	<div align="center">오늘의 날씨 : <img src="../images/02d.png">상태 : 약간흐림&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }%&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="main.jsp" class="logo"> 중고로Go </a></div>
-           	</c:if>
-           	<c:if test="${ (vo.icon eq '03d') }">
-           	<div align="center">오늘의 날씨 : <img src="../images/03d.png">상태 : 흐림&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }%&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="main.jsp" class="logo"> 중고로Go </a></div>
-           	</c:if>
-           	<c:if test="${ (vo.icon eq '04d') }">
-           	<div align="center">오늘의 날씨 : <img src="../images/04d.png">상태 : 매우흐림&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }%&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="main.jsp" class="logo"> 중고로Go </a></div>
-           	</c:if>
-           	<c:if test="${ (vo.icon eq '09d') }">
-           	<div align="center">오늘의 날씨 : <img src="../images/09d.png">상태 : 약한비&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }%&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="main.jsp" class="logo"> 중고로Go </a></div>
-           	</c:if>
-           	<c:if test="${ (vo.icon eq '10d') }">
-           	<div align="center">오늘의 날씨 : <img src="../images/10d.png">상태 : 비&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }%&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="main.jsp" class="logo"> 중고로Go </a></div>
-           	</c:if>
-           	<c:if test="${ (vo.icon eq '11d') }">
-           	<div align="center">오늘의 날씨 : <img src="../images/11d.png">상태 : 번개&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }%&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="main.jsp" class="logo">중고로Go </a></div>
-           	</c:if>
-           	<c:if test="${ (vo.icon eq '13d') }">
-           	<div align="center">오늘의 날씨 : <img src="../images/13d.png">상태 : 눈&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }%&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="main.jsp" class="logo"> 중고로Go </a></div>
-           	</c:if>
-           	<c:if test="${ (vo.icon eq '50d') }">
-           	<div align="center">오늘의 날씨 :<img src="../images/50d.png">상태 : 안개&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }%&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="main.jsp" class="logo"> 중고로Go </a></div>
-           	</c:if>
-          
-   </c:forEach>
-   
-		</div>
-		<nav class="left">
-			<a href="#menu"><span>Menu</span></a>
-			<!-- Menu -->
-			<nav id="menu">
-				<ul class="links">
-					<li><a href="../main.jsp">Home</a></li>
-					<li><a href="http://localhost:8080/2024_03_02_SecondhandMarket/product/all_items.do">전체매물</a></li>
-					<li><a href="list.do">Category</a></li>
-					<li><a href="../board/list.do">community</a></li>
-					<li><a href="generic.jsp">Generic</a></li>
-					<li><a href="elements.jsp">Elements</a></li>
-					<li><a href="cart_list.do">장바구니(임시)</a></li>
-				</ul>
-				<ul class="actions vertical">
-					<li><a href="#" class="button fit">Login</a></li>
-				</ul>
-			</nav>
-		</nav>
+
+	<jsp:include page="include/menu.jsp"></jsp:include>
+
 		
-		<ul id="dropdownmenu">
-		<li class="mainmenu"><a href="${ pageContext.request.contextPath }/product/list.do?c_idx=0" >전체보기</a>
+
+
+	<section id="main" class="wrapper">
+	
+			<ul id="dropdownmenu">
+		<li class="mainmenu"><a href="${ pageContext.request.contextPath }/product/list.do?c_idx=0" >&emsp;&emsp;▶▶전체보기(카테고리별검색)▼</a>
 		<ul>
 					<li><a href="${ pageContext.request.contextPath }/product/list.do?c_idx=1" >가전</a></li>
 					<li><a href="${ pageContext.request.contextPath }/product/list.do?c_idx=2" >도서</a></li>
@@ -327,37 +308,20 @@
 					<li><a href="${ pageContext.request.contextPath }/product/list.do?c_idx=5" >식품</a></li>
 				</ul></li>
 		</ul>
-		
-		<form class="form-inline">
-			<nav class="right">
-			<c:if test="${ empty sessionScope.user }">
-			<input type="reset" value="Join Us" class="button special" onclick="location.href='/SecondhandMarket/user/user_insert_form.jsp'">
-			<input type="reset" value="Login"  class="button"  onclick="send();">
-			</c:if>
-
-				<c:if test="${ not empty sessionScope.user }">
-					<b>${ user.user_name }</b>님 환영합니다 
-			<a href="#" class="button alt"
-						onclick="location.href='${ pageContext.request.contextPath}/user/logout.do'">로그아웃</a>
-				</c:if>
-				<a href="#" class="button special" onclick="insert_form();"> 상품등록</a>
-
-				<div id="ser" align="right" style="margin-bottom: 5px;">
-					<select id="search" class="form-control">
+			<div id="ser" align="center"  >
+					<select name="category" id="search" style="width:100px;  float:left; margin-top: 5px;" >
 						<option value="all">전체보기</option>
 						<option value="name">이름</option>
 						<option value="subject">제목</option>
 						<option value="content">내용</option>
 						<option value="subject_content">제목+내용</option>
-					</select> <input id="search_text" class="form-control"value="${ param.search_text }"> 
-							<a href="#" class="button" onclick="find();">검색</a>
+					</select> <input type="text" id="search_text" class="form-control"value="${ param.search_text }" style="width: 150px;  float:left; margin-top: 5px; margin-left: 5px;" > 
+							<a href="#" class="button" id="sb" onclick="find();"style= "float:left; margin-top: 5px; margin-left: 5px;">검색</a>
+							<a href="#" class="button special" onclick="insert_form();" style= "float:left; margin-top: 5px; margin-left: 5px;">상품등록</a>
 				</div>
-			</nav>
-		</form>
-	</header>
-
-
-	<section id="main" class="wrapper">
+		
+						
+	
 	<form class="form-inline">
 	<div id="box">
 				<div id="product_box">
@@ -378,7 +342,7 @@
 
 							<p class="subject">
 								제목:${ vo.p_subject }<br>가격 : ${vo.p_price }원 / 지역 : ${vo.p_local }<br>
-								<span class="glyphicon glyphicon-heart">관심도(${vo.p_hit })</span>
+								<span class="glyphicon glyphicon-heart" style="font-size: 25px; color: red"></span>관심도(${vo.p_hit })
 							</p>
 
 						</div>
@@ -390,20 +354,9 @@
 				
 		  </form>
 	</section>
-	<!-- Footer -->
-	<footer id="footer">
-		<div class="inner">
-			<h2>Get In Touch</h2>
-			<ul class="actions">
-				<li><span class="icon fa-phone"></span> <a href="#">(000) 000-0000</a></li>
-				<li><span class="icon fa-envelope"></span> <a href="#">information@untitled.tld</a></li>
-				<li><span class="icon fa-map-marker"></span> 123 Somewhere Road, Nashville, TN 00000</li>
-			</ul>
-		</div>
-	</footer>
-	<div class="copyright">
-		Powered by: <a href="https://templated.co/">TEMPLATED</a>.
-	</div>
+	
+	
+	<jsp:include page="include/footer.jsp"></jsp:include>
 
 
 	<!-- Scripts -->

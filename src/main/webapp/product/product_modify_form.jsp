@@ -34,6 +34,26 @@
 </style>
 
 <script type="text/javascript">
+$(document).ready(function(){
+	//  quickmenu의 top 이 얼마인지 알아오자
+		var top = 
+		parseInt($("#quickmenu").css("top"));
+		$("#quickmenu").css("top",130);
+	
+		
+	// 스크롤 되어질때 quickmenu의 속성값도 이동하게 설정
+	$(window).scroll(function(){
+		var scrollTop = $(window).scrollTop();
+		
+					
+		var quickTop = top + scrollTop;
+		
+	
+		
+		//$("#quickmenu").animate({top:quickTop},1);
+		$("#quickmenu").css("top",quickTop+100);
+	});
+});
   function  send(f){
 	  
 	  //입력사항체크(제목/내용/사진)

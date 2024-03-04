@@ -11,10 +11,12 @@ import annotation.RequestMapping;
 import dao.CardDao;
 import dao.CartDao;
 import dao.PaymentDao;
+import util.WeatherUtil;
 import vo.CardVo;
 import vo.CartVo;
 import vo.PaymentVo;
 import vo.UserVo;
+import vo.WeatherVo;
 
 /**
  * 결제정보 컨트롤러
@@ -54,7 +56,16 @@ public class PaymentController {
 		List<CardVo> card_list = CardDao.getInstance().selectList(user_idx);
 		request.setAttribute("payment_list", payment_list);
 		// request.setAttribute("category_list", category_list);
+	
+		List<WeatherVo> weatherlist = null;
+		try {
+			weatherlist =WeatherUtil.search_weather_json();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
+		request.setAttribute("weatherlist", weatherlist);
 		request.setAttribute("card_list", card_list);
 
 		return "payment_list.jsp";
@@ -100,7 +111,15 @@ public class PaymentController {
 		List<CardVo> card_list = CardDao.getInstance().selectList(user_idx);
 		request.setAttribute("payment_list", payment_list);
 		
+		List<WeatherVo> weatherlist = null;
+		try {
+			weatherlist =WeatherUtil.search_weather_json();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
+		request.setAttribute("weatherlist", weatherlist);
 		request.setAttribute("card_list", card_list);
 
 		return "payment_list.jsp";
@@ -182,6 +201,15 @@ public class PaymentController {
 		//결제 내역
 		List<PaymentVo> payment_list = PaymentDao.getInstance().payment_select(user_idx);
 		
+		List<WeatherVo> weatherlist = null;
+		try {
+			weatherlist =WeatherUtil.search_weather_json();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		request.setAttribute("weatherlist", weatherlist);
 		request.setAttribute("payment_list", payment_list);
 		
 		return "pay_list_form.jsp";

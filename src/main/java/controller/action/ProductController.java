@@ -17,6 +17,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import annotation.RequestMapping;
 import annotation.ResponseBody;
+import dao.CartDao;
 import dao.CategoryDao;
 import dao.ProductDao;
 import dao.UserDao;
@@ -30,17 +31,38 @@ import vo.WeatherVo;
 
 public class ProductController {
 	
+		/**
+		 *  전체매물란에 화면띄우는 기능
+		 * @param request
+		 * @param response
+		 * @return
+		 */
 		@RequestMapping("/product/all_items.do")
 		public String all_items(HttpServletRequest request, HttpServletResponse response) {
 			
 			List<ProductVo> list = ProductDao.getInstance().selectList_p_hit();
 		
+			List<WeatherVo> weatherlist = null;
+			try {
+				weatherlist =WeatherUtil.search_weather_json();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			request.setAttribute("weatherlist", weatherlist);
 			request.setAttribute("list", list);
 			
 			return "../all_items.jsp";
 		}
 	
-	
+		/**
+		 * 카테고리란에 전체화면 띄우는 기능
+		 * @param request
+		 * @param response
+		 * @return
+		 * @throws Exception
+		 */
 		@RequestMapping("/product/list.do")
 		public String list(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
@@ -157,6 +179,13 @@ public class ProductController {
 			
 		}//end:product_one.do
 		
+		
+		/**
+		 *   삭제 기능
+		 * @param request
+		 * @param response
+		 * @return
+		 */
 		@RequestMapping("/product/delete.do")
 		public String delete(HttpServletRequest request, HttpServletResponse response) {
 
@@ -176,16 +205,30 @@ public class ProductController {
 				 
 			//3.DB delete
 			int res = ProductDao.getInstance().delete(p_idx);
+			int res1 = CartDao.getInstance().delete_select_p_idx(p_idx);
 			
 			return "redirect:../product/list.do";
 		}
 		
+		/**
+		 * 인서트 폼으로 바로이동
+		 * @param request
+		 * @param response
+		 * @return
+		 */
 		@RequestMapping("/product/insert_form.do")
 		public String insert_form(HttpServletRequest request, HttpServletResponse response) {
 
 			return "product_insert_form.jsp";
 		}
 		
+		/** 
+		 *  입력기능 
+		 * @param request
+		 * @param response
+		 * @return
+		 * @throws IOException
+		 */
 		@RequestMapping("/product/insert.do")
 		public String insert(HttpServletRequest request, HttpServletResponse response) throws IOException {
 

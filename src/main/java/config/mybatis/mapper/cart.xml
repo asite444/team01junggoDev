@@ -35,9 +35,9 @@ from cart c join product p on  p.p_idx=c.p_idx
 where c.user_idx=#{user_idx}
 </select>
 
-<!-- 장바구니 삭제(사용안함) -->
-<delete id="cart_delete" parameterType="int">
-delete from cart where c_idx=#{c_idx}
+<!-- 장바구니 삭제 -->
+<delete id="cart_delete_p_idx" parameterType="int">
+delete from cart where p_idx=#{p_idx}
 </delete>
 
 <!-- 장바구니 등록여부 -->
@@ -118,7 +118,6 @@ where c.cart_idx=#{cart_idx}
 select p_price from product where p_idx=#{p_idx}
 </select>
 </mapper>
-
 
 
 

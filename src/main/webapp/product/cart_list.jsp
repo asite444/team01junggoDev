@@ -32,6 +32,25 @@
 $(document).ready(function(){
 	
 	
+		
+			var top = 
+			parseInt($("#quickmenu").css("top"));
+			$("#quickmenu").css("top",130);
+		
+			
+		// 스크롤 되어질때 quickmenu의 속성값도 이동하게 설정
+		$(window).scroll(function(){
+			var scrollTop = $(window).scrollTop();
+			
+						
+			var quickTop = top + scrollTop;
+			
+		
+			
+			//$("#quickmenu").animate({top:quickTop},1);
+			$("#quickmenu").css("top",quickTop+100);
+		});
+	
 	
 	
 	$("#check_all").click(function(){
@@ -202,47 +221,7 @@ const check_count =$("input[name='cart_idx']:checked").length;
 			</header>
 		</div>	
 	</section>
-	<!-- Footer -->
-		
-	<footer id="footer">	
-	
-			<div align="center" >
-		<c:forEach var="vo"  items="${ weatherlist }">   
-        	<c:if test="${ (vo.icon eq '01d') }">
-           	<div align="center">오늘의 날씨 : <img src="../images/01d.png">상태 : 맑음&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }</div>
-           	</c:if>
-           	<c:if test="${ (vo.icon eq '02d') }">
-           	<div align="center">오늘의 날씨 : <img src="../images/02d.png">상태 : 약간흐림&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }</div>
-           	</c:if>
-           	<c:if test="${ (vo.icon eq '03d') }">
-           	<div align="center">오늘의 날씨 : <img src="../images/03d.png">상태 : 흐림&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }</div>
-           	</c:if>
-           	<c:if test="${ (vo.icon eq '04d') }">
-           	<div align="center">오늘의 날씨 : <img src="../images/04d.png">상태 : 매우흐림&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }</div>
-           	</c:if>
-           	<c:if test="${ (vo.icon eq '09d') }">
-           	<div align="center">오늘의 날씨 : <img src="../images/09d.png">상태 : 약한비&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }</div>
-           	</c:if>
-           	<c:if test="${ (vo.icon eq '10d') }">
-           	<div align="center">오늘의 날씨 : <img src="../images/10d.png">상태 : 비&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }</div>
-           	</c:if>
-           	<c:if test="${ (vo.icon eq '11d') }">
-           	<div align="center">오늘의 날씨 : <img src="../images/11d.png">상태 : 번개&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }</div>
-           	</c:if>
-           	<c:if test="${ (vo.icon eq '13d') }">
-           	<div align="center">오늘의 날씨 : <img src="../images/13d.png">상태 : 눈&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }</div>
-           	</c:if>
-           	<c:if test="${ (vo.icon eq '50d') }">
-           	<div align="center">오늘의 날씨 :<img src="../images/50d.png">상태 : 안개&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }</div>
-           	</c:if>
-          
-   </c:forEach>
-   
-		</div>
-	
-	<jsp:include page="../include/footer.jsp"></jsp:include>
-	</footer>
-	
+<jsp:include page="../include/footer.jsp"></jsp:include>
 	
 	
 	<!-- Scripts -->
