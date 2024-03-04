@@ -26,9 +26,14 @@
 	content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="../assets/css/main.css">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script type="text/javascript">
 
 $(document).ready(function(){
+	
+	
+	
+	
 	$("#check_all").click(function(){
 		const checked=$(this).is(':checked');
 		
@@ -67,9 +72,7 @@ function delete_cart_select(f){
 		  if (window.confirm("해당 상품을 삭제하시겠습니까?")) {
 				f.action="cart_delete_select.do"; // CartSelectDeleteAction.java
 				f.submit();
-		  }
-	
-	
+		  }	
 
 }
 
@@ -91,9 +94,6 @@ const check_count =$("input[name='cart_idx']:checked").length;
 			f.action="payment_form.do";
 			f.submit();
 	}
-	
-	
-	
 
 }
 
@@ -103,33 +103,16 @@ const check_count =$("input[name='cart_idx']:checked").length;
 </head>
 <body>
 <form class="form-inline">
+	 <jsp:include page="../include/header.jsp"></jsp:include>
 	<!-- Header -->
-	<header id="header">
-		<nav class="left">
-			<a href="#menu"><span>Menu</span></a>
-		</nav>
-		<a href="main.jsp" class="logo">중고로GO</a>
-		<nav class="right">
-			<a href="#" class="button alt">Log in</a>
-		</nav>
-	</header>
-	<!-- Menu -->
-	<nav id="menu">
-		<ul class="links">
-			<li><a href="../main.jsp">Home</a></li>
-			<li><a href="../category.jsp">Category</a></li>
-			<li><a href="../generic.jsp">Generic</a></li>
-			<li><a href="../elements.jsp">Elements</a></li>
-			<li><a href="cart_list.do">(임시)카트</a></li>
-		</ul>
-		<ul class="actions vertical">
-			<li><a href="#" class="button fit">Login</a></li>
-		</ul>
-	</nav>
+	
+	
+	<jsp:include page="../include/menu.jsp"></jsp:include>
+	<!-- menu -->
 	<section id="main" class="wrapper">
 		<div class="inner">
 			<header class="align-center">
-				<h1>장바구니</h1>
+				<h1>WISHLIST</h1>
 				
 				<div style="width:1300px; margin: auto;" class="table-wrapper"> 
 				<table >
@@ -145,10 +128,11 @@ const check_count =$("input[name='cart_idx']:checked").length;
 			<tr bgcolor="#dedede" >
 			    <th style="text-align: center;">선택</th>
 				<th width="25%" style="text-align: center;">제품명</th>
+				<th  style="text-align: center;">이미지</th>
 				<th style="text-align: center;">판매자</th>
 				<th style="text-align: center;">제품상태</th>
 				<th align="center" style="text-align: center;">금액</th>
-				<th style="text-align: center;" width="10%">금액수정</th>
+				
 				<!-- <th>삭제</th> 
 				
 				cart_idx,
@@ -160,29 +144,21 @@ const check_count =$("input[name='cart_idx']:checked").length;
 			<c:forEach var="cart"  items="${cart_list}">
 			<tbody>
 				<tr align="center">
-				<td><input type="checkbox" name="cart_idx"  value="${cart.cart_idx}" id="cart_idx_${cart.cart_idx}">
+				<td style="vertical-align: middle;"><input type="checkbox" name="cart_idx"  value="${cart.cart_idx}" id="cart_idx_${cart.cart_idx}">
 				<label for="cart_idx_${cart.cart_idx}">
 				</label>
 				</td>
-				<td>${ cart.p_name }</td>
-				<td>${ cart.sell_user_name }</td>
+				<td style="vertical-align: middle;"><a href="view.do?p_idx=${cart.p_idx}">${ cart.p_name }</a></td>
+				<td style="vertical-align: middle;"><img src="${pageContext.request.contextPath}/upload/${cart.p_filename}" width="100" height="90">
+				<td style="vertical-align: middle;">${ cart.sell_user_name }</td>
 				
-				<td>${ cart.p_status }</td>
-				<td>
-				<!-- 금액 조정 폼 -->
+				<td style="vertical-align: middle;">${ cart.p_status }</td>
+				<td style="vertical-align: middle;">
+
 				<fmt:formatNumber value="${cart.p_price}"/> (원)
-				
-				
-				
+			
 				</td>
-				<td>
-				<c:if test="${cart.p_nego eq '가능'}">
-		<%-- 				<input style="text-align: center; width: 150px;"  id="p_price_${cart.cart_idx}"  size="4"  value="${ cart.p_price }"> --%>
-						<input class="button small" type="button" value="수정"  
-						       onclick="modify_cart(${ cart.cart_idx });" style="text-align: center;">
-				</c:if>
-				
-				</td>
+	
 			</tr>
 			</tbody>
 			<tr>
@@ -193,7 +169,7 @@ const check_count =$("input[name='cart_idx']:checked").length;
 	        <c:if test="${ empty cart_list }"> 
 				<tr>
 					<td colspan="6" align="center">
-						<b><font color=red>장바구니가 비었습니다.</font></b>
+						<b><font color=red>WISHLIST 가 비었습니다.</font></b>
 					</td>
 				</tr>
 			</c:if>
@@ -227,22 +203,48 @@ const check_count =$("input[name='cart_idx']:checked").length;
 		</div>	
 	</section>
 	<!-- Footer -->
-	<footer id="footer">
-		<div class="inner">
-			<h2>Get In Touch</h2>
-			<ul class="actions">
-				<li><span class="icon fa-phone"></span> <a href="#">(000)
-						000-0000</a></li>
-				<li><span class="icon fa-envelope"></span> <a href="#">information@untitled.tld</a></li>
-				<li><span class="icon fa-map-marker"></span> 123 Somewhere
-					Road, Nashville, TN 00000</li>
-			</ul>
+		
+	<footer id="footer">	
+	
+			<div align="center" >
+		<c:forEach var="vo"  items="${ weatherlist }">   
+        	<c:if test="${ (vo.icon eq '01d') }">
+           	<div align="center">오늘의 날씨 : <img src="../images/01d.png">상태 : 맑음&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }</div>
+           	</c:if>
+           	<c:if test="${ (vo.icon eq '02d') }">
+           	<div align="center">오늘의 날씨 : <img src="../images/02d.png">상태 : 약간흐림&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }</div>
+           	</c:if>
+           	<c:if test="${ (vo.icon eq '03d') }">
+           	<div align="center">오늘의 날씨 : <img src="../images/03d.png">상태 : 흐림&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }</div>
+           	</c:if>
+           	<c:if test="${ (vo.icon eq '04d') }">
+           	<div align="center">오늘의 날씨 : <img src="../images/04d.png">상태 : 매우흐림&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }</div>
+           	</c:if>
+           	<c:if test="${ (vo.icon eq '09d') }">
+           	<div align="center">오늘의 날씨 : <img src="../images/09d.png">상태 : 약한비&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }</div>
+           	</c:if>
+           	<c:if test="${ (vo.icon eq '10d') }">
+           	<div align="center">오늘의 날씨 : <img src="../images/10d.png">상태 : 비&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }</div>
+           	</c:if>
+           	<c:if test="${ (vo.icon eq '11d') }">
+           	<div align="center">오늘의 날씨 : <img src="../images/11d.png">상태 : 번개&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }</div>
+           	</c:if>
+           	<c:if test="${ (vo.icon eq '13d') }">
+           	<div align="center">오늘의 날씨 : <img src="../images/13d.png">상태 : 눈&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }</div>
+           	</c:if>
+           	<c:if test="${ (vo.icon eq '50d') }">
+           	<div align="center">오늘의 날씨 :<img src="../images/50d.png">상태 : 안개&ensp;온도 : ${ vo.temp  }ºC&ensp;습도 : ${ vo.humidity }</div>
+           	</c:if>
+          
+   </c:forEach>
+   
 		</div>
+	
+	<jsp:include page="../include/footer.jsp"></jsp:include>
 	</footer>
-	<div class="copyright">
-		Powered by: <a href="https://templated.co/">TEMPLATED</a>.
-	</div>
-
+	
+	
+	
 	<!-- Scripts -->
 	<script src="../assets/js/jquery.min.js"></script>
 	<script src="../assets/js/jquery.scrolly.min.js"></script>

@@ -76,7 +76,7 @@ public class CartDao {
 	}
 
 	/**
-	 * 결제화면의 실제 결제할 상품정보 list
+	 * 결제화면의 실제 결제할 상품정보 list(위시리스트에서 결제 화면으로 넘어가는 경우)
 	 * @param map
 	 * @return
 	 */
@@ -111,5 +111,50 @@ public class CartDao {
 		return payment_total_amount;	
 	}
 	
+	/**
+	 * 위시리스트 담기
+	 * @param map
+	 * @return
+	 */
+	
+	public CartVo selectOneExist(CartVo vo) {
+		// TODO Auto-generated method stub
+		CartVo resVo = null;
+		
+		SqlSession sqlSession = factory.openSession();
+		
+		resVo = sqlSession.selectOne("cart.cart_one_exist", vo);
+		
+		sqlSession.close();
+		
+		return resVo;
+	}
+
+	public int insert(CartVo vo) {
+		// TODO Auto-generated method stub
+		
+		int res=0;
+		SqlSession sqlSession=factory.openSession(true);
+		res=sqlSession.insert("cart.cart_insert",vo);
+		
+		sqlSession.close();
+		return res;
+		
+		
+	}
+
+	/**
+	 * 바로 결제할 경우
+	 * @param map
+	 * @return
+	 */
+	public List<CartVo> selectList_direct_payment(Map<String, Object> map) {
+		SqlSession sqlSession=factory.openSession();
+		
+		List<CartVo> list=sqlSession.selectList("cart.product_direct_payment", map);
+		sqlSession.close();
+	
+		return list;
+	}
 	
 }

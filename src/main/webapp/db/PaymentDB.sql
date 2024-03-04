@@ -1,21 +1,28 @@
--- 결제정보 테이블
+USE secondhanddb;
+DROP TABLE IF EXISTS `Payment`;
+
 CREATE TABLE `Payment` (
-	`pay_idx`	int  PRIMARY KEY auto_increment	NOT NULL,
+	`pay_idx`	int auto_increment primary key	NOT NULL,
 	`user_idx`	int 	NOT NULL,
-	`cart_idx`	int	NOT NULL,
-	`user_name`	varchar(200)	NOT NULL,
-	`pay_zipcode`	varchar(200)	NULL,
-	`prod_idx`	int	NOT NULL,
-	`prod_name`	varchar(200)	NOT NULL,
-	`prod_count`	int	NOT NULL,
-	`prod_pay`	int	NOT NULL,
-	`total_pay`	int	NOT NULL,
-	`pro_image`	varchar(200)	NOT NULL,
-	`paycard_numb`	varchar(200)	NULL,
-	`pay_type`	varchar(200)	NULL	COMMENT '무통장입금,카드결제등'
+	`order_number`	int	NULL,
+	`cart_idx`	int	NULL,
+	`pay_zipcode`	int	NOT NULL,
+	`pay_addr`	VARCHAR(200)	NULL,
+	`user_name`	VARCHAR(200)	NULL,
+	`prod_idx`	int	NULL,
+	`p_name`	VARCHAR(200)	NULL,
+	`pro_image`	VARCHAR(200)	NULL,
+	`sell_user_name`	VARCHAR(200)	NULL,
+	`p_total_amount`	int	NULL,
+	`amount_appr`	int	NULL,
+	`card_type`	VARCHAR(200)	NULL,
+	`card_number`	VARCHAR(200)	NULL,
+	`payment_date`	date	NULL
 );
-
-
+select * from payment ;
+select * from payment where user_idx=1 order by payment_date,order_number desc;
+select ifnull(max(order_number),0) +1 as order_number from payment;
+commit;
 ALTER TABLE `Payment` ADD CONSTRAINT `FK_user_TO_Payment_1` FOREIGN KEY (
 	`user_idx`
 )
@@ -23,4 +30,4 @@ REFERENCES `user` (
 	`user_idx`
 );
 
-COMMIT;
+commit;

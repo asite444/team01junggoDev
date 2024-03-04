@@ -3,13 +3,13 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cart">
-<!-- 카트 리스트 출력 -->
+<!-- 카트 리스트 출력 (위시리스트의 경우)-->
  <select id="cart_list" parameterType="int" resultType="vo.CartVo">
 select 
 c. cart_idx
 , c.user_idx
-, c.prod_idx
-, c.prod_count 
+, c.p_idx
+, c.p_count 
 , p.p_subject
 , p.p_name
 , p.user_idx as sell_user_idx
@@ -20,7 +20,7 @@ c. cart_idx
 , u.user_name as sell_user_name
 from cart c 
 join product p
-on  p.p_idx=c.prod_idx
+on  p.p_idx=c.p_idx
 join user u
 on u.user_idx=p.user_idx
 where c.user_idx=#{user_idx}
@@ -31,7 +31,7 @@ where c.user_idx=#{user_idx}
 <!-- 유저별 장바구니 총합계 -->
 <select id="cart_total_amount" parameterType="int" resultType="int">
 select  ifnull(sum(p.p_price),0) 
-from cart c join product p on  p.p_idx=c.prod_idx
+from cart c join product p on  p.p_idx=c.p_idx
 where c.user_idx=#{user_idx}
 </select>
 
@@ -42,12 +42,12 @@ delete from cart where c_idx=#{c_idx}
 
 <!-- 장바구니 등록여부 -->
 <select id="cart_one_exist" parameterType="cart" resultType="cart">
-select * from cart where p_idx=#{p_idx} and mem_idx=#{mem_idx}
+select * from cart where p_idx=#{p_idx} and user_idx=#{user_idx}
 </select>
 
 <!--장바구니 등록 -->
 <insert id="cart_insert" parameterType="cart">
-insert into cart (c_cnt, p_idx, mem_idx) values(1,#{p_idx},#{mem_idx})
+insert into cart ( p_idx, user_idx) values(#{p_idx},#{user_idx})
 </insert>  
 
 <!-- 선택된 상품만만 삭제 -->
@@ -58,13 +58,13 @@ delete from cart where cart_idx in
 </foreach>
 </delete>
 
-
+<!-- 위시리스트에서 결제 폼으로 넘어갈 때 -->
 <select id="cart_select" parameterType="Map" resultType="cart">
 select 
 c. cart_idx
 , c.user_idx
-, c.prod_idx
-, c.prod_count 
+, c.p_idx
+, c.p_count 
 , p.p_subject
 , p.p_name
 , p.user_idx as sell_user_idx
@@ -75,7 +75,7 @@ c. cart_idx
 , u.user_name as sell_user_name
 from cart c 
 join product p
-on  p.p_idx=c.prod_idx
+on  p.p_idx=c.p_idx
 join user u
 on u.user_idx=p.user_idx
 where c.cart_idx in
@@ -84,14 +84,39 @@ where c.cart_idx in
 </foreach>
 
 </select>
+<!--바로 결제할 경우  -->
+<select id="product_direct_payment" parameterType="Map" resultType="cart">
+select 
+0 as cart_idx
+, #{user_idx} as user_idx 
+, p.p_idx
+, 0 as p_count
+, p.p_subject
+, p.p_name
+, p.user_idx as sell_user_idx
+, p.p_price
+, p.p_status
+, p.p_nego
+, p.p_filename
+, u.user_name as sell_user_name
+from product p
+join user u
+on u.user_idx=p.user_idx
+where p.p_idx =#{p_idx}
+
+</select>
+
 
 <select id="payment_total_amount" parameterType="int" resultType="int">
 select  p.p_price
-from cart c join product p on  p.p_idx=c.prod_idx
+from cart c join product p on  p.p_idx=c.p_idx
 where c.cart_idx=#{cart_idx}
 </select>
 
 
+<select id="product_ammount" parameterType="int" resultType="int">
+select p_price from product where p_idx=#{p_idx}
+</select>
 </mapper>
 
 

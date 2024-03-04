@@ -1,4 +1,5 @@
 use secondhanddb;
+drop table board;
 CREATE TABLE `board` (
 	`b_idx`	int  primary key auto_increment 	NOT NULL,
 	`b_subject`	varchar(200)	NOT NULL,

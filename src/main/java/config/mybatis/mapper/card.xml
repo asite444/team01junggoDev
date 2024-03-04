@@ -7,26 +7,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  <insert id="card_insert" parameterType="vo.CardVo">
  insert into creditcard (
  user_idx
- , card_number
- , card_holder_name
- , card_nickname
- , expiration_date
- , cvv
- , card_bank
- , card_type
- , card_category
- , regist_date) values(
-  #{card_idx}
- ,#{user_idx}
- ,#{card_number}
- ,#{card_holder_name}
- ,#{card_nickname}
- ,#{expiration_date}
- ,#{cvv}
- ,#{card_bank}
- ,#{card_type}
- ,#{card_category}
- ,now()
+,card_number
+,card_holder_name
+,card_nickname
+,expiration_date
+,cvv
+,card_bank
+,card_type
+,card_category
+,card_password
+,regist_date
+ ) values(
+#{user_idx}
+,#{card_number}
+,#{card_holder_name}
+,#{card_nickname}
+,#{expiration_date}
+,#{cvv}
+,#{card_bank}
+,#{card_type}
+,#{card_category}
+,#{card_password}
+,now()
  )
  </insert>
   

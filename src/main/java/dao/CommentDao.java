@@ -97,22 +97,27 @@ public class CommentDao {
 		
 	}
 	
-	//댓글수정
-//	public int update(int cmt_idx) {
-//		// TODO Auto-generated method stub
-//		int res = 0;
-//		
-//		//1.sqlSession얻어오기
-//		SqlSession sqlsession = factory.openSession(true);
-//		
-//		//2.수행
-//		res = sqlsession.update("comment.comment_modify",cmt_idx);
-//		
-//		//3.닫기
-//		sqlsession.close();
-//		
-//		return res;
-//	}
+	/**
+	 * 댓글 수정
+	 * @param vo
+	 * @return
+	 */
+	public int update(CommentVo vo) {
+		// TODO Auto-generated method stub
+		
+		int res = 0;
+		
+		//1.sqlSession얻어오기
+		SqlSession sqlsession = factory.openSession(true);
+		
+		//2.수행
+		res = sqlsession.update("comment.update_comment",vo);
+		
+		//3.닫기
+		sqlsession.close();
+		
+		return res;
+	}
 	
 	
 	//댓글 페이징 처리하기 
@@ -160,6 +165,8 @@ public class CommentDao {
 		
 		return res;
 	}
+	
+
 	
 
 	

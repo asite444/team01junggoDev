@@ -10,16 +10,17 @@ private String card_number;
 private String card_holder_name;
 private String card_nickname;
 private String expiration_date;
-private int cvv;
+private String cvv;
 private String card_bank;
 private String card_type;
 private String card_category;
 private String regist_date;
-
+private String card_password;
 /**
  * 기능없음
  */
 public CardVo() {}
+
 
 
 /** 카드 등록 생성자
@@ -32,9 +33,10 @@ public CardVo() {}
  * @param card_bank
  * @param card_type
  * @param card_category
+ * @param card_password
  */
 public CardVo(int user_idx, String card_number, String card_holder_name, String card_nickname, String expiration_date,
-		int cvv, String card_bank, String card_type, String card_category) {
+		String cvv, String card_bank, String card_type, String card_category, String card_password) {
 	this.user_idx = user_idx;
 	this.card_number = card_number;
 	this.card_holder_name = card_holder_name;
@@ -44,7 +46,11 @@ public CardVo(int user_idx, String card_number, String card_holder_name, String 
 	this.card_bank = card_bank;
 	this.card_type = card_type;
 	this.card_category = card_category;
+	this.card_password = card_password;
 }
+
+
+
 public int getCard_idx() {
 	return card_idx;
 }
@@ -81,10 +87,10 @@ public String getExpiration_date() {
 public void setExpiration_date(String expiration_date) {
 	this.expiration_date = expiration_date;
 }
-public int getCvv() {
+public String getCvv() {
 	return cvv;
 }
-public void setCvv(int cvv) {
+public void setCvv(String cvv) {
 	this.cvv = cvv;
 }
 public String getCard_bank() {
@@ -110,6 +116,16 @@ public String getRegist_date() {
 }
 public void setRegist_date(String regist_date) {
 	this.regist_date = regist_date;
+}
+
+
+public String getCard_password() {
+	return card_password;
+}
+
+
+public void setCard_password(String card_password) {
+	this.card_password = card_password;
 }
 
 

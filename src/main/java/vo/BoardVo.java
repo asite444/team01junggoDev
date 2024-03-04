@@ -17,18 +17,20 @@ public class BoardVo {
 	int		no; //lank() : 글번호컬럼명
 	int		cmt_count;//댓글갯수
 	
+	int		community_page;
 	
 	
-	
-	
+
 
 	public BoardVo() {
 		// TODO Auto-generated constructor stub
 		
 	}
 
+
+	
 	/**
-	 * 새글쓰기에 대한 포장
+	 * 새글쓰기에 대한 포장(community_page)
 	 * @param b_idx
 	 * @param b_subject
 	 * @param b_content
@@ -36,9 +38,10 @@ public class BoardVo {
 	 * @param user_idx
 	 * @param user_name
 	 * @param b_ref
+	 * @param community_page
 	 */
 	public BoardVo(int b_idx, String b_subject, String b_content, String b_ip, int user_idx, String user_name,
-			int b_ref) {
+			int b_ref, int community_page) {
 		super();
 		this.b_idx = b_idx;
 		this.b_subject = b_subject;
@@ -47,10 +50,12 @@ public class BoardVo {
 		this.user_idx = user_idx;
 		this.user_name = user_name;
 		this.b_ref = b_ref;
+		this.community_page = community_page;
 	}
 
+	
 	/**
-	 * 답글쓰기
+	 * 답글쓰기(community_page)
 	 * @param b_idx
 	 * @param b_subject
 	 * @param b_content
@@ -60,10 +65,11 @@ public class BoardVo {
 	 * @param b_ref
 	 * @param b_step
 	 * @param b_depth
+	 * @param community_page
 	 */
-	public BoardVo(int b_idx, String b_subject, String b_content, String b_ip, int user_idx, String user_name, int b_ref,
-			int b_step, int b_depth) {
-		
+	public BoardVo(int b_idx, String b_subject, String b_content, String b_ip, int user_idx, String user_name,
+			int b_ref, int b_step, int b_depth, int community_page) {
+		super();
 		this.b_idx = b_idx;
 		this.b_subject = b_subject;
 		this.b_content = b_content;
@@ -73,9 +79,17 @@ public class BoardVo {
 		this.b_ref = b_ref;
 		this.b_step = b_step;
 		this.b_depth = b_depth;
+		this.community_page = community_page;
 	}
+
 	
-	//modify_form
+	/**
+	 * modify_form 수정폼
+	 * @param b_idx
+	 * @param b_subject
+	 * @param b_content
+	 * @param b_ip
+	 */
 	public BoardVo(int b_idx, String b_subject, String b_content, String b_ip) {
 		super();
 		this.b_idx = b_idx;
@@ -85,6 +99,22 @@ public class BoardVo {
 	}
 	
 	
+	
+	/**
+	 * 페이지에 따른 넘버 getter
+	 * @return
+	 */
+	public int getCommunity_page() {
+		return community_page;
+	}
+	/**
+	 * 페이지에 따른 넘버 settet
+	 * @param community_page
+	 */
+	public void setCommunity_page(int community_page) {
+		this.community_page = community_page;
+	}
+
 		public int getCmt_count() {
 		return cmt_count;
 	}

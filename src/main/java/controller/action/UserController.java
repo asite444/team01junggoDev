@@ -112,7 +112,7 @@ public class UserController {
 	 @RequestMapping("/user/insert_form.do")
 	public String insert_form(HttpServletRequest request, HttpServletResponse response) {
 
-		return "user_insert_form.do";
+		return "user_insert_form.jsp";
 	 }//end: insert_form.do
 	  		
 
@@ -151,10 +151,10 @@ public class UserController {
 	  }//end: insert.do
 	  
 	  
-	  	//아이디 체크
-		@RequestMapping(value="/user/check_id.do",produces="application/json;charset=utf-8;")
-		@ResponseBody
-		public String check_id(HttpServletRequest request, HttpServletResponse response) {
+	  //아이디 체크
+	  @RequestMapping(value="/user/check_id.do",produces="application/json;charset=utf-8;")
+	  @ResponseBody
+	  public String check_id(HttpServletRequest request, HttpServletResponse response) {
 			
 			String user_id = request.getParameter("user_id");
 			//System.out.println("아이디 체크");
@@ -168,13 +168,126 @@ public class UserController {
 			
 			
 			return json.toString();
-		}
+	  }
+	  
+	  //삭제  
+	  @RequestMapping("/user/delete.do")
+	  public String delete(HttpServletRequest request, HttpServletResponse response) {
+	 	
+		int user_idx = Integer.parseInt(request.getParameter("user_idx"));
+		
+		//2.DB delete : DML(insert/update/delete)처리후 결과행수반환(res)
+		int res = UserDao.getInstance().delete(user_idx);
+		
+		    
+		return "redirect:../user/list.do";
+	}
+	 
+	//회원정보수정 폼  
+	@RequestMapping("/user/modify_form.do")
+	public String modify_form(HttpServletRequest request, HttpServletResponse response) {
+		
+		int user_idx = Integer.parseInt(request.getParameter("user_idx"));
+		
+		//2.user_idx에 해당되는 회원정보 1건을 얻어오기
+		UserVo vo = UserDao.getInstance().selectOne(user_idx);
+		
+		//3.request binding
+		request.setAttribute("vo", vo);
+	
+
+		return "user_modify_form.jsp";
+	}  
+	
+	//회원정보 수정
+	@RequestMapping("/user/modify.do")
+	public String modify(HttpServletRequest request, HttpServletResponse response) {
+		
+		int    user_idx     = Integer.parseInt(request.getParameter("user_idx"));
+		String user_name	= request.getParameter("user_name");
+		String user_id  	= request.getParameter("user_id");
+		String user_pwd	    = request.getParameter("user_pwd");
+		String user_email	= request.getParameter("user_email");
+		String user_zipcode	= request.getParameter("user_zipcode");
+		String user_addr	= request.getParameter("user_addr");
+		String user_grade	= request.getParameter("user_grade");
+		
+		//2.IP 구하기
+		String user_ip	= request.getRemoteAddr();
+		
+		//3.VO포장
+		UserVo vo = new UserVo(user_idx, user_name, user_id, user_pwd, user_email, user_zipcode, user_addr, user_ip, user_grade);
+		
+		//4. DB update : update user set user_pwd=?,user_email=?,user_zipcode=?,user_addr=?,user=ip=?,
+		//                               user_grade=?,user_modifydate=now()
+		//               where user_idx=?
+		int res = UserDao.getInstance().update(vo);
+		
+		return "redirect: list.do";
+	}
+	
+	
+	//마이페이지 폼
+	@RequestMapping("/user/mypage_form.do")
+	public String mypage_form(HttpServletRequest request, HttpServletResponse response) {
+		
+		int user_idx = Integer.parseInt(request.getParameter("user_idx"));
+		
+		//해당되는 회원정보 1건을 얻어오기
+		UserVo vo = UserDao.getInstance().selectOne(user_idx);
+		
+		//request binding
+		request.setAttribute("vo", vo);
+
+		return "user_mypage_form.jsp";
+	}
+	
+	@RequestMapping("/user/mypage.do")
+	public String mypage(HttpServletRequest request, HttpServletResponse response) {
+		
+		int    user_idx     = Integer.parseInt(request.getParameter("user_idx"));
+		String user_name    = request.getParameter("user_name");
+		String user_id      = request.getParameter("user_id");
+		String user_pwd     = request.getParameter("user_pwd");
+		String user_email   = request.getParameter("user_email");
+		String user_zipcode = request.getParameter("user_zipcode");
+		String user_addr    = request.getParameter("user_addr");
+		String user_grade   = request.getParameter("user_grade");
+		
+		//IP 구하기
+		String user_ip = request.getRemoteAddr();
+		
+		//VO 포장하기
+		UserVo vo = new UserVo(user_idx, user_name, user_id, user_pwd, user_email, user_zipcode, user_addr, user_ip, user_grade);
+		
+		//4.DB update : update member set mem_pwd=?,mem_email=?,mem_zipcode=?,mem_addr=?,mem_ip=?,
+		//                                mem_grade=?,mem_modifydate=now()
+		//              where mem_idx=?
+		int res = UserDao.getInstance().update(vo);
+
+		return "redirect: list.do";
+	}
+	
+	
+	
+	  
+	  
+	  
 	  
 	  	
 	  
 
 
 }
+
+
+
+
+
+
+
+
+
 	
 	
 

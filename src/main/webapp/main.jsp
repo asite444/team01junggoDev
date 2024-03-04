@@ -18,13 +18,23 @@
 	content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="assets/css/main.css">
+<!-- Bootstrap 3.x -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.scrolly.min.js"></script>
+	<script src="assets/js/skel.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
 
 <script type="text/javascript">
 	function login(){
 	    
-		   location.href="user/user_login_form.jsp";
+		   location.href="user/login_form.do";
 	}
 </script>
+
 <style type="text/css">
 	#query{ 
 	margin: auto;
@@ -34,55 +44,18 @@
 </head>
 <body>
 
+   
+<jsp:include page="include/header.jsp"></jsp:include>
 	<!-- Header -->
-	<header id="header">
-		<nav class="left">
-			<a href="#menu"><span>Menu</span></a>
-		</nav>
-		<a href="main.jsp" class="logo">중고로Go</a>
-		<nav class="right">
-		  <c:if test="${ empty sessionScope.user }">
-			<input class="button alt" value="Login"
-					onclick="login();">
-		  </c:if>
-			
-			<!-- 로그인이 됐을경우 : 세션영역에 user가 있는가?  -->
-		<c:if test="${ not empty sessionScope.user }">
-			<b>${ sessionScope.user.user_name }</b>님 환영합니다!!
-			<input class="button alt" type="button" value="Logout"
-			       onclick="location.href='user/logout.do'">
-		</c:if>		
-					
-		</nav>
-		
-		
-		
-		
-	</header>
-	<!-- Menu -->
-	<nav id="menu">
-		<ul class="links">
-			<li><a href="main.jsp">Home</a></li>
-			<li><a href="all_items.jsp">전체매물</a></li>
-			<li><a href="category.jsp" >Category</a></li>
-			<li><a href="board/list.do">community</a></li>
-			<li><a href="generic.jsp">Generic</a></li>
-			<li><a href="elements.jsp">Elements</a></li>
-			<li><a href="product/cart_list.do">장바구니(임시)</a></li>
-		</ul>
-		<ul class="actions vertical">
-			<li>
-				<input class="button fit" value="Login" 
-						onclick="login();" >			
-			</li>
-		</ul>
-		
-		
-	</nav>
+
+
+	<jsp:include page="include/menu.jsp"></jsp:include>
+	
 	<!-- Banner -->
 	<section id="banner">
-		<div class="content">
-			<h1>☆Wellcome SecondHand Shop!!☆</h1>
+		<div class="content" style="height: 350px">
+		
+			<!-- <h1>☆Wellcome SecondHand Shop!!☆</h1>
 			<p>
 				어서오세요!
 				반갑슴둥
@@ -91,13 +64,13 @@
 			</p>
 			<ul class="actions">
 				<li><a href="#one" class="button scrolly">Get Started</a></li>
-			</ul>
+			</ul>  -->
 		</div>
 	</section>
 	
-	<hr>
+	
 	<!-- Search -->
-		<form method="post" action="#">
+		<!-- <form method="post" action="#">
 			<div class="row uniform">
 				<div class="9u 12u$(small)">
 					<input type="text" name="query" id="query" value="매물검색"
@@ -107,8 +80,9 @@
 					<input type="submit" value="Search" class="fit">
 				</div>
 			</div>
-		</form>
+		</form> -->
 	<hr>	
+	
 	<!-- One -->
 	<section id="one" class="wrapper">
 		<div class="inner flex flex-3">
@@ -124,46 +98,42 @@
 				<div>
 					<h3>인기매물</h3>
 					<p>
-						 조회수 count로 10개 가져오기
-						 <br> 
-						 조회수 count로 10개 가져오기
+						가전제품/접시그릇세트 | 명품가방/신발
+				        <br> 
+						 
 					</p>
 				</div>
 			</div>
 			<div class="flex-item image fit round">
-				<img src="images/pic01.jpg" alt="" width="330" height="330">
+				<img src="images/joonggo5.png" alt="" width="330" height="330">
 			</div>
 			<div class="flex-item right">
 				<div>
-					<h3>Tempus nullam</h3>
+					<h3>중고 거래 금지물품</h3>
 					<p>
-						Sed adipiscing ornare risus. Morbi estes<br> blandit sit et
-						amet, sagittis magna.
+						기호식품(담배,주류등),의약품, 시력교정 제품,저작권 침해제품<br>
+						소분된식품,화장품샘플,소분된화장품,면세품, 모의총포, 헌혈증 등등
 					</p>
 				</div>
 				<div>
-					<h3>Suscipit nibh dolore</h3>
+					<h3>안심거래존</h3>
 					<p>
-						Pellentesque egestas sem. Suspendisse<br> modo ullamcorper
-						feugiat lorem.
+						이제 안심거래존에서 안전거래하세요!!<br>
 					</p>
 				</div>
 			</div>
 		</div>
 	</section>
 	<!-- Two -->
-	<section id="two" class="wrapper style1 special">
+	<section id="two" class="">
 		<div class="inner">
-			<h2>Feugiat lorem</h2>
+			<h2>안심거래존</h2>
 			<figure>
 				<blockquote>
-					"Morbi in sem quis dui placerat ornare. Pellentesque odio nisi,
-					euismod in, pharetra<br> magna etiam lorem ultricies in diam.
-					Sed arcu cras consequat."
+					안심거래존이 신설되었습니다. 많은 이용부탁드립니다.
 				</blockquote>
 				<footer>
-					<cite class="author">Jane Anderson</cite> <cite class="company">CEO,
-						Untitled</cite>
+					
 				</footer>
 			</figure>
 		</div>
@@ -173,58 +143,78 @@
 		<div class="inner flex flex-3">
 			<div class="flex-item box">
 				<div class="image fit">
-					<img src="images/pic02.jpg" alt="" width="418" height="200">
+					<img src="images/joonggo6.jpg" alt="" width="418" height="200">
 				</div>
 				<div class="content">
-					<h3>Consequat</h3>
-					<p>Placerat ornare. Pellentesque od sed euismod in, pharetra
-						ltricies edarcu cas consequat.</p>
+					<h3>1:1안심거래</h3>
+					<p>1:1 안심거래 수칙을 준수하면서 거래하세요</p>
 				</div>
 			</div>
 			<div class="flex-item box">
 				<div class="image fit">
-					<img src="images/pic03.jpg" alt="" width="418" height="200">
+					<img src="images/joonggo10.png" alt="" width="418" height="200">
 				</div>
 				<div class="content">
-					<h3>Adipiscing</h3>
-					<p>Morbi in sem quis dui placerat Pellentesque odio nisi,
-						euismod pharetra lorem ipsum.</p>
+					<h3>거래금지품목</h3>
+					<p>거래금지 품목을 확인해주세요</p>
 				</div>
 			</div>
 			<div class="flex-item box">
 				<div class="image fit">
-					<img src="images/pic04.jpg" alt="" width="418" height="200">
+					<img src="images/joonggo7.jpg" alt="" width="418" height="200">
 				</div>
 				<div class="content">
-					<h3>Malesuada</h3>
-					<p>Nam dui mi, tincidunt quis, accu an porttitor, facilisis
-						luctus que metus vulputate sem magna.</p>
+					<h3>안심거래존</h3>
+					<p>안심거래존에서 보다 안전한거래를 하세요</p>
 				</div>
 			</div>
 		</div>
 	</section>
+	
+	
 	<!-- Footer -->
 	<footer id="footer">
-		<div class="inner">
-			<h2>Get In Touch</h2>
-			<ul class="actions">
-				<li><span class="icon fa-phone"></span> <a href="#">(000)
-						000-0000</a></li>
-				<li><span class="icon fa-envelope"></span> <a href="#">information@untitled.tld</a></li>
-				<li><span class="icon fa-map-marker"></span> 123 Somewhere
-					Road, Nashville, TN 00000</li>
-			</ul>
-		</div>
+			
+			<span><b style="color: white;" ></b>공동대표 임동현 민수진 주도윤 정상균 | <b style="color: white;"></b>사업자번호 123-00-00000</span>
+			<div><b style="color:  white"></b>직업정보제공사업 신고번호 K1200020200016</div>
+			<div><b style="color: white;"></b>주소 서울 강남구 서초대로 77길 41 5층(중고로고서비스)</div>
+			<span><b style="color: white;"></b>전화 1500-1500 | <b style="color: white;"></b>고객문의 kor@ict.com</span>
+			
+			<div>
+			<b>
+			  <a href="#">이용약관</a> |	<a href="#">개인정보사용방침</a> | <a href="#">청소년보호정책</a>
+			</b></div>
+			
+			
+			
+			
+			<!-- <ul class="actions">
+				<li><span class="icon fa-phone"></span> (02)4321-1234</li>
+				<li><span class="icon fa-envelope"></span> <a href="#">information@ict.com</a></li>
+				<li><span class="icon fa-map-marker"></span>(06611) 서울 강남구 서초대로 77길 41 5층</li>
+			</ul> -->
+			
+			
+		
 	</footer>
+	
+	
 	<div class="copyright">
-		Powered by: <a href="https://templated.co/">TEMPLATED</a>.
+		<ul class="icons">
+				<li><a href="https://twitter.com/" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+				<li><a href="https://www.facebook.com/" class="icon fa-facebook"><span
+						class="label">Facebook</span></a></li>
+				<li><a href="https://www.instagram.com/" class="icon fa-instagram"><span
+						class="label">Instagram</span></a></li>
+				<li><a href="https://github.com/" class="icon fa-github"><span class="label">Github</span></a></li>
+				<li><a href="https://dribbble.com/" class="icon fa-dribbble"><span
+						class="label">Dribbble</span></a></li>
+				<li><a href="https://www.tumblr.com/" class="icon fa-tumblr"><span class="label">Tumblr</span></a></li>
+				<li><a href="https://www.youtube.com/" class="icon fa-youtube"><span class="label">Youtube</span></a></li>
+			</ul>
 	</div>
+	
 
-	<!-- Scripts -->
-	<script src="assets/js/jquery.min.js"></script>
-	<script src="assets/js/jquery.scrolly.min.js"></script>
-	<script src="assets/js/skel.min.js"></script>
-	<script src="assets/js/util.js"></script>
-	<script src="assets/js/main.js"></script>
+	
 </body>
 </html>

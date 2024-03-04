@@ -59,6 +59,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="comment_delete_b_idx" parameterType="int">
 		delete from comment where b_idx=${ b_idx } 
 	</delete>
+	
+	<!-- 댓글 수정 -->
+	<update id="update_comment" parameterType="vo.CommentVo">
+		update comment set 
+                      	 cmt_content = #{ cmt_content },
+                      	 cmt_regdate=now()
+     				where cmt_idx = #{ cmt_idx }   
+	</update>
+
 
 </mapper>
 

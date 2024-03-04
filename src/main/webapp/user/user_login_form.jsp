@@ -111,7 +111,7 @@
 							<div class="6u 12u$(xsmall)">
 								<input type="text" name="user_id" id="user_id" value="${ user_id }"
 									placeholder="ID">
-								<div data-lastpass-icon-root="true"
+								<div data-lastpass-icon-root="true" 
 									style="position: relative !important; height: 0px !important; width: 0px !important; float: left !important;"></div>
 							</div>
 							<div class="6u$ 12u$(xsmall)">
@@ -127,11 +127,11 @@
 									</li>
 									<li>
 										<input type="reset" value="Home" class="alt"
-												onclick="location.href='/SecondhandMarket/main.jsp'">
+												onclick="location.href='../main.jsp'">
 									</li>
 									<li>
 										<input type="reset" value="Join Us" class="button special"
-												onclick="location.href='/SecondhandMarket/user/user_insert_form.jsp'">
+												onclick="location.href='insert_form.do'">
 									</li>
 								</ul>
 							</div>

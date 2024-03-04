@@ -114,26 +114,31 @@ public class CommentController {
 	}
 	
 	//댓글수정
-//	@RequestMapping(value="/board/modify_comment.do",produces="application/json; charset=utf-8;")
-//	@ResponseBody
-//	public String update(HttpServletRequest request, HttpServletResponse response) {
-//		
-//		// /board/comment_delete.do?cmt_idx=2
-//		//1.parameter 받기
-//		int	cmt_idx			= Integer.parseInt(request.getParameter("cmt_idx"));
-//	
-//		//2.DB insert : res <- 처리된 행수
-//		int res = CommentDao.getInstance().update(cmt_idx);
-//		
-//		//3.결과 JSON객체로 생성
-//		JSONObject json = new JSONObject();
-//		if(res==1)
-//			json.put("result",  res );
-//		else
-//			json.put("result",  false ); 
-//		
-//		return json.toString();
-//	}
+	@RequestMapping(value="/board/update_comment.do",produces="application/json; charset=utf-8;")
+	@ResponseBody
+	public String update(HttpServletRequest request, HttpServletResponse response) {
+		
+		// /board/comment_delete.do?cmt_idx=2
+		//1.parameter 받기
+		int	cmt_idx			= Integer.parseInt(request.getParameter("cmt_idx"));
+		String cmt_content =  request.getParameter("cmt_content");
+		
+		CommentVo vo = new CommentVo();
+		vo.setCmt_idx(cmt_idx);
+		vo.setCmt_content(cmt_content);
+	
+		//2.DB insert : res <- 처리된 행수
+		int res = CommentDao.getInstance().update(vo);
+		
+		//3.결과 JSON객체로 생성
+		JSONObject json = new JSONObject();
+		if(res==1)
+			json.put("result",  res );
+		else
+			json.put("result",  false ); 
+		
+		return json.toString();
+	}
 
 
 }
