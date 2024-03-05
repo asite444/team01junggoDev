@@ -2691,7 +2691,11 @@
     font-weight: normal;
     font-style: normal;
 }
+<<<<<<< HEAD
 		#header .logo {
+=======
+		#header   .logo {
+>>>>>>> refs/remotes/origin/master
 			color: #f6755e;
 			/* font-family: "Pacifico", cursive; */	/* 원래의 로고 font */
 			font-family: 'ClimateCrisisKRVF';
@@ -2770,7 +2774,7 @@
 			}
 
 			#header nav a[href="#menu"] {
-				font-size: 1.5em;
+				/*font-size: 1.5em;*/
 			}
 
 			#header nav.left {
